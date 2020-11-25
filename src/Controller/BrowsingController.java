@@ -7,7 +7,7 @@ public class BrowsingController {
 	private BrowsingGUI browsingGUI;
 	private DatabaseController databaseController;
 	
-	private void browse() {
+	public void browse() {
 		
 	}
 }

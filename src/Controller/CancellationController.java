@@ -7,7 +7,7 @@ public class CancellationController {
 	private CancellationGUI cancellationGUI;
 	private DatabaseController databaseController;
 	
-	private void cancel() {
+	public void cancel() {
 		
 	}
 }

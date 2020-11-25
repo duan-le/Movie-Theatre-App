@@ -7,15 +7,15 @@ public class AccountController {
 	private AccountGUI accountGUI;
 	private DatabaseController databaseController;
 	
-	private void register() {
+	public void register() {
 		
 	}
 	
-	private void login() {
+	public void login() {
 		
 	}
 	
-	private void update() {
+	public void update() {
 		
 	}
 }
