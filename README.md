@@ -1,2 +1,8 @@
 # Movie-Theatre-App
-ENSF 480 Project 1
+This is a term project for the class ENSF 480.
+
+# Members
+Duan Le
+Jinseo Lee
+Desiree Leal
+Andrew Lattimer
