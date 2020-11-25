@@ -2,7 +2,7 @@
 This is a term project for the class ENSF 480.
 
 # Members
-Duan Le
-Jinseo Lee
-Desiree Leal
-Andrew Lattimer
+- Duan Le
+- Jinseo Lee
+- Desiree Leal
+- Andrew Lattimer
