@@ -7,28 +7,42 @@ import Model.*;
 public class DatabaseController {
     private Connection db_con;
     private Statement stmt;
-    public DatabaseController(){
-        try{  
-            Class.forName("com.mysql.jdbc.Driver");  
+    
+    public DatabaseController() {
+    	try{  
+    		Driver driver = new com.mysql.cj.jdbc.Driver();
+			DriverManager.registerDriver(driver);
             String path = ""; // e.g. jdbc:mysql://localhost:3306/sonoo
             String user = ""; // e.g. root
             String pass = "";
             db_con = DriverManager.getConnection(path, user, pass);  
-
         } catch(Exception e){    
                 System.out.println(e);
-        }     
-     }
-    public Movie findMovie(String movieName) throws Exception{
-
-        // query database to find movie
-        String query = "select * from Movie" +
-                        "from Movie" +
-                        "where Movie.name = " + movieName;
-        stmt = db_con.createStatement();  
-        ResultSet rs=stmt.executeQuery(query);  
-
-        return new Movie();
+        }
+    }
+    
+	private void insertMovie() {
+		try {
+			String query = "INSERT INTO mydb.student (id, firstname, lastname) VALUES (?, ?, ?)";
+			PreparedStatement pStat = db_con.prepareStatement(query);
+			
+			pStat.setInt(1, id);
+			pStat.setString(2, firstName);
+			pStat.setString(3, lastName);
+			pStat.executeUpdate();
+			pStat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+    
+    public Movie findMovie(String movieName){
+    	try {
+    		String query = "SELECT * FROM Movie WHERE "
+    	} catch(Exception e) {
+            System.out.println(e);
+    	}
+		return null;
     }
 
     public ArrayList<Showtime> getAllShowtimes(String movieName){
