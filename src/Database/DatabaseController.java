@@ -45,7 +45,7 @@ public class DatabaseController {
         // add ticket to database
     }
 
-    public void updateSeat(String movieName, Showtime showtime){
+    public void updateSeat(String movieName, Showtime showtime, Seat seat){
         // update Seat e.g. boolean filled seat 
     }
 
