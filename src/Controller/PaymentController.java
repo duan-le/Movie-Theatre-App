@@ -8,6 +8,7 @@ public class PaymentController {
 	private DatabaseController databaseController;
 	
 	public void pay() {
-		databaseController.getTicketPrice()
+		databaseController.getTicketPrice();
+		
 	}
 }

@@ -4,6 +4,7 @@ import Database.DatabaseController;
 import Model.*;
 import View.BrowsingGUI;
 import java.io.*; 
+import java.util.*;
 
 public class BrowsingController {
 	private BrowsingGUI browsingGUI;
@@ -14,16 +15,20 @@ public class BrowsingController {
 		// Print to console. Change to GUI later
 		
 	}
-	public Movie getMovie() throws IOException{
+	public Movie getMovie() throws Exception{
 		System.out.println("Enter movie: ");
 		String movieName = reader.readLine();
-		return databaseController.getMovie(movieName);
+		return databaseController.findMovie(movieName);
 	}
-	public void getSeat() throws IOException {
-		System.out.println("Enter seat number: ");
-		reader.readLine();
+	public ArrayList<Seat> getAllSeats() throws Exception {
+		System.out.println("Enter movie: ");
+		String movieName = reader.readLine();
+		System.out.println("Enter showtime: ");
+		String showTime = reader.readLine();
+		Showtime showtime = new Showtime();
+		return databaseController.getAllSeats(movieName, showtime);
 	}
-	public void getShowTime() throws IOException {
+	public void getShowTime() throws Exception {
 		System.out.println("Enter show time: ");
 		reader.readLine();
 	}
