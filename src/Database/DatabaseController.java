@@ -2,12 +2,32 @@ package Database;
 
 import java.io.*;
 import java.util.ArrayList;
-
+import java.sql.*;
 import Model.*;
 public class DatabaseController {
-    Movie findMovie(String movieName){
+    private Connection db_con;
+    private Statement stmt;
+    public DatabaseController(){
+        try{  
+            Class.forName("com.mysql.jdbc.Driver");  
+            String path = ""; // e.g. jdbc:mysql://localhost:3306/sonoo
+            String user = ""; // e.g. root
+            String pass = "";
+            db_con = DriverManager.getConnection(path, user, pass);  
+            stmt = db_con.createStatement();  
+
+        } catch(Exception e){    
+                System.out.println(e);
+        }     
+     }
+    Movie findMovie(String movieName) throws Exception{
 
         // query database to find movie
+        String query = "select * from Movie" +
+                        "from Movie" +
+                        "where Movie.name = " + movieName;
+        ResultSet rs=stmt.executeQuery(query);  
+
         return new Movie();
     }
 
