@@ -25,9 +25,11 @@ public class BrowsingController {
 			return;
 		}
 		Showtime showtime = selectShowTime(movieName);
-		selectSeat(movieName, showtime);
+		Seat seat = selectSeat(movieName, showtime);
 
-		// select movie then create ticket?
+		// create ticket
+		Ticket ticket = new Ticket(movieName, showtime, seat.getSeatNumber());
+		databaseController.addTicket(ticket);
 		
 	}
 
@@ -48,7 +50,7 @@ public class BrowsingController {
 		return showtime;
     }
 	
-	private void selectSeat(String movieName, Showtime showtime) throws Exception {
+	private Seat selectSeat(String movieName, Showtime showtime) throws Exception {
 		ArrayList<Seat> allSeats= databaseController.getAllSeats(movieName, showtime);
 
 		// display available seats
@@ -63,6 +65,7 @@ public class BrowsingController {
 		int index = Integer.parseInt(reader.readLine()); 
 		Seat seat = allSeats.get(index);
 		databaseController.updateSeat(movieName, showtime, seat);
+		return seat;
 	}
 
 
