@@ -23,6 +23,7 @@ public class DatabaseController {
         }
     }
     
+    // Query database to find movie matching movieName
     public Movie findMovie(String movieName) {
     	String n = "";
 		String g = "";
@@ -30,9 +31,8 @@ public class DatabaseController {
 		int m = 0;
 		int y = 0;
 		String rt = "";
-    	
     	try {
-    		String query = "SELECT * FROM db.Movie WHERE Name=?";
+    		String query = "SELECT * FROM db.movie WHERE Name=?";
     		prepStmt = conn.prepareStatement(query);
     		prepStmt.setString(1, movieName);
     		rs = prepStmt.executeQuery();
@@ -44,17 +44,41 @@ public class DatabaseController {
     			y = rs.getInt("ReleaseYear");
     			rt = rs.getString("RunningTime");
     		}
-    		
+    		prepStmt.close();
+    		rs.close();
     	} catch(Exception e) {
             System.out.println(e);
     	}
-		
     	return new Movie(n, g, new Date(d, m, y), rt);
     }
 
+    // Query database to find all showtimes for movie
     public ArrayList<Showtime> getAllShowtimes(String movieName){
-        //query database to find show times for movie
-        return new ArrayList<Showtime>();
+		ArrayList<Showtime> showtimeList = new ArrayList<Showtime>();
+    	int d = 0;
+		int m = 0;
+		int y = 0;
+    	String st = "";
+		String et = "";
+    	try {
+    		String query = "SELECT * FROM db.showtime WHERE MovieName=?";
+    		prepStmt = conn.prepareStatement(query);
+    		prepStmt.setString(1, movieName);
+    		rs = prepStmt.executeQuery();
+    		while(rs.next()) {
+    			d = rs.getInt("Day");
+    			m = rs.getInt("Month");
+    			y = rs.getInt("Year");
+    			st = rs.getString("StartTime");
+    			et = rs.getString("EndTime");
+    			showtimeList.add(new Showtime(new Date(d, m, y), st, et));
+    		}
+    		prepStmt.close();
+    		rs.close();
+    	} catch(Exception e) {
+            System.out.println(e);
+    	}
+        return showtimeList;
     }
 
     public ArrayList<Seat> getAllSeats(String movieName, Showtime showtime){
