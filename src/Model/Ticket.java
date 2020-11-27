@@ -6,9 +6,26 @@ public class Ticket {
 	private int ticketNumber;
 	private Showtime showtime;
 
-	public Ticket(String movieName, Showtime showtime, int seatNumber){
-		this.movieName = movieName;
-		this.showtime = showtime;
-		this.seatNumber = seatNumber;
+	public Ticket(String mn, int sn, int tn, Showtime st) {
+		movieName = mn;
+		seatNumber = sn;
+		ticketNumber = tn;
+		showtime = st;
+	}
+	
+	public String getMovieName() {
+		return movieName;
+	}
+	
+	public int getSeatNumber() {
+		return seatNumber;
+	}
+	
+	public int getTicketNumber() {
+		return ticketNumber;
+	}
+	
+	public Showtime getShowtime() {
+		return showtime;
 	}
 }
