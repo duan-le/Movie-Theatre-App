@@ -151,7 +151,24 @@ public class DatabaseController {
     
     // Add account
     public void addAccount(Account account) {
-        
+    	try {
+    		String query = "INSERT INTO db.account VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    		prepStmt = conn.prepareStatement(query);
+    		prepStmt.setString(1, account.getEmail());
+    		prepStmt.setString(2, account.getPassword());
+    		prepStmt.setInt(3, account.getCardInfo().getCardNumber());
+    		prepStmt.setString(4, account.getCardInfo().getCardHolderName());
+    		prepStmt.setString(5, account.getUserInfo().getName());
+    		prepStmt.setString(6, account.getUserInfo().getAddress());
+    		prepStmt.setString(7, account.getUserInfo().getPhoneNumber());
+    		prepStmt.setString(8, account.getBillingInfo().getName());
+    		prepStmt.setString(9, account.getBillingInfo().getAddress());
+    		prepStmt.setString(10, account.getBillingInfo().getPhoneNumber());
+    		prepStmt.executeUpdate();
+			prepStmt.close();
+		} catch(Exception e) {
+	        System.out.println(e);
+		}
     }
 
     // Update user info for account

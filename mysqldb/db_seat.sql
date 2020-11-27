@@ -27,13 +27,13 @@ DROP TABLE IF EXISTS `seat`;
 CREATE TABLE `seat` (
   `Number` int NOT NULL,
   `Available` tinyint(1) DEFAULT NULL,
-  `MovieName` varchar(45) DEFAULT NULL,
-  `ShowDay` int DEFAULT NULL,
-  `ShowMonth` int DEFAULT NULL,
-  `ShowYear` int DEFAULT NULL,
-  `StartTime` varchar(45) DEFAULT NULL,
-  `EndTime` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Number`)
+  `MovieName` varchar(45) NOT NULL,
+  `ShowDay` int NOT NULL,
+  `ShowMonth` int NOT NULL,
+  `ShowYear` int NOT NULL,
+  `StartTime` varchar(45) NOT NULL,
+  `EndTime` varchar(45) NOT NULL,
+  PRIMARY KEY (`Number`,`MovieName`,`ShowDay`,`ShowMonth`,`ShowYear`,`StartTime`,`EndTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-26 18:27:26
+-- Dump completed on 2020-11-27 10:59:01
