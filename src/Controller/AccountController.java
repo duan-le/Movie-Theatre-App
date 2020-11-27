@@ -12,6 +12,13 @@ public class AccountController {
 
 	public void register() {
 		// get user, billing, card info
+		UserInfo userInfo = null;
+		CardInfo cardInfo = null;
+		BillingInfo billingInfo = null;
+		String email = "";
+		String password = "";
+		Account account = new Account(userInfo, billingInfo, cardInfo, email, password);
+		databaseController.addAccount(account);
 	}
 	
 	public boolean login(OrdinaryUser user) throws Exception {

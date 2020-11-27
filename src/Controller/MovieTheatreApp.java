@@ -12,7 +12,7 @@ public class MovieTheatreApp {
 	private CancellationController cancellationController;
 	private AccountController accountController;
 	private DatabaseController databaseController;
-	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
+	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 	private OrdinaryUser user;
 	
 	public static void main(String[] args) {
@@ -21,8 +21,6 @@ public class MovieTheatreApp {
 			MovieTheatreApp app = new MovieTheatreApp();
 			app.startMenu();
 			app.selectOption();
-			app.startPayment();
-
 		} catch(Exception e){
 			System.out.println(e);
 		}
@@ -32,45 +30,45 @@ public class MovieTheatreApp {
 		paymentController.pay(user);
 	}
 	
-	public void selectOption() throws Exception{
+	public void selectOption() {
 		// ordingary or register button 
 		// create user object based on button pressed
 		// two different start paths but same loop path e.g. everything goes back to browse
-		String line = reader.readLine();
-		int option = Integer.parseInt(line);
-		switch(option){
-			case 1:
-				// create register user
-				user = new RegisteredUser();
-				while (accountController.login(user)) {
+		try {
+			String line = reader.readLine();
+			int option = Integer.parseInt(line);
+			System.out.println(option);
+			switch(option) {
+				case 1:
+					user = new RegisteredUser();
+					while (accountController.login(user)) {
+						break;
+					}
+					browsingController.browse(user);
+					startPayment();
 					break;
-				}
-				browsingController.browse(user);
-				break;
-			case 2:
-				// create ordinary user
-				user = new OrdinaryUser();
-				browsingController.browse(user);
-				break;
-			case 3:
-				cancellationController.cancel();
-			default:
-				break;
+				case 2:
+					user = new OrdinaryUser();
+					browsingController.browse(user);
+					startPayment();
+					break;
+				case 3:
+					cancellationController.cancel();
+					break;
+				case 4:
+					accountController.register();
+					break;
+				default:
+					break;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
-	public void startMenu(){
+	
+	public void startMenu() {
 		String menu = "1. login" +
 					"\n2. movie";
 		System.out.println(menu);
 	}
-	
-    // Main test
-//    public static void main(String[] args) {
-//    	DatabaseController dbc = new DatabaseController();
-//    	Movie movie = dbc.findMovie("Movie 1");
-//    	System.out.println(movie.getName());
-//    	System.out.println(movie.getRunningTime());
-//    	
-//    }
-
 }
