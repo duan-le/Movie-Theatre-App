@@ -12,4 +12,20 @@ public class Movie {
 		releaseDate = rd;
 		runningTime = rt;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getGenre() {
+		return genre;
+	}
+	
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+	
+	public String getRunningTime() {
+		return runningTime;
+	}
 }

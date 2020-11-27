@@ -1,24 +1,24 @@
 package Database;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.sql.*;
 import Model.*;
 import Model.Date;
+
 public class DatabaseController {
     private Connection conn;
-    PreparedStatement prepStmt;
+    private PreparedStatement prepStmt;
     private ResultSet rs;
     
     public DatabaseController() {
     	try{  
     		Driver driver = new com.mysql.cj.jdbc.Driver();
 			DriverManager.registerDriver(driver);
-            String path = ""; 
-            String user = "";
-            String pass = "";
+            String path = "jdbc:mysql://localhost/mydb"; 
+            String user = "root";
+            String pass = "password";
             conn = DriverManager.getConnection(path, user, pass);  
-        } catch(Exception e){    
+        } catch(Exception e) {    
                 System.out.println(e);
         }
     }
@@ -53,7 +53,7 @@ public class DatabaseController {
     }
 
     // Query database to find all showtimes for movie
-    public ArrayList<Showtime> getAllShowtimes(String movieName){
+    public ArrayList<Showtime> getAllShowtimes(String movieName) {
 		ArrayList<Showtime> showtimeList = new ArrayList<Showtime>();
     	int d = 0;
 		int m = 0;
@@ -81,40 +81,86 @@ public class DatabaseController {
         return showtimeList;
     }
 
-    public ArrayList<Seat> getAllSeats(String movieName, Showtime showtime){
-        //query to get all seats for a movie
-        return new ArrayList<Seat>();
+    // Query to get all seats for a movie at a specific showtime
+    public ArrayList<Seat> getAllSeats(String movieName, Showtime showtime) {
+    	ArrayList<Seat> seatList = new ArrayList<Seat>();
+    	int sn = 0;
+    	boolean avail = true;
+    	try {
+    		String query = "SELECT * FROM db.seat WHERE MovieName=? and ShowDay=? and ShowMonth=? and ShowYear=? and StartTime=? and EndTime=?";
+    		prepStmt = conn.prepareStatement(query);
+    		prepStmt.setString(1, movieName);
+    		prepStmt.setInt(2, showtime.getDate().getDay());
+    		prepStmt.setInt(3, showtime.getDate().getMonth());
+    		prepStmt.setInt(4, showtime.getDate().getYear());
+    		prepStmt.setString(5, showtime.getStartTime());
+    		prepStmt.setString(6, showtime.getEndTime());    		
+    		rs = prepStmt.executeQuery();
+    		while(rs.next()) {
+    			sn = rs.getInt("Number");
+    			avail = rs.getBoolean("Available");
+    			seatList.add(new Seat(sn, avail));
+    		}
+    		prepStmt.close();
+    		rs.close();
+    	} catch(Exception e) {
+            System.out.println(e);
+    	}
+        return seatList;
+    }
+    
+    // Update Seat e.g. boolean filled seat
+    public void updateSeat(String movieName, Showtime showtime, Seat seat, boolean avail){
+    	try {
+    		String query = "UPDATE db.seat SET Available=? WHERE MovieName=? and ShowDay=? and ShowMonth=? and ShowYear=? and StartTime=? and EndTime=? and Number=?";
+    		prepStmt = conn.prepareStatement(query);
+    		prepStmt.setBoolean(1, avail);
+    		prepStmt.setString(2, movieName);
+    		prepStmt.setInt(3, showtime.getDate().getDay());
+    		prepStmt.setInt(4, showtime.getDate().getMonth());
+    		prepStmt.setInt(5, showtime.getDate().getYear());
+    		prepStmt.setString(6, showtime.getStartTime());
+    		prepStmt.setString(7, showtime.getEndTime());
+    		prepStmt.setInt(8, seat.getSeatNumber());
+    		prepStmt.executeUpdate();
+			prepStmt.close();
+		} catch(Exception e) {
+	        System.out.println(e);
+		}
+    }
+    
+    // Add ticket to database
+    public void addTicket(Ticket ticket) {
+        
+    }
+    
+    // Remove ticket from database
+    public void removeTicket(int ticketNumber) {
+        
+    }
+    
+    // Add purchased ticket from receipt
+    public void addPurchasedTicket(TicketReceipt purchasedTicket) {
+        
     }
 
-    public void addTicket(Ticket ticket){
-        // add ticket to database
+    // Remove purchased ticket from database
+    public void removePurchasedTicket(int ticketNumber) {
+        
     }
-
-    public void updateSeat(String movieName, Showtime showtime, Seat seat){
-        // update Seat e.g. boolean filled seat 
-    }
-
-    public void updateUserInfo(UserInfo userinfo, Account account) {
-        // update user info for account
-    }
-
-    public void updateCardInfo(CardInfo cardinfo, Account account){
-        // update card info for account
-    }
-
+    
+    // Add account
     public void addAccount(Account account) {
-        // add account
+        
     }
 
-    public void removeTicket(int ticketNumber){
-        // remove ticket from database
+    // Update user info for account
+    public void updateUserInfo(UserInfo userinfo, Account account) {
+        
     }
 
-    public void addPurchasedTicket(TicketReceipt purchasedTicket){
-        // add purchased ticket from receipt
-    }
-
-    public void removePurchasedTicket(int ticketNumber){
-        // remove purchased ticket from database
+    // Update card info for account
+    public void updateCardInfo(CardInfo cardinfo, Account account) {
+        
     }
 }
