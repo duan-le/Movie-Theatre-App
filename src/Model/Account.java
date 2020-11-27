@@ -6,6 +6,10 @@ public class Account {
 	private CardInfo cardInfo;
 	private String email;
 	private String password;
+			
+	public Account() {
+		
+	}
 	
 	public Account(UserInfo ui, BillingInfo bi, CardInfo ci, String e, String p) {
 		userInfo = ui;

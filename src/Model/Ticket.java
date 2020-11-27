@@ -6,6 +6,10 @@ public class Ticket {
 	private int ticketNumber;
 	private Showtime showtime;
 
+	public Ticket() {
+		
+	}
+	
 	public Ticket(String mn, int sn, int tn, Showtime st) {
 		movieName = mn;
 		seatNumber = sn;

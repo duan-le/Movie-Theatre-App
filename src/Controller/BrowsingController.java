@@ -21,16 +21,12 @@ public class BrowsingController {
 		System.out.println("Enter movie: ");
 		String movieName = reader.readLine();
 		Movie movie = databaseController.findMovie(movieName);
-		if (movie == null)
-		{
-			return;
-		}
 		Showtime showtime = selectShowTime(movieName);
 		Seat seat = selectSeat(movieName, showtime);
 
 		// create ticket
-		Ticket ticket = new Ticket(movieName, showtime, seat.getSeatNumber());
-		databaseController.addTicket(ticket);
+		Ticket ticket = databaseController.getTicket(movie.getName(), showtime, seat);
+		
 		return ticket;
 		
 	}
@@ -66,9 +62,7 @@ public class BrowsingController {
 		System.out.println("Select seat number: ");
 		int index = Integer.parseInt(reader.readLine()); 
 		Seat seat = allSeats.get(index);
-		databaseController.updateSeat(movieName, showtime, seat);
+		
 		return seat;
 	}
-
-
 }

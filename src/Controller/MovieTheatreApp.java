@@ -14,20 +14,21 @@ public class MovieTheatreApp {
 	private DatabaseController databaseController;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 	private OrdinaryUser user;
+	
 	public static void main(String[] args) {
 		// print to console. switch to gui later
 		try{
 			MovieTheatreApp app = new MovieTheatreApp();
 			app.startMenu();
 			app.selectOption();
-			app.startPayment(user);
+			app.startPayment();
 
 		} catch(Exception e){
 			System.out.println(e);
 		}
 	}
 	
-	public void startPayment(OrdinaryUser user) {
+	public void startPayment() throws Exception {
 		paymentController.pay(user);
 	}
 	
@@ -39,20 +40,22 @@ public class MovieTheatreApp {
 		int option = Integer.parseInt(line);
 		switch(option){
 			case 1:
-			// create register user
-			user = new RegisteredUser();
-			accountController.login();
-			browsingController.browse(user);
-			break;
+				// create register user
+				user = new RegisteredUser();
+				while (accountController.login(user)) {
+					break;
+				}
+				browsingController.browse(user);
+				break;
 			case 2:
-			// create ordinary user
-			user = new OrdinaryUser();
-			browsingController.browse(user);
-			break;
+				// create ordinary user
+				user = new OrdinaryUser();
+				browsingController.browse(user);
+				break;
 			case 3:
-			cancellationController.cancel();
+				cancellationController.cancel();
 			default:
-			break;
+				break;
 		}
 	}
 	public void startMenu(){
@@ -60,5 +63,14 @@ public class MovieTheatreApp {
 					"\n2. movie";
 		System.out.println(menu);
 	}
+	
+    // Main test
+//    public static void main(String[] args) {
+//    	DatabaseController dbc = new DatabaseController();
+//    	Movie movie = dbc.findMovie("Movie 1");
+//    	System.out.println(movie.getName());
+//    	System.out.println(movie.getRunningTime());
+//    	
+//    }
 
 }

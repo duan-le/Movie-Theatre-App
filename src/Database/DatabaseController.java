@@ -14,7 +14,7 @@ public class DatabaseController {
     	try{  
     		Driver driver = new com.mysql.cj.jdbc.Driver();
 			DriverManager.registerDriver(driver);
-            String path = "jdbc:mysql://localhost/mydb"; 
+            String path = "jdbc:mysql://localhost/db"; 
             String user = "root";
             String pass = "password";
             conn = DriverManager.getConnection(path, user, pass);  
@@ -110,7 +110,7 @@ public class DatabaseController {
     }
     
     // Update Seat e.g. boolean filled seat
-    public void updateSeat(String movieName, Showtime showtime, Seat seat, boolean avail){
+    public void updateSeat(String movieName, Showtime showtime, int seatNumber, boolean avail){
     	try {
     		String query = "UPDATE db.seat SET Available=? WHERE MovieName=? and ShowDay=? and ShowMonth=? and ShowYear=? and StartTime=? and EndTime=? and Number=?";
     		prepStmt = conn.prepareStatement(query);
@@ -121,7 +121,7 @@ public class DatabaseController {
     		prepStmt.setInt(5, showtime.getDate().getYear());
     		prepStmt.setString(6, showtime.getStartTime());
     		prepStmt.setString(7, showtime.getEndTime());
-    		prepStmt.setInt(8, seat.getSeatNumber());
+    		prepStmt.setInt(8, seatNumber);
     		prepStmt.executeUpdate();
 			prepStmt.close();
 		} catch(Exception e) {
@@ -130,8 +130,8 @@ public class DatabaseController {
     }
     
     // Add ticket to database
-    public void addTicket(Ticket ticket) {
-        
+    public Ticket getTicket(String movieName, Showtime showtime, Seat seat) {
+        return new Ticket();
     }
     
     // Remove ticket from database
@@ -139,8 +139,13 @@ public class DatabaseController {
         
     }
     
+    // Get ticket price
+    public double getTicketPrice() {
+    	return 0;
+    }
+    
     // Add purchased ticket from receipt
-    public void addTicketReceipt(TicketReceipt purchasedTicket) {
+    public void addTicketReceipt(TicketReceipt ticketReceipt) {
         
     }
 
@@ -170,9 +175,11 @@ public class DatabaseController {
 	        System.out.println(e);
 		}
     }
-    public Account getAccount(){
+
+    public Account getAccount(String email, String password) {
         return new Account();
     }
+    
     // Update user info for account
     public void updateUserInfo(UserInfo userinfo, Account account) {
         

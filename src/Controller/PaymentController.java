@@ -14,30 +14,51 @@ public class PaymentController {
 
 	public void pay(OrdinaryUser user) throws Exception{
 		// print to console. switch to gui later
-		System.out.println("retrieving ticket numbers from previous gui: ");
-		//if user is ordinary elseif register 
-		/*
-		priceList = ArrayList<Double>();
-		for (int i: i < ticketList.size(); i++){
-			priceList.append(databaseController.getTicketPrice(ticketList.get(i)))
+		
+		ArrayList<Ticket> ticketList = user.getTicketList();
+		double price = 0;
+		for (Ticket t : ticketList) {
+			price += databaseController.getTicketPrice();
 		}
-		*/
-
-		// for now assume one ticket per user. later add logic similar to above loop for multiple tickets
+		
+		if (user instanceof OrdinaryUser) {
+			ordinaryPay(user);
+		} else {
+			registeredPay(user);
+		}
+		
+		System.out.println("CardInfo, BillingInfo and UserInfo Payment Processed");
+		
+		for (Ticket t : ticketList) {
+			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber());
+			
+			databaseController.addTicketReceipt(ticketReceipt);
+			user.addTicketReceipt(ticketReceipt);
+			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);
+		}
 	}
-	private void ordinaryPay(user){
-		int ticketNumber = user.getTicketPrice();
-		double price = databaseController.getTicketPrice(ticketNumber);
-
-		cardinfo = enterCardInfo();
-		billinginfo = enterBillingInfo();
-		processPayment();
-		TicketReceipt receipt = new TicketReceipt(e, tn);
-		user.addTicketReceipt(receipt);
-		databaseController.addTicketReceipt(receipt);
-
+	
+	private void ordinaryPay(OrdinaryUser user) throws Exception {
+		
+		
+		// enter info
+		System.out.println("");
+		System.out.println("Enter Card Numbe: ");
+		String cardinfo = reader.readLine();
+		System.out.println("Enter Billing Info: ");
+		String billinginfo = reader.readLine();
+		
+		// confirm payment
+		
+		// process payment here
 	}
-	private void registeredPay(){
+	
+	private void registeredPay(OrdinaryUser user) {
+
+		// confirm payment
+		
+		// Payment is automatic because registered user should be logged in
+		System.out.println("Payment Automatically Processed");
 
 	}
 }
