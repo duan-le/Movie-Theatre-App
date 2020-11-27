@@ -11,12 +11,13 @@ public class BrowsingController {
 	private DatabaseController databaseController;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 
-	public void browse() throws Exception {
+	public void browse(OrdinaryUser user) throws Exception {
 		// Print to console. Change to GUI later
-		selectMovie();
+		user.addTicket(selectMovie());
 		
 	}
-	private void selectMovie() throws Exception{
+	private Ticket selectMovie() throws Exception{
+		// in the gui we will show all movie
 		System.out.println("Enter movie: ");
 		String movieName = reader.readLine();
 		Movie movie = databaseController.findMovie(movieName);
@@ -30,6 +31,7 @@ public class BrowsingController {
 		// create ticket
 		Ticket ticket = new Ticket(movieName, showtime, seat.getSeatNumber());
 		databaseController.addTicket(ticket);
+		return ticket;
 		
 	}
 

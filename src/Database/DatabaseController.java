@@ -140,12 +140,12 @@ public class DatabaseController {
     }
     
     // Add purchased ticket from receipt
-    public void addPurchasedTicket(TicketReceipt purchasedTicket) {
+    public void addTicketReceipt(TicketReceipt purchasedTicket) {
         
     }
 
     // Remove purchased ticket from database
-    public void removePurchasedTicket(int ticketNumber) {
+    public void removeTicketReceipt(int ticketNumber) {
         
     }
     
@@ -170,7 +170,9 @@ public class DatabaseController {
 	        System.out.println(e);
 		}
     }
-
+    public Account getAccount(){
+        return new Account();
+    }
     // Update user info for account
     public void updateUserInfo(UserInfo userinfo, Account account) {
         

@@ -4,7 +4,7 @@ import Database.DatabaseController;
 import View.StartGUI;
 import java.io.*; 
 import java.util.*;
-
+import Model.*;
 public class MovieTheatreApp {
 	private StartGUI startGUI;
 	private BrowsingController browsingController;
@@ -13,33 +13,44 @@ public class MovieTheatreApp {
 	private AccountController accountController;
 	private DatabaseController databaseController;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
-
+	private OrdinaryUser user;
 	public static void main(String[] args) {
 		// print to console. switch to gui later
 		try{
 			MovieTheatreApp app = new MovieTheatreApp();
 			app.startMenu();
 			app.selectOption();
-			app.startPayment();
+			app.startPayment(user);
+
 		} catch(Exception e){
 			System.out.println(e);
 		}
 	}
 	
-	public void startPayment() {
-
+	public void startPayment(OrdinaryUser user) {
+		paymentController.pay(user);
 	}
 	
 	public void selectOption() throws Exception{
+		// ordingary or register button 
+		// create user object based on button pressed
+		// two different start paths but same loop path e.g. everything goes back to browse
 		String line = reader.readLine();
 		int option = Integer.parseInt(line);
 		switch(option){
 			case 1:
+			// create register user
+			user = new RegisteredUser();
 			accountController.login();
+			browsingController.browse(user);
 			break;
 			case 2:
-			browsingController.browse();
+			// create ordinary user
+			user = new OrdinaryUser();
+			browsingController.browse(user);
 			break;
+			case 3:
+			cancellationController.cancel();
 			default:
 			break;
 		}
