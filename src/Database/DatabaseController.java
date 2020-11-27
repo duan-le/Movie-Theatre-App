@@ -4,45 +4,52 @@ import java.io.*;
 import java.util.ArrayList;
 import java.sql.*;
 import Model.*;
+import Model.Date;
 public class DatabaseController {
-    private Connection db_con;
-    private Statement stmt;
+    private Connection conn;
+    PreparedStatement prepStmt;
+    private ResultSet rs;
     
     public DatabaseController() {
     	try{  
     		Driver driver = new com.mysql.cj.jdbc.Driver();
 			DriverManager.registerDriver(driver);
-            String path = ""; // e.g. jdbc:mysql://localhost:3306/sonoo
-            String user = ""; // e.g. root
+            String path = ""; 
+            String user = "";
             String pass = "";
-            db_con = DriverManager.getConnection(path, user, pass);  
+            conn = DriverManager.getConnection(path, user, pass);  
         } catch(Exception e){    
                 System.out.println(e);
         }
     }
     
-	private void insertMovie() {
-		try {
-			String query = "INSERT INTO mydb.student (id, firstname, lastname) VALUES (?, ?, ?)";
-			PreparedStatement pStat = db_con.prepareStatement(query);
-			
-			pStat.setInt(1, id);
-			pStat.setString(2, firstName);
-			pStat.setString(3, lastName);
-			pStat.executeUpdate();
-			pStat.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-    
-    public Movie findMovie(String movieName){
+    public Movie findMovie(String movieName) {
+    	String n = "";
+		String g = "";
+		int d = 0;
+		int m = 0;
+		int y = 0;
+		String rt = "";
+    	
     	try {
-    		String query = "SELECT * FROM Movie WHERE "
+    		String query = "SELECT * FROM db.Movie WHERE Name=?";
+    		prepStmt = conn.prepareStatement(query);
+    		prepStmt.setString(1, movieName);
+    		rs = prepStmt.executeQuery();
+    		while(rs.next()) {
+    			n = rs.getString("Name");
+    			g = rs.getString("Genre");
+    			d = rs.getInt("ReleaseDay");
+    			m = rs.getInt("ReleaseMonth");
+    			y = rs.getInt("ReleaseYear");
+    			rt = rs.getString("RunningTime");
+    		}
+    		
     	} catch(Exception e) {
             System.out.println(e);
     	}
-		return null;
+		
+    	return new Movie(n, g, new Date(d, m, y), rt);
     }
 
     public ArrayList<Showtime> getAllShowtimes(String movieName){
