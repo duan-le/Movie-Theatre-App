@@ -20,11 +20,17 @@ public class MovieTheatreApp {
 			MovieTheatreApp app = new MovieTheatreApp();
 			app.startMenu();
 			app.selectOption();
+			app.startPayment();
 		} catch(Exception e){
 			System.out.println(e);
 		}
 	}
-	public void selectOption() throws IOException{
+	
+	public void startPayment() {
+
+	}
+	
+	public void selectOption() throws Exception{
 		String line = reader.readLine();
 		int option = Integer.parseInt(line);
 		switch(option){
