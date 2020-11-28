@@ -16,6 +16,10 @@ public class AccountController {
 
 	public void register() {
 		// get user, billing, card info
+		
+		accountGUI = new AccountGUI ("Create an Account", 0);
+		
+		accountGUI.RegisterGUI.get
 
 		UserInfo userInfo = new UserInfo("name3", "addr3", "phone3");
 		CardInfo cardInfo = new CardInfo(3333, "chn3");
@@ -27,6 +31,9 @@ public class AccountController {
 	}
 	
 	public boolean login(OrdinaryUser user) throws Exception {
+		
+		accountGUI = new AccountGUI ("Login", 1);
+		
 		System.out.println("Enter email: ");
 		String email = reader.readLine();
 		System.out.println("Enter password: ");

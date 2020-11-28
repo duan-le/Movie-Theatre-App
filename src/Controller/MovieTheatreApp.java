@@ -5,6 +5,7 @@ import View.StartGUI;
 import java.io.*; 
 import java.util.*;
 import Model.*;
+	
 public class MovieTheatreApp {
 	private StartGUI startGUI;
 	private BrowsingController browsingController;
@@ -27,8 +28,9 @@ public class MovieTheatreApp {
 		
 		try{
 			MovieTheatreApp app = new MovieTheatreApp(databaseController);
-			app.startMenu();
-			app.selectOption();
+			startGUI = new StartGUI (this);
+//			app.startMenu();
+//			app.selectOption();
 		} catch(Exception e){
 			System.out.println(e);
 		}
@@ -36,6 +38,28 @@ public class MovieTheatreApp {
 	
 	public void startPayment() throws Exception {
 		paymentController.pay(user);
+	}
+	
+	public void login () {
+		user = new RegisteredUser();
+		while (!accountController.login(user)) {
+		}
+		browsingController.browse(user);
+		startPayment();
+	}
+	
+	public void browse () {
+		user = new OrdinaryUser();
+		browsingController.browse(user);
+		startPayment();
+	}
+	
+	public void cancel () {
+		cancellationController.cancel();
+	}
+	
+	public void register () {
+		accountController.register();
 	}
 	
 	public void selectOption() {
@@ -73,9 +97,12 @@ public class MovieTheatreApp {
 		}
 	}
 	
-	public void startMenu() {
-		String menu = "1. login" +
-					"\n2. movie";
-		System.out.println(menu);
-	}
+	
+	
+	
+//	public void startMenu() {
+//		String menu = "1. login" +
+//					"\n2. movie";
+//		System.out.println(menu);
+//	}
 }

@@ -28,11 +28,21 @@ public class StartGUI extends JFrame{
 	 */
 	private JButton browse, login, cancel, create;
 	
+	private MovieTheatreApp movieTheatreApp;
+	
 	/**
 	 * Creates the frame and initializes all components on it.
 	 */
-	public StartGUI (String label) {	
+	public StartGUI (String label, MovieTheatreApp map) {	
 		super(label);
+		
+		this.movieTheatreApp = map;
+		
+//		try { 
+//		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (Exception e) {
+//		    e.printStackTrace();
+//		}
 		
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -42,7 +52,7 @@ public class StartGUI extends JFrame{
 		browse = new JButton("Browse Movies as a Guest");
 		create = new JButton("Create an Account");
 		login = new JButton("Login");
-		cancel = new JButton("Cancel");
+		cancel = new JButton("Cancel Ticket");
 		
 		browse.addActionListener(new GuestListener());
 		login.addActionListener(new LoginListener());
@@ -71,17 +81,18 @@ public class StartGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			cancel();
+			map.cancel();
 		}	
 	}
 	
 	/**
 	 * Disposes of the frame and ends the program.
-	 */
+
 	public void cancel() {
 		dispose();
 		System.exit(1);
 	}
+	*/
 	
 	/**
 	 * Listens for when the admin button is pressed.
@@ -95,17 +106,17 @@ public class StartGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			newBrowse();
+			map.browse();
 		}	
 	}
 	
 	/**
 	 * Disposes of this frame and starts a new browsing frame.
-	 */
 	public void newBrowse() {
 		dispose();
-		new BrowsingGUI("Browse Movies", 0);
+		new BrowsingGUI("Browse Movies");
 	}
+	*/
 	
 	/**
 	 * Listens for when the student button is pressed.
@@ -119,31 +130,34 @@ public class StartGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			newLogin();
+			map.login();
 		}
 	}
 	
 	/**
 	 * Disposes of this frame and starts a new studentLogin frame.
-	 */
+	
 	public void newLogin() {
 		dispose();
 		System.out.println("Properly disposed");
 		new AccountGUI("Login");
 	}
+	 */
 	
 	class CreateListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			newCreate();
+			map.register();
 		}
 	}
 	
+	/*
 	public void newCreate () {
 		dispose();
 		new AccountGUI ("Create Account");
 	}
+	*/
 	
 }
