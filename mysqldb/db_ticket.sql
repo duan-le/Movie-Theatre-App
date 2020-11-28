@@ -35,7 +35,7 @@ CREATE TABLE `ticket` (
   `MovieName` varchar(45) NOT NULL,
   `Price` float DEFAULT NULL,
   PRIMARY KEY (`Number`,`Day`,`Month`,`Year`,`EndTime`,`StartTime`,`MovieName`,`SeatNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `ticket` (
 
 LOCK TABLES `ticket` WRITE;
 /*!40000 ALTER TABLE `ticket` DISABLE KEYS */;
+INSERT INTO `ticket` VALUES (1,1,2,1,2000,'14:00','16:00','Movie 1',15),(2,2,2,1,2000,'14:00','16:00','Movie 1',15),(3,3,2,1,2000,'14:00','16:00','Movie 1',15),(4,1,2,2,2000,'15:00','17:00','Movie 2',20),(5,2,2,2,2000,'15:00','17:00','Movie 2',20),(6,3,2,2,2000,'15:00','17:00','Movie 2',20),(7,1,2,1,2000,'14:00','16:00','Movie 3',15),(8,2,2,1,2000,'14:00','16:00','Movie 3',15);
 /*!40000 ALTER TABLE `ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 16:24:23
+-- Dump completed on 2020-11-27 18:33:14

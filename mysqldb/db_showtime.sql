@@ -43,7 +43,7 @@ CREATE TABLE `showtime` (
 
 LOCK TABLES `showtime` WRITE;
 /*!40000 ALTER TABLE `showtime` DISABLE KEYS */;
-INSERT INTO `showtime` VALUES (2,1,2000,'14:00','16:00','Movie 1'),(2,2,2000,'15:00','17:00','Movie 2'),(2,1,2000,'14:00','16:00','Movie 3');
+INSERT INTO `showtime` VALUES (2,1,2000,'14:00','16:00','Movie 1'),(2,1,2000,'21:00','23:00','Movie 1'),(2,2,2000,'15:00','17:00','Movie 2'),(2,1,2000,'14:00','16:00','Movie 3');
 /*!40000 ALTER TABLE `showtime` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 16:24:23
+-- Dump completed on 2020-11-27 18:33:14

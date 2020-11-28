@@ -287,7 +287,6 @@ public class DatabaseController {
 		} catch(Exception e) {
 	        System.out.println(e);
 		}
-    	
     	return account;
     }
     

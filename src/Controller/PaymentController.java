@@ -25,17 +25,17 @@ public class PaymentController {
 			price += t.getTicketPrice();
 		}
 		
+		
 		if (user instanceof OrdinaryUser) {
 			ordinaryPay(user);
 		} else {
 			registeredPay(user);
 		}
-		
+			
 		System.out.println("CardInfo, BillingInfo and UserInfo Payment Processed");
 		
 		for (Ticket t : ticketList) {
 			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber());
-			
 			databaseController.addTicketReceipt(ticketReceipt);
 			user.addTicketReceipt(ticketReceipt);
 			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);

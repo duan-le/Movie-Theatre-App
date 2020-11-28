@@ -17,7 +17,6 @@ public class BrowsingController {
 	
 	public void browse(OrdinaryUser user) throws Exception {
 		// Print to console. Change to GUI later\
-		System.out.println("Here");
 		user.addTicket(selectMovie());
 		
 	}
@@ -43,7 +42,7 @@ public class BrowsingController {
 		for (int i = 0; i < allShowTime.size(); i++){
 			if(i % 10 == 0)
 				System.out.println();
-			System.out.print(allShowTime.get(i));
+			System.out.println(allShowTime.get(i));
 		}
 
 		// select show time

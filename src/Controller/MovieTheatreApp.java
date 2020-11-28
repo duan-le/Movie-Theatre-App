@@ -49,22 +49,20 @@ public class MovieTheatreApp {
 			switch(option) {
 				case 1:
 					user = new RegisteredUser();
-					while (accountController.login(user)) {
-						break;
+					while (!accountController.login(user)) {
 					}
 					browsingController.browse(user);
 					startPayment();
 					break;
 				case 2:
 					user = new OrdinaryUser();
-					System.out.println(user.getTicketList().get(0).getSeatNumber());
 					browsingController.browse(user);
 					startPayment();
 					break;
 				case 3:
 					cancellationController.cancel();
 					break;
-				case 4:
+				case 4:				
 					accountController.register();
 					break;
 				default:

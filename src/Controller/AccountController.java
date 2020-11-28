@@ -16,11 +16,12 @@ public class AccountController {
 
 	public void register() {
 		// get user, billing, card info
-		UserInfo userInfo = null;
-		CardInfo cardInfo = null;
-		BillingInfo billingInfo = null;
-		String email = "";
-		String password = "";
+
+		UserInfo userInfo = new UserInfo("name3", "addr3", "phone3");
+		CardInfo cardInfo = new CardInfo(3333, "chn3");
+		BillingInfo billingInfo = new BillingInfo("bn3", "ba3", "bp3");
+		String email = "email3";
+		String password = "pass3";
 		Account account = new Account(userInfo, billingInfo, cardInfo, email, password);
 		databaseController.addAccount(account);
 	}
