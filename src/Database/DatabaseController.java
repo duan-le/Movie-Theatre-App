@@ -1,7 +1,8 @@
 package Database;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.sql.*;
+import java.text.*;
 import Model.*;
 import Model.Date;
 
@@ -14,9 +15,9 @@ public class DatabaseController {
     	try{  
     		Driver driver = new com.mysql.cj.jdbc.Driver();
 			DriverManager.registerDriver(driver);
-            String path = "jdbc:mysql://localhost/db"; 
+            String path = "jdbc:mysql://127.0.0.1:3306/db"; 
             String user = "root";
-            String pass = "password";
+            String pass = "";
             conn = DriverManager.getConnection(path, user, pass);  
         } catch(Exception e) {    
                 System.out.println(e);
@@ -27,10 +28,11 @@ public class DatabaseController {
     public Movie findMovie(String movieName) {
     	String n = "";
 		String g = "";
-		int d = 0;
+		String rt = "";
+    	int d = 0;
 		int m = 0;
 		int y = 0;
-		String rt = "";
+
     	try {
     		String query = "SELECT * FROM db.movie WHERE Name=?";
     		prepStmt = conn.prepareStatement(query);
@@ -38,19 +40,23 @@ public class DatabaseController {
     		rs = prepStmt.executeQuery();
     		while(rs.next()) {
     			n = rs.getString("Name");
-    			g = rs.getString("Genre");
-    			d = rs.getInt("ReleaseDay");
-    			m = rs.getInt("ReleaseMonth");
-    			y = rs.getInt("ReleaseYear");
-    			rt = rs.getString("RunningTime");
+				g = rs.getString("Genre");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd HH:mm");
+				String date = df.format(rs.getTimestamp("ReleaseDate"));
+				String [] ds = date.split(" ");
+				y = Integer.parseInt(ds[0]);
+				m = Integer.parseInt(ds[1]);
+				d = Integer.parseInt(ds[2]);
+				rt = rs.getString("RunningTime");
     		}
     		prepStmt.close();
     		rs.close();
     	} catch(Exception e) {
             System.out.println(e);
     	}
-    	return new Movie(n, g, new Date(d, m, y), rt);
-    }
+		return new Movie(n, g, new Date(d, m, y), rt);
+	}
+	
 
     // Query database to find all showtimes for movie
     public ArrayList<Showtime> getAllShowtimes(String movieName) {
@@ -59,19 +65,20 @@ public class DatabaseController {
 		int m = 0;
 		int y = 0;
     	String st = "";
-		String et = "";
     	try {
     		String query = "SELECT * FROM db.showtime WHERE MovieName=?";
     		prepStmt = conn.prepareStatement(query);
     		prepStmt.setString(1, movieName);
     		rs = prepStmt.executeQuery();
     		while(rs.next()) {
-    			d = rs.getInt("Day");
-    			m = rs.getInt("Month");
-    			y = rs.getInt("Year");
-    			st = rs.getString("StartTime");
-    			et = rs.getString("EndTime");
-    			showtimeList.add(new Showtime(new Date(d, m, y), st, et));
+				SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd HH:mm");
+				String date = df.format(rs.getTimestamp("ShowDate"));
+				String [] ds = date.split(" ");
+				y = Integer.parseInt(ds[0]);
+				m = Integer.parseInt(ds[1]);
+				d = Integer.parseInt(ds[2]);
+    			st = ds[3];
+    			showtimeList.add(new Showtime(new Date(d, m, y), st));
     		}
     		prepStmt.close();
     		rs.close();
@@ -87,14 +94,15 @@ public class DatabaseController {
     	int sn = 0;
     	boolean avail = true;
     	try {
-    		String query = "SELECT * FROM db.seat WHERE MovieName=? and ShowDay=? and ShowMonth=? and ShowYear=? and StartTime=? and EndTime=?";
+    		String query = "SELECT * FROM db.seat WHERE MovieName=? and ShowDate=?";
     		prepStmt = conn.prepareStatement(query);
-    		prepStmt.setString(1, movieName);
-    		prepStmt.setInt(2, showtime.getDate().getDay());
-    		prepStmt.setInt(3, showtime.getDate().getMonth());
-    		prepStmt.setInt(4, showtime.getDate().getYear());
-    		prepStmt.setString(5, showtime.getStartTime());
-    		prepStmt.setString(6, showtime.getEndTime());    		
+			prepStmt.setString(1, movieName);
+			SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd HH:mm");
+			String dt = showtime.getDate().getYear() + " "+ 
+						showtime.getDate().getMonth() + " " +
+						showtime.getDate().getDay() + " " + 
+						showtime.getStartTime();
+    		prepStmt.setTimestamp(2, new Timestamp(df.parse(dt).getTime()));
     		rs = prepStmt.executeQuery();
     		while(rs.next()) {
     			sn = rs.getInt("Number");
@@ -112,16 +120,17 @@ public class DatabaseController {
     // Update Seat e.g. boolean filled seat
     public void updateSeat(String movieName, Showtime showtime, int seatNumber, boolean avail){
     	try {
-    		String query = "UPDATE db.seat SET Available=? WHERE MovieName=? and ShowDay=? and ShowMonth=? and ShowYear=? and StartTime=? and EndTime=? and Number=?";
+    		String query = "UPDATE db.seat SET Available=? WHERE MovieName=? and ShowDate=? and Number=?";
     		prepStmt = conn.prepareStatement(query);
     		prepStmt.setBoolean(1, avail);
-    		prepStmt.setString(2, movieName);
-    		prepStmt.setInt(3, showtime.getDate().getDay());
-    		prepStmt.setInt(4, showtime.getDate().getMonth());
-    		prepStmt.setInt(5, showtime.getDate().getYear());
-    		prepStmt.setString(6, showtime.getStartTime());
-    		prepStmt.setString(7, showtime.getEndTime());
-    		prepStmt.setInt(8, seatNumber);
+			prepStmt.setString(2, movieName);
+			SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd HH:mm");
+			String dt = showtime.getDate().getYear() + " "+ 
+						showtime.getDate().getMonth() + " " +
+						showtime.getDate().getDay() + " " + 
+						showtime.getStartTime();
+    		prepStmt.setTimestamp(3, new Timestamp(df.parse(dt).getTime()));
+    		prepStmt.setInt(4, seatNumber);
     		prepStmt.executeUpdate();
 			prepStmt.close();
 		} catch(Exception e) {
@@ -137,28 +146,30 @@ public class DatabaseController {
     	int m = 0;
     	int y = 0;
     	String st = "";
-    	String et = "";
     	String mn = "";
     	double p = 0;
     	try {
-    		String query = "SELECT * FROM db.ticket WHERE SeatNumber=? and Day=? and Month=? and Year=? and StartTime=? and EndTime=? and MovieName=?";
+    		String query = "SELECT * FROM db.ticket WHERE SeatNumber=? and Date=? and MovieName=?";
     		prepStmt = conn.prepareStatement(query);
-    		prepStmt.setInt(1, seat.getSeatNumber());
-    		prepStmt.setInt(2, showtime.getDate().getDay());
-    		prepStmt.setInt(3, showtime.getDate().getMonth());
-    		prepStmt.setInt(4, showtime.getDate().getYear());
-    		prepStmt.setString(5, showtime.getStartTime());
-    		prepStmt.setString(6, showtime.getEndTime());
-    		prepStmt.setString(7, movieName);
+			prepStmt.setInt(1, seat.getSeatNumber());
+			SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd HH:mm");
+			String dt = showtime.getDate().getYear() + " "+ 
+						showtime.getDate().getMonth() + " " +
+						showtime.getDate().getDay() + " " + 
+						showtime.getStartTime();
+    		prepStmt.setTimestamp(2, new Timestamp(df.parse(dt).getTime()));
+    		prepStmt.setString(3, movieName);
     		rs = prepStmt.executeQuery();
 			while (rs.next()) {
 				tn = rs.getInt("Number");
 				sn = rs.getInt("SeatNumber");
-				d = rs.getInt("Day");
-				m = rs.getInt("Month");
-				y = rs.getInt("Year");
-				st = rs.getString("StartTime");
-				et = rs.getString("EndTime");
+				df = new SimpleDateFormat("yyyy MM dd HH:mm");
+				String date = df.format(rs.getTimestamp("Date"));
+				String [] ds = date.split(" ");
+				y = Integer.parseInt(ds[0]);
+				m = Integer.parseInt(ds[1]);
+				d = Integer.parseInt(ds[2]);
+				st = ds[3];
 				mn = rs.getString("MovieName");
 				p = rs.getDouble("Price");
 			}
@@ -168,7 +179,7 @@ public class DatabaseController {
 	        System.out.println(e);
 		}
     	
-    	return new Ticket(mn, sn, tn, new Showtime(new Date(d, m, y), st, et), p);
+    	return new Ticket(mn, sn, tn, new Showtime(new Date(d, m, y), st), p);
     }
     
     // Get ticket by ticket number 
@@ -179,7 +190,6 @@ public class DatabaseController {
     	int m = 0;
     	int y = 0;
     	String st = "";
-    	String et = "";
     	String mn = "";
     	double p = 0;
     	try {
@@ -190,11 +200,13 @@ public class DatabaseController {
 			while (rs.next()) {
 				tn = rs.getInt("Number");
 				sn = rs.getInt("SeatNumber");
-				d = rs.getInt("Day");
-				m = rs.getInt("Month");
-				y = rs.getInt("Year");
-				st = rs.getString("StartTime");
-				et = rs.getString("EndTime");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd HH:mm");
+				String date = df.format(rs.getTimestamp("Date"));
+				String [] ds = date.split(" ");
+				y = Integer.parseInt(ds[0]);
+				m = Integer.parseInt(ds[1]);
+				d = Integer.parseInt(ds[2]);
+				st = ds[3];
 				mn = rs.getString("MovieName");
 				p = rs.getDouble("Price");
 			}
@@ -204,7 +216,7 @@ public class DatabaseController {
 	        System.out.println(e);
 		}
     	
-    	return new Ticket(mn, sn, tn, new Showtime(new Date(d, m, y), st, et), p);
+    	return new Ticket(mn, sn, tn, new Showtime(new Date(d, m, y), st), p);
     }
     
     // Add purchased ticket from receipt
@@ -212,7 +224,8 @@ public class DatabaseController {
         try {
         	String query = "INSERT INTO db.ticketreceipt VALUES(?)";
     		prepStmt = conn.prepareStatement(query);
-    		prepStmt.setInt(1, ticketReceipt.getTicketNumber());
+			prepStmt.setInt(1, ticketReceipt.getTicketNumber());
+    		prepStmt.setTimestamp(2, "default");
     		prepStmt.executeUpdate();
 			prepStmt.close();
         } catch(Exception e) {
@@ -321,5 +334,11 @@ public class DatabaseController {
         } catch(Exception e) {
 	        System.out.println(e);
 		}
-    }
+	}
+	// Testing DatabaseController
+	public static void main(String [] args){
+		DatabaseController dc = new DatabaseController();
+		Ticket t = dc.getTicket(1);
+		System.out.println(t.getMovieName());
+	}
 }

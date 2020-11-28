@@ -24,13 +24,14 @@ public class MovieTheatreApp {
 	public static void main(String[] args) {
 		// print to console. switch to gui later
 		DatabaseController databaseController = new DatabaseController();
-		
-		try{
-			MovieTheatreApp app = new MovieTheatreApp(databaseController);
-			app.startMenu();
-			app.selectOption();
-		} catch(Exception e){
-			System.out.println(e);
+		while(true){
+			try{
+				MovieTheatreApp app = new MovieTheatreApp(databaseController);
+				app.startMenu();
+				app.selectOption();
+			} catch(Exception e){
+				System.out.println(e);
+			}
 		}
 	}
 	
@@ -45,11 +46,11 @@ public class MovieTheatreApp {
 		try {
 			String line = reader.readLine();
 			int option = Integer.parseInt(line);
-			System.out.println(option);
 			switch(option) {
 				case 1:
 					user = new RegisteredUser();
 					while (!accountController.login(user)) {
+						System.out.println("Email/Password is not found try again!");
 					}
 					browsingController.browse(user);
 					startPayment();
@@ -65,6 +66,9 @@ public class MovieTheatreApp {
 				case 4:				
 					accountController.register();
 					break;
+				case 5:
+					System.out.println("Exiting System");
+					System.exit(1);
 				default:
 					break;
 			}
@@ -75,7 +79,10 @@ public class MovieTheatreApp {
 	
 	public void startMenu() {
 		String menu = "1. login" +
-					"\n2. movie";
+					"\n2. movie"+
+					"\n3. cancel" +
+					"\n4. register"+
+					"\n5. exit";
 		System.out.println(menu);
 	}
 }

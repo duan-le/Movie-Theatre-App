@@ -3,12 +3,10 @@ package Model;
 public class Showtime {
 	private Date date;
 	private String startTime;
-	private String endTime;
 
-	public Showtime(Date d, String st, String et) {
+	public Showtime(Date d, String st) {
 		date = d;
 		startTime = st;
-		endTime = et;
 	}
 	
 	public Date getDate() {
@@ -17,10 +15,6 @@ public class Showtime {
 	
 	public String getStartTime() {
 		return startTime;
-	}
-	
-	public String getEndTime() {
-		return endTime;
 	}
 	
 	public String toString(){

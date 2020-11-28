@@ -47,7 +47,7 @@ public class PaymentController {
 		
 		// enter info
 		System.out.println("");
-		System.out.println("Enter Card Numbe: ");
+		System.out.println("Enter Card Number: ");
 		String cardinfo = reader.readLine();
 		System.out.println("Enter Billing Info: ");
 		String billinginfo = reader.readLine();

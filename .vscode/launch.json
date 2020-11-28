@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-MovieTheatreApp<MovieTheatreApp>",
+            "request": "launch",
+            "mainClass": "Controller.MovieTheatreApp",
+            "projectName": "MovieTheatreApp"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-DatabaseController<MovieTheatreApp>",
+            "request": "launch",
+            "mainClass": "Database.DatabaseController",
+            "projectName": "MovieTheatreApp"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-TimezoneDump<MovieTheatreApp>",
+            "request": "launch",
+            "mainClass": "com.mysql.cj.jdbc.admin.TimezoneDump",
+            "projectName": "MovieTheatreApp"
+        }
+    ]
+}
