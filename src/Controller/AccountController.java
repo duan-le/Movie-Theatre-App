@@ -19,31 +19,39 @@ public class AccountController {
 		
 		accountGUI = new AccountGUI ("Create an Account", 0);
 		
-		accountGUI.RegisterGUI.get
+		accountGUI.RegisterGUI.getOkayButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-		UserInfo userInfo = new UserInfo("name3", "addr3", "phone3");
-		CardInfo cardInfo = new CardInfo(3333, "chn3");
-		BillingInfo billingInfo = new BillingInfo("bn3", "ba3", "bp3");
-		String email = "email3";
-		String password = "pass3";
-		Account account = new Account(userInfo, billingInfo, cardInfo, email, password);
-		databaseController.addAccount(account);
+				UserInfo userInfo = new UserInfo(accountGUI.registerGUI.getName(), accountGUI.registerGUI.getAddress(),
+					accountGUI.registerGUI.getPhoneNum());
+				CardInfo cardInfo = new CardInfo(accountGUI.registerGUI.getCardNum(), accountGUI.registerGUI.getCardName());
+				BillingInfo billingInfo = new BillingInfo(accountGUI.registerGUI.getBillingName(), 
+					accountGUI.registerGUI.getBillingAddress(), accountGUI.registerGUI.getBillingPhoneNum());
+				String email = accountGUI.registerGUI.getEmail();
+				String password = accountGUI.registerGUI.getPassword();
+				Account account = new Account(userInfo, billingInfo, cardInfo, email, password);
+				databaseController.addAccount(account);
+		}});
 	}
 	
 	public boolean login(OrdinaryUser user) throws Exception {
 		
 		accountGUI = new AccountGUI ("Login", 1);
 		
-		System.out.println("Enter email: ");
-		String email = reader.readLine();
-		System.out.println("Enter password: ");
-		String password = reader.readLine();
-		Account account = databaseController.getAccount(email, password);
-		if (account != null) {
-			((RegisteredUser) user).setAccount(account);
-			return true;
-		}
-		return false;
+		accountGUI.RegisterGUI.getOkayButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+		
+				Account account = databaseController.getAccount(accountGUI.loginGUI.getMail(), accountGUI.loginGUI.getPass());
+				if (account != null) {
+					((RegisteredUser) user).setAccount(account);
+					return true;
+				}
+				return false;
+		}});
 	}
 	
 	public void update() {

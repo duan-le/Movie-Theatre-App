@@ -17,58 +17,66 @@ import javax.swing.JPasswordField;
 public class AccountGUI extends JFrame {
 	
 	private AccountController accountController;
+	private LoginGUI loginGUI;
+	private RegisterGUI registerGUI;
 	
-	private JPanel panel;
-	
-	private JTextField emailField, newPassField;
-	
-	private JPasswordField password;
-	
-	public String email;
-	public String password;
+	private JPanel userInfo, billingInfo, cardInfo, loginInfo, buttons;
 
-	public AccountGUI(String label, AccountController ac)
+	public AccountGUI(String label, int n)
 	{
-		super(label);
+		super (label);
 		
-		panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		determineAction(n);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(230, 150);
-	
-		emailField = new JTextField();
-		password = new JPasswordField();
-		cancel = new JButton("Cancel");
-		
-		login.addActionListener(new LoginListener());
-		createAccount.addActionListener(new CreateAccountListener());
-		cancel.addActionListener(new CancelListener());
-		
-//		panel.add(emailField);
-//		panel.add(passwordField);
-//		panel.add(newEmailField);
-//		panel.add(newPassField);
-//		panel.add(createAccount);
-//		panel.add(login);
-//		panel.add(cancel);
-		
-		add("Center", panel);
+		setSize(500, 800);
 		setVisible(true);
 	}
 	
-	class LoginGUI extends JFrame {
+	public void determineAction (String label, int n) {
+		if (n == 0)
+			registerGUI = new RegisterGUI(this);
+		else
+			loginGUI = new LoginGUI (label, n);
+	}
+	
+	
+	class RegisterGUI {
 		
-		JLabel firstName, lastName, address, phoneNum, billingName, billingAddress, billingNum, cardNumber, cardName;
-		JTextField fname, lname, addr, phono, bname, baddr, bphono, cardnum, chn;
+		AccountGUI accountGUI;
+		JLabel flname, address, phoneNum, billingName, billingAddress, billingNum, cardNumber, cardName, email, password;
+		JTextField name, addr, phono, bname, baddr, bphono, cardnum, chn, mail, pass;
+		
 		JButton okay, cancel;
 		
-		LoginGUI (String label AccountGUI ag, AccountController ac) {
-			super (label);
+		RegisterGUI (AccountGUI ag) {
 			
-			firstName = new JLabel ("First Name: ");
-			fname = new JTextField ();
-			lastName = new JLabel ("Last Name: ");
-			lname = new JTextField ();
+			this.accountGUI = ag;
+			
+			ag.userInfo = new JPanel(new GridLayout (0, 2));
+			ag.billingInfo = new JPanel(new GridLayout (0, 2));
+			ag.cardInfo = new JPanel(new GridLayout (0, 2));
+			ag.loginInfo = new JPanel(new GridLayout (0, 2));
+			ag.buttons = new JPanel(new FlowLayout());
+			
+			configureText();
+			configureUserInfo();
+			configureBillingInfo();
+			configureCardInfo();
+			configureLoginInfo();
+			configureButtons();
+		
+			ag.add(ag.userInfo);
+			ag.add(ag.billingInfo);
+			ag.add(ag.cardInfo);
+			ag.add(ag.loginInfo);
+			ag.add(ag.buttons);
+			
+		}
+		
+		public void configureText () {
+			flname = new JLabel ("Last Name: ");
+			name = new JTextField ();
 			address = new JLabel ("Address: ");
 			addr = new JTextField ();
 			phoneNum = new JLabel ("Phone Number: ");
@@ -82,103 +90,138 @@ public class AccountGUI extends JFrame {
 			cardNumber = new JLabel ("Card Number: ");
 			cardnum = new JTextField ();
 			cardName = new JLabel ("Card Holder Name: ");
-			JTextField chn = new JTextField ();
-			
+			chn = new JTextField ();
+			email = new JLabel("Email: ");
+			mail = new JTextField ();
+			password = new JLabel ("Password: ");
+			pass = new JTextField ();
+		}
+		
+		public void configureUserInfo (AccountGUI ag) {
+			ag.userInfo.add(flname);
+			ag.userInfo.add(name);
+			ag.userInfo.add(address);
+			ag.userInfo.add(addr);
+			ag.userInfo.add(phoneNum);
+			ag.userInfo.add(phono);
+		}
+		
+		public void configureBillingInfo (AccountGUI ag) {
+			ag.billingInfo.add(billingName);
+			ag.billingInfo.add(bname);
+			ag.billingInfo.add(billingAddress);
+			ag.billingInfo.add(baddr);
+			ag.billingInfo.add(billingNum);
+			ag.billingInfo.add(bphono);
+		}
+		
+		public void configureCardInfo (AccountGUI ag) {
+			ag.cardInfo.add(cardNumber);
+			ag.cardInfo.add(cardnum);
+			ag.cardInfo.add(cardName);
+			ag.cardInfo.add(chn);
+		}
+		
+		public void configureLoginInfo (AccountGUI ag) {
+			ag.loginInfo.add(email);
+			ag.loginInfo.add(mail);
+			ag.loginInfo.add(password);
+			ag.loginInfo.add(pass);
+		}
+		
+		public void configureButtons () {
+			okay = new JButton ("Create Account");
+			cancel = new JButton ("Cancel");
+			ag.buttons.add(okay);
+			ag.buttons.add(cancel);
 		}
 		
 		public JButton getOkayButton () {
+			return okay;
+		}
+		
+		public JButton getCancelButton () {
 			return cancel;
 		}
-	}
-	
-	
-	public void determineAction (int n) {
-		if (n == 0)
-			createAccount();
-		else
-			login();
-	}
-	
-	
-	public JTextField getEmail () {
-		return this.emailField;
-	}
-	
-	public JPasswordField getLoginPass () {
-		return this.password;
-	}
-	
-	public JTextField getNewPass () {
-		return this.newPassField;
-	}
-	
-	public void createAccount() {
 		
-		JLabel firstName = new JLabel ("First Name: ");
-		JTextField fname = new JTextField ();
-		JLabel lastName = new JLabel ("Last Name: ");
-		JTextField lname = new JTextField ();
-		JLabel address = new JLabel ("Address: ");
-		JTextField addr = new JTextField ();
-		JLabel phoneNum = new JLabel ("Phone Number: ");
-		JTextField phono = new JTextField ();
-		JLabel billingName = new JLabel ("Name: ");
-		JTextField bname = new JTextField ();
-		JLabel billingAddress = new JLabel ("Billing Address: ");
-		JTextField baddr = new JTextField ();
-		JLabel billingNum = new JLabel ("Billing Phone Number: ");
-		JTextField bphono = new JTextField ();
-		JLabel cardNumber = new JLabel ("Card Number: ");
-		JTextField cardnum = new JTextField ();
-		JLabel cardName = new JLabel ("Card Holder Name: ");
-		JTextField chn = new JTextField ();
-		JLabel  = new JLabel ();
-		JTextField  = new JTextField ();
+		public String getName () {
+			return name.getText();
+		}
 		
+		public String getAddress () {
+			return addr.getText();
+		}
 		
+		public String getPhoneNum () {
+			return phono.getText();
+		}
 		
-	}
-	
-	public void login () {
-		emailField
-		password = new JPasswordField ();
-	}
-	
-	/*
-	class CancelListener implements ActionListener
-	{
+		public String getBillingName () {
+			return bname.getText();
+		}
 		
-		public void actionPerformed(ActionEvent e)
-		{
-			dispose();
+		public String getBillingAddress () {
+			return baddr.getText();
+		}
+		
+		public String getBillingPhoneNum () {
+			return bphono.getText();
+		}
+		
+		public String getCardNum () {
+			return cardnum.getText();
+		}
+		
+		public String getCardName () {
+			return chn.getText();
+		}
+		
+		public String getEmail () {
+			return mail.getText();
+		}
+		
+		public String getPassword () {
+			return pass.getText();
 		}
 	}
 	
-	class CreateAccountListener implements ActionListener
-	{
+	
+	class LoginGUI {
 		
-		public void actionPerformed(ActionEvent e)
-		{
-			String newEmail = newEmailField.getText();
-			String newPass = newPassField.getText();
-			// add account to database and perform checks
+		JPasswordField password;
+		JTextField email;
+		JLabel pass, mail;
+		JButton okay, cancel;
+		
+		LoginGUI (AccountGUI ag) {
+			
+			email = new JTextField();
+			password = new JPasswordField();
+			mail = new JLabel ("Email: ");
+			pass = new JLabel ("Password: ")
+			
+			okay = new JButton ("Login");
+			cancel = new JButton ("Cancel");
+			
+			ag.loginInfo = new JPanel(new GridLayout (0, 2));
+			ag.buttons = new JPanel(new FlowLayout());
+			
+			ag.add(ag.loginInfo);
+			ag.add(ag.buttons);
 		}
-
+		
+		public String getPass () {
+			return password.getText();
+		}
+		
+		public String getMail () {
+			return email.getText();
+		}
+		
+		public JButton getOkayButton () {
+			return okay;
+		}
 	}
 	
-	class LoginListener implements ActionListener
-	{
-		
-		public void actionPerformed(ActionEvent e)
-		{
-			String email = emailField.getText();
-			String password = passwordField.getText();
-			// perform DB checks to make sure that login info is correct
-			new AccountMenuGUI();
-			dispose();
-		}
-		
-	}
-	*/
 	
 }
