@@ -18,7 +18,7 @@ public class PaymentController {
 		ArrayList<Ticket> ticketList = user.getTicketList();
 		double price = 0;
 		for (Ticket t : ticketList) {
-			price += databaseController.getTicketPrice();
+			price += t.getTicketPrice();
 		}
 		
 		if (user instanceof OrdinaryUser) {

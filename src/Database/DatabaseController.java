@@ -129,19 +129,46 @@ public class DatabaseController {
 		}
     }
     
-    // Add ticket to database
+    // Get ticket to database
     public Ticket getTicket(String movieName, Showtime showtime, Seat seat) {
-        return new Ticket();
-    }
-    
-    // Remove ticket from database
-    public void removeTicket(int ticketNumber) {
-        
-    }
-    
-    // Get ticket price
-    public double getTicketPrice() {
-    	return 0;
+    	int tn = 0;
+    	int sn = 0;
+    	int d = 0;
+    	int m = 0;
+    	int y = 0;
+    	String st = "";
+    	String et = "";
+    	String mn = "";
+    	double p = 0;
+    	try {
+    		String query = "SELECT * FROM db.ticket WHERE SeatNumber=? and Day=? and Month=? and Year=? and StartTime=? and EndTime=? and MovieName=?";
+    		prepStmt = conn.prepareStatement(query);
+    		prepStmt.setInt(1, seat.getSeatNumber());
+    		prepStmt.setInt(2, showtime.getDate().getDay());
+    		prepStmt.setInt(3, showtime.getDate().getMonth());
+    		prepStmt.setInt(4, showtime.getDate().getYear());
+    		prepStmt.setString(5, showtime.getStartTime());
+    		prepStmt.setString(6, showtime.getEndTime());
+    		prepStmt.setString(7, movieName);
+    		rs = prepStmt.executeQuery();
+			while (rs.next()) {
+				tn = rs.getInt("Number");
+				sn = rs.getInt("SeatNumber");
+				d = rs.getInt("Day");
+				m = rs.getInt("Month");
+				y = rs.getInt("Year");
+				st = rs.getString("StartTime");
+				et = rs.getString("EndTime");
+				mn = rs.getString("MovieName");
+				p = rs.getDouble("Price");
+			}
+    		prepStmt.close();
+			rs.close();
+		} catch(Exception e) {
+	        System.out.println(e);
+		}
+    	
+    	return new Ticket(mn, sn, tn, new Showtime(new Date(d, m, y), st, et), p);
     }
     
     // Add purchased ticket from receipt
@@ -177,16 +204,71 @@ public class DatabaseController {
     }
 
     public Account getAccount(String email, String password) {
-        return new Account();
+    	Account account = null;
+    	int cn = 0;
+    	String chn = "";
+    	String n = "";
+    	String a = "";
+    	String p = "";
+    	String bn = "";
+    	String ba = "";
+    	String bp = "";
+    	try {
+    		String query = "SELECT * FROM db.account WHERE Email=? and Password=?";
+    		prepStmt = conn.prepareStatement(query);
+    		prepStmt.setString(1, email);
+    		prepStmt.setString(2, password);
+    		rs = prepStmt.executeQuery();
+			if (rs.next()) {
+				cn = rs.getInt("CardNumber");
+				chn = rs.getString("CardHolderName");
+				n = rs.getString("Name");
+				a = rs.getString("Address");
+				p = rs.getString("Phone");
+				bn = rs.getString("BillingName");
+				ba = rs.getString("BillingAddress");
+				bp = rs.getString("BillingPhone");
+				account = new Account(new UserInfo(n, a, p), new BillingInfo(bn, ba, bp), new CardInfo(cn, chn), email, password);
+			}
+    		prepStmt.close();
+			rs.close();
+		} catch(Exception e) {
+	        System.out.println(e);
+		}
+    	
+    	return account;
     }
     
     // Update user info for account
-    public void updateUserInfo(UserInfo userinfo, Account account) {
-        
+    public void updateUserInfo(UserInfo userInfo, Account account) {
+        try {
+        	String query = "UPDATE db.account SET Name=?, Address=?, Phone=? WHERE Email=? and Password=?";
+        	prepStmt = conn.prepareStatement(query);
+    		prepStmt.setString(1, userInfo.getName());
+    		prepStmt.setString(2, userInfo.getAddress());
+    		prepStmt.setString(3, userInfo.getPhoneNumber());
+    		prepStmt.setString(4, account.getEmail());
+    		prepStmt.setString(5, account.getPassword());
+    		prepStmt.executeUpdate();
+			prepStmt.close();
+        } catch(Exception e) {
+	        System.out.println(e);
+		}
     }
 
     // Update card info for account
-    public void updateCardInfo(CardInfo cardinfo, Account account) {
-        
+    public void updateCardInfo(CardInfo cardInfo, Account account) {
+    	try {
+        	String query = "UPDATE db.account SET CardNumber=?, CardHolderName=? WHERE Email=? and Password=?";
+        	prepStmt = conn.prepareStatement(query);
+    		prepStmt.setInt(1, cardInfo.getCardNumber());
+    		prepStmt.setString(2, cardInfo.getCardHolderName());
+    		prepStmt.setString(3, account.getEmail());
+    		prepStmt.setString(4, account.getPassword());
+    		prepStmt.executeUpdate();
+			prepStmt.close();
+        } catch(Exception e) {
+	        System.out.println(e);
+		}
     }
 }

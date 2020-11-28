@@ -33,7 +33,9 @@ CREATE TABLE `seat` (
   `ShowYear` int NOT NULL,
   `StartTime` varchar(45) NOT NULL,
   `EndTime` varchar(45) NOT NULL,
-  PRIMARY KEY (`Number`,`MovieName`,`ShowDay`,`ShowMonth`,`ShowYear`,`StartTime`,`EndTime`)
+  PRIMARY KEY (`Number`,`MovieName`,`ShowDay`,`ShowMonth`,`ShowYear`,`StartTime`,`EndTime`),
+  KEY `FK2_idx` (`MovieName`,`ShowDay`,`ShowMonth`,`ShowYear`,`StartTime`,`EndTime`),
+  CONSTRAINT `FK2` FOREIGN KEY (`MovieName`, `ShowDay`, `ShowMonth`, `ShowYear`, `StartTime`, `EndTime`) REFERENCES `showtime` (`MovieName`, `Day`, `Month`, `Year`, `StartTime`, `EndTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,6 +45,7 @@ CREATE TABLE `seat` (
 
 LOCK TABLES `seat` WRITE;
 /*!40000 ALTER TABLE `seat` DISABLE KEYS */;
+INSERT INTO `seat` VALUES (1,1,'Movie 1',2,1,2000,'14:00','16:00'),(1,1,'Movie 2',2,2,2000,'15:00','17:00'),(1,1,'Movie 3',2,1,2000,'14:00','16:00'),(2,1,'Movie 1',2,1,2000,'14:00','16:00'),(2,1,'Movie 2',2,2,2000,'15:00','17:00'),(2,1,'Movie 3',2,1,2000,'14:00','16:00'),(3,1,'Movie 1',2,1,2000,'14:00','16:00'),(3,1,'Movie 2',2,2,2000,'15:00','17:00');
 /*!40000 ALTER TABLE `seat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 10:59:01
+-- Dump completed on 2020-11-27 16:24:23

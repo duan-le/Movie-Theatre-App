@@ -25,15 +25,16 @@ DROP TABLE IF EXISTS `ticket`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ticket` (
-  `Number` int NOT NULL,
-  `SeatNumber` int DEFAULT NULL,
-  `Day` int DEFAULT NULL,
-  `Month` int DEFAULT NULL,
-  `Year` int DEFAULT NULL,
-  `StartTime` varchar(45) DEFAULT NULL,
-  `EndTime` varchar(45) DEFAULT NULL,
-  `MovieName` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`Number`)
+  `Number` int NOT NULL AUTO_INCREMENT,
+  `SeatNumber` int NOT NULL,
+  `Day` int NOT NULL,
+  `Month` int NOT NULL,
+  `Year` int NOT NULL,
+  `StartTime` varchar(45) NOT NULL,
+  `EndTime` varchar(45) NOT NULL,
+  `MovieName` varchar(45) NOT NULL,
+  `Price` float DEFAULT NULL,
+  PRIMARY KEY (`Number`,`Day`,`Month`,`Year`,`EndTime`,`StartTime`,`MovieName`,`SeatNumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 10:59:01
+-- Dump completed on 2020-11-27 16:24:23

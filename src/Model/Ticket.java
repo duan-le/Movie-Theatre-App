@@ -5,16 +5,14 @@ public class Ticket {
 	private int seatNumber;
 	private int ticketNumber;
 	private Showtime showtime;
-
-	public Ticket() {
-		
-	}
+	private double price;
 	
-	public Ticket(String mn, int sn, int tn, Showtime st) {
+	public Ticket(String mn, int sn, int tn, Showtime st, double p) {
 		movieName = mn;
 		seatNumber = sn;
 		ticketNumber = tn;
 		showtime = st;
+		price = p;
 	}
 	
 	public String getMovieName() {
@@ -31,5 +29,9 @@ public class Ticket {
 	
 	public Showtime getShowtime() {
 		return showtime;
+	}
+	
+	public double getTicketPrice() {
+		return price;
 	}
 }

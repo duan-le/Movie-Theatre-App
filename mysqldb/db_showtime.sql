@@ -31,7 +31,9 @@ CREATE TABLE `showtime` (
   `StartTime` varchar(45) NOT NULL,
   `EndTime` varchar(45) NOT NULL,
   `MovieName` varchar(45) NOT NULL,
-  PRIMARY KEY (`Day`,`Month`,`Year`,`StartTime`,`EndTime`,`MovieName`)
+  PRIMARY KEY (`Day`,`Month`,`Year`,`StartTime`,`EndTime`,`MovieName`),
+  KEY `FK_idx` (`MovieName`),
+  CONSTRAINT `FK` FOREIGN KEY (`MovieName`) REFERENCES `movie` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -41,6 +43,7 @@ CREATE TABLE `showtime` (
 
 LOCK TABLES `showtime` WRITE;
 /*!40000 ALTER TABLE `showtime` DISABLE KEYS */;
+INSERT INTO `showtime` VALUES (2,1,2000,'14:00','16:00','Movie 1'),(2,2,2000,'15:00','17:00','Movie 2'),(2,1,2000,'14:00','16:00','Movie 3');
 /*!40000 ALTER TABLE `showtime` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 10:59:01
+-- Dump completed on 2020-11-27 16:24:23
