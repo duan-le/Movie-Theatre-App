@@ -22,6 +22,10 @@ public class BrowsingController {
 	}
 	private Ticket selectMovie() throws Exception{
 		// in the gui we will show all movie
+		
+		// in the database the movie table will contain all movies including movies that are not yet to be announced.
+		// only the registered user can see this in the browser and reserve (select) that movie after it passes the logic.
+		
 		System.out.println("Enter movie: ");
 		String movieName = reader.readLine();
 		Movie movie = databaseController.findMovie(movieName);
