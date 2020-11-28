@@ -1,4 +1,5 @@
 package Model;
+import java.util.*;
 
 public class Voucher {
 	private double amount;

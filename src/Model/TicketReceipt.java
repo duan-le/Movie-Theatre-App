@@ -1,4 +1,5 @@
 package Model;
+import java.util.*;
 
 public class TicketReceipt {
 	private int ticketNumber;

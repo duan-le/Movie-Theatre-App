@@ -1,4 +1,5 @@
 package Model;
+import java.util.*;
 
 public class MovieNews {
 	private String news;

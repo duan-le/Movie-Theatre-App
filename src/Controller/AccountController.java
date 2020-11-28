@@ -24,6 +24,8 @@ public class AccountController {
 		String password = "pass3";
 		Account account = new Account(userInfo, billingInfo, cardInfo, email, password);
 		databaseController.addAccount(account);
+
+		System.out.println("You are billed 20 dollars for the annual account fee");
 	}
 	
 	public boolean login(OrdinaryUser user) throws Exception {

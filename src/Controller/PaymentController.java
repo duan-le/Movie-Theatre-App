@@ -26,10 +26,10 @@ public class PaymentController {
 		}
 		
 		
-		if (user instanceof OrdinaryUser) {
-			ordinaryPay(user);
+		if (user.getClass() == OrdinaryUser.class) {
+			ordinaryPay();
 		} else {
-			registeredPay(user);
+			registeredPay();
 		}
 			
 		System.out.println("CardInfo, BillingInfo and UserInfo Payment Processed");
@@ -42,9 +42,7 @@ public class PaymentController {
 		}
 	}
 	
-	private void ordinaryPay(OrdinaryUser user) throws Exception {
-		
-		
+	private void ordinaryPay() throws Exception {
 		// enter info
 		System.out.println("");
 		System.out.println("Enter Card Number: ");
@@ -55,9 +53,11 @@ public class PaymentController {
 		// confirm payment
 		
 		// process payment here
+		System.out.println("Payment is now being Processed");
+
 	}
 	
-	private void registeredPay(OrdinaryUser user) {
+	private void registeredPay() {
 
 		// confirm payment
 		

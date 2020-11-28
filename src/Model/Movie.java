@@ -1,5 +1,5 @@
 package Model;
-
+import java.util.*;
 public class Movie {
 	private String name;
 	private String genre;
