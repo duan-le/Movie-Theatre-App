@@ -129,7 +129,7 @@ public class DatabaseController {
 		}
     }
     
-    // Get ticket to database
+    // Get ticket from database by everything but ticket number
     public Ticket getTicket(String movieName, Showtime showtime, Seat seat) {
     	int tn = 0;
     	int sn = 0;
@@ -150,6 +150,42 @@ public class DatabaseController {
     		prepStmt.setString(5, showtime.getStartTime());
     		prepStmt.setString(6, showtime.getEndTime());
     		prepStmt.setString(7, movieName);
+    		rs = prepStmt.executeQuery();
+			while (rs.next()) {
+				tn = rs.getInt("Number");
+				sn = rs.getInt("SeatNumber");
+				d = rs.getInt("Day");
+				m = rs.getInt("Month");
+				y = rs.getInt("Year");
+				st = rs.getString("StartTime");
+				et = rs.getString("EndTime");
+				mn = rs.getString("MovieName");
+				p = rs.getDouble("Price");
+			}
+    		prepStmt.close();
+			rs.close();
+		} catch(Exception e) {
+	        System.out.println(e);
+		}
+    	
+    	return new Ticket(mn, sn, tn, new Showtime(new Date(d, m, y), st, et), p);
+    }
+    
+    // Get ticket by ticket number 
+    public Ticket getTicket(int ticketNumber) {
+    	int tn = 0;
+    	int sn = 0;
+    	int d = 0;
+    	int m = 0;
+    	int y = 0;
+    	String st = "";
+    	String et = "";
+    	String mn = "";
+    	double p = 0;
+    	try {
+    		String query = "SELECT * FROM db.ticket WHERE Number=?";
+    		prepStmt = conn.prepareStatement(query);
+    		prepStmt.setInt(1, ticketNumber);
     		rs = prepStmt.executeQuery();
 			while (rs.next()) {
 				tn = rs.getInt("Number");
