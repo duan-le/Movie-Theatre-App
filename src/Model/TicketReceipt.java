@@ -4,7 +4,7 @@ public class TicketReceipt {
 	private int ticketNumber;
 	
 	public TicketReceipt(int tn) {
-		ticketNumber= tn;
+		ticketNumber = tn;
 	}
 	
 	public int getTicketNumber() {
