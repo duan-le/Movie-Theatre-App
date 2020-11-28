@@ -67,11 +67,15 @@ public class CancellationGUI extends JFrame {
 			
 			String ticketNo = ticketNum.getText();
 			
-			boolean succesful = cc.cancel(ticketNo);
+			boolean successful = cc.cancel(ticketNo);
 			
 			if(successful)
 			{
-				CancelCofirmationGUI();
+				CancelConfirmationGUI();
+			}
+			else
+			{
+				CancellationFailedGUI();
 			}
 			
 			dispose();
@@ -90,15 +94,44 @@ public class CancellationGUI extends JFrame {
 		
 	}
 	
-	class CancelConfirmationGUI() extends JFrame
-	{
-		public CancelConfirmationGUI()
+	
+		public void CancelConfirmationGUI()
 		{
-			JLabel message = new JLabel
+			JFrame ccf = new JFrame("Ticket Cancellation Confirmed");
+			JPanel panel = new JPanel();
+			JLabel message = new JLabel("Your ticket has been cancelled");
+			JButton ok = new JButton("OK");
+			ok.addActionListener(new CancelListener());
+			
+			panel.add(message);
+			panel.add(ok);
+			
+			ccf.add("Center", panel);
+			setVisible(true);
 		}
-	}
+		
+		
 	
 	
+	
+	
+		public void CancellationFailedGUI()
+		{
+			JFrame tcf = new JFrame("Ticket Cancellation Failed");
+			JPanel panel = new JPanel();
+			JLabel message = new JLabel("Your ticket could not be cancelled, please try again");
+			JButton ok = new JButton("OK");
+			ok.addActionListener(new CancelListener());
+			
+			panel.add(message);
+			panel.add(ok);
+			
+			
+			tcf.add("Center", panel);
+			setVisible(true);
+		}
+		
+		
 	
 	
 	
