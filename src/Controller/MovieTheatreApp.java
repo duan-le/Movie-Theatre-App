@@ -11,14 +11,22 @@ public class MovieTheatreApp {
 	private PaymentController paymentController;
 	private CancellationController cancellationController;
 	private AccountController accountController;
-	private DatabaseController databaseController;
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 	private OrdinaryUser user;
 	
+	public MovieTheatreApp(DatabaseController db) {
+		browsingController = new BrowsingController(db);
+		paymentController = new PaymentController(db);
+		cancellationController = new CancellationController(db);
+		accountController = new AccountController(db);
+	}
+	
 	public static void main(String[] args) {
 		// print to console. switch to gui later
+		DatabaseController databaseController = new DatabaseController();
+		
 		try{
-			MovieTheatreApp app = new MovieTheatreApp();
+			MovieTheatreApp app = new MovieTheatreApp(databaseController);
 			app.startMenu();
 			app.selectOption();
 		} catch(Exception e){
@@ -49,6 +57,7 @@ public class MovieTheatreApp {
 					break;
 				case 2:
 					user = new OrdinaryUser();
+					System.out.println(user.getTicketList().get(0).getSeatNumber());
 					browsingController.browse(user);
 					startPayment();
 					break;

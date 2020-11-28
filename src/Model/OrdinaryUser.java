@@ -11,6 +11,7 @@ public class OrdinaryUser {
 		ticketList = new ArrayList<Ticket>();
 		receiptList = new ArrayList<TicketReceipt>();
 		voucherList = new ArrayList<Voucher>();
+		ticketList.add(new Ticket());
 	}
 	
 	public void addTicketReceipt(TicketReceipt tr) {

@@ -12,6 +12,10 @@ public class CancellationController {
 	private DatabaseController databaseController;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 	
+	public CancellationController(DatabaseController db) {
+		databaseController = db;
+	}
+	
 	public void cancel() throws Exception {
 		System.out.println("Enter ticket number: ");
         String line = reader.readLine();

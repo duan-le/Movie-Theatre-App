@@ -11,8 +11,13 @@ public class BrowsingController {
 	private DatabaseController databaseController;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 
+	public BrowsingController(DatabaseController db) {
+		databaseController = db;
+	}
+	
 	public void browse(OrdinaryUser user) throws Exception {
-		// Print to console. Change to GUI later
+		// Print to console. Change to GUI later\
+		System.out.println("Here");
 		user.addTicket(selectMovie());
 		
 	}

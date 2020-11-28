@@ -12,6 +12,10 @@ public class PaymentController {
 	
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 
+	public PaymentController(DatabaseController db) {
+		databaseController = db;
+	}
+	
 	public void pay(OrdinaryUser user) throws Exception{
 		// print to console. switch to gui later
 		

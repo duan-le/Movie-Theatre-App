@@ -7,6 +7,10 @@ public class Ticket {
 	private Showtime showtime;
 	private double price;
 	
+	public Ticket() {
+		seatNumber = 1;
+	}
+	
 	public Ticket(String mn, int sn, int tn, Showtime st, double p) {
 		movieName = mn;
 		seatNumber = sn;

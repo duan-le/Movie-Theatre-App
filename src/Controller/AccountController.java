@@ -9,6 +9,10 @@ public class AccountController {
 	private AccountGUI accountGUI;
 	private DatabaseController databaseController;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
+	
+	public AccountController(DatabaseController db) {
+		databaseController = db;
+	}
 
 	public void register() {
 		// get user, billing, card info
