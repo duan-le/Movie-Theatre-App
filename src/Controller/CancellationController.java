@@ -14,14 +14,16 @@ public class CancellationController {
 	
 	public CancellationController(DatabaseController db) {
 		databaseController = db;
+		cancellationGUI = new CancellationGUI("Confirm Cancellation", this);
 	}
 	
-	public void cancel() throws Exception {
-		System.out.println("Enter ticket number: ");
-        String line = reader.readLine();
+	public boolean cancel(String ticketNo) throws Exception {
+		//System.out.println("Enter ticket number: ");
+        String line = ticketNo;
         int ticketNumber = Integer.parseInt(line);
         databaseController.removeTicketReceipt(ticketNumber);
         Ticket ticket = databaseController.getTicket(ticketNumber);
         databaseController.updateSeat(ticket.getMovieName(), ticket.getShowtime(), ticket.getSeatNumber(), true);
+        return true;
 	}
 }

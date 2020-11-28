@@ -6,20 +6,32 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.CancellationController;
+import Database.DatabaseController;
 import model.PaymentGUI.CancelListener;
 import model.PaymentGUI.SubmitListener;
 
 public class CancellationGUI extends JFrame {
 
+	/**
+	 * serial id
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private JButton submit, cancel;
 	private JTextField ticketNum;
+	private CancellationController cc;
+	private DatabaseController db;
+	private JLabel ticketNumLabel;
 	
-	public CancellationGUI (String label) {
+	public CancellationGUI (String label, CancellationController c) {
 		super(label);
+		
+		cc = c;
 		
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -34,6 +46,10 @@ public class CancellationGUI extends JFrame {
 		submit.addActionListener(new SubmitListener());
 		cancel.addActionListener(new CancelListener());
 		
+		ticketNumLabel = new JLabel("Ticket number: ");
+		
+		panel.add(ticketNumLabel);
+		panel.add(ticketNum);
 		panel.add(submit);
 		panel.add(cancel);
 		
@@ -51,9 +67,12 @@ public class CancellationGUI extends JFrame {
 			
 			String ticketNo = ticketNum.getText();
 			
-			//Database checks to see if ticketNo is valid
+			boolean succesful = cc.cancel(ticketNo);
 			
-			ConfirmationField();
+			if(successful)
+			{
+				CancelCofirmationGUI();
+			}
 			
 			dispose();
 			
@@ -70,6 +89,16 @@ public class CancellationGUI extends JFrame {
 		}
 		
 	}
+	
+	class CancelConfirmationGUI() extends JFrame
+	{
+		public CancelConfirmationGUI()
+		{
+			JLabel message = new JLabel
+		}
+	}
+	
+	
 	
 	
 	

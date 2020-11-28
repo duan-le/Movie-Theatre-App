@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 
-public class AccountGUI {
+public class AccountGUI extends JFrame {
 	
 	private AccountController accountController;
 	
@@ -37,7 +37,7 @@ public class AccountGUI {
 		setSize(230, 150);
 	
 		emailField = new JTextField();
-		passwordField = new JTextField();
+		password = new JPasswordField();
 		cancel = new JButton("Cancel");
 		
 		login.addActionListener(new LoginListener());
