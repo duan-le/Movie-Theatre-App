@@ -14,14 +14,14 @@ public class AccountController {
 		databaseController = db;
 	}
 
-	public void register() {
+	public void register() throws Exception{
 		// get user, billing, card info
 
 		UserInfo userInfo = new UserInfo("name3", "addr3", "phone3");
 		CardInfo cardInfo = new CardInfo(3333, "chn3");
 		BillingInfo billingInfo = new BillingInfo("bn3", "ba3", "bp3");
-		String email = "email3";
-		String password = "pass3";
+		String email = reader.readLine();
+		String password = reader.readLine();
 		Account account = new Account(userInfo, billingInfo, cardInfo, email, password, null);
 		databaseController.addAccount(account);
 		System.out.println("You are billed 20 dollars for the annual account fee");
