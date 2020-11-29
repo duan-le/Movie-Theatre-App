@@ -201,7 +201,7 @@ public class DatabaseController {
     // Add account
     public void addAccount(Account account) {
     	try {
-    		String query = "INSERT INTO db.account VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    		String query = "INSERT INTO db.account VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)";
     		prepStmt = conn.prepareStatement(query);
     		prepStmt.setString(1, account.getEmail());
     		prepStmt.setString(2, account.getPassword());
@@ -229,7 +229,8 @@ public class DatabaseController {
     	String p = "";
     	String bn = "";
     	String ba = "";
-    	String bp = "";
+		String bp = "";
+		java.util.Date d = null;
     	try {
     		String query = "SELECT * FROM db.account WHERE Email=? and Password=?";
     		prepStmt = conn.prepareStatement(query);
@@ -245,7 +246,8 @@ public class DatabaseController {
 				bn = rs.getString("BillingName");
 				ba = rs.getString("BillingAddress");
 				bp = rs.getString("BillingPhone");
-				account = new Account(new UserInfo(n, a, p), new BillingInfo(bn, ba, bp), new CardInfo(cn, chn), email, password);
+				d = rs.getTimestamp("CreationDate");
+				account = new Account(new UserInfo(n, a, p), new BillingInfo(bn, ba, bp), new CardInfo(cn, chn), email, password, d);
 			}
     		prepStmt.close();
 			rs.close();

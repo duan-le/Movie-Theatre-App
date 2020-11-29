@@ -22,12 +22,12 @@ public class AccountController {
 		BillingInfo billingInfo = new BillingInfo("bn3", "ba3", "bp3");
 		String email = "email3";
 		String password = "pass3";
-		Account account = new Account(userInfo, billingInfo, cardInfo, email, password);
+		Account account = new Account(userInfo, billingInfo, cardInfo, email, password, null);
 		databaseController.addAccount(account);
-
 		System.out.println("You are billed 20 dollars for the annual account fee");
-		databaseController.getAccountCreationDate();
-		System.out.println("Account creation date: " + );
+		account = databaseController.getAccount(email, password);
+
+		System.out.println("Account creation date: " + account.getCreationDate());
 	}
 	
 	public boolean login(OrdinaryUser user) throws Exception {
