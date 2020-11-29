@@ -6,6 +6,8 @@ import View.BrowsingGUI;
 import java.io.*; 
 import java.util.*;
 
+import com.mysql.cj.exceptions.DataConversionException;
+
 public class BrowsingController {
 	private BrowsingGUI browsingGUI;
 	private DatabaseController databaseController;
@@ -43,7 +45,7 @@ public class BrowsingController {
 
 		Movie movie = databaseController.findMovie(movieName);
 		Showtime showtime = selectShowTime(movieName);
-		Seat seat = selectSeat(movieName, showtime);
+		Seat seat = selectSeat(user, movieName, showtime);
 
 		// create ticket
 		Ticket ticket = databaseController.getTicket(movie.getName(), showtime, seat);
@@ -69,9 +71,20 @@ public class BrowsingController {
 		return showtime;
     }
 	
-	private Seat selectSeat(String movieName, Showtime showtime) throws Exception {
+	private Seat selectSeat(OrdinaryUser user, String movieName, Showtime showtime) throws Exception {
 		ArrayList<Seat> allSeats= databaseController.getAllSeats(movieName, showtime);
-
+		Movie movie = databaseController.findMovie(movieName);
+		Date date = new Date();
+		if (movie.getReleaseDate().getTime() > date.getTime()){
+			double seatAvail =0;
+			for (Seat seat: allSeats){
+				if (seat.getAvailability())
+					seatAvail ++;
+			}
+			if (seatAvail / allSeats.size() < .9)
+				System.out.println("over 10% is booked already");
+				// gui exits the browse
+		}
 		// display available seats
 		for (int i = 0; i < allSeats.size(); i++){
 			if (i % 10 == 0)

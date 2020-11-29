@@ -23,10 +23,10 @@ public class CancellationController {
 		String line = reader.readLine();
 		int ticketNumber = Integer.parseInt(line);
 		Ticket ticket = databaseController.getTicket(ticketNumber);
-		// if (check72hours(ticket)){
-		// 	System.out.println("At least 72 hours before movie starts for Cancellation. Cancellation Failed.");
-		// 	return;
-		// }
+		if (check72hours(ticket)){
+			System.out.println("At least 72 hours before movie starts for Cancellation. Cancellation Failed.");
+			return;
+		}
 
 		if (user.getClass() == OrdinaryUser.class) {
 			ordinaryCancel(user, ticket);
