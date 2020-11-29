@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db`;
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: db
+-- Host: 127.0.0.1    Database: db
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -25,15 +25,11 @@ DROP TABLE IF EXISTS `showtime`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `showtime` (
-  `Day` int NOT NULL,
-  `Month` int NOT NULL,
-  `Year` int NOT NULL,
-  `StartTime` varchar(45) NOT NULL,
-  `EndTime` varchar(45) NOT NULL,
   `MovieName` varchar(45) NOT NULL,
-  PRIMARY KEY (`Day`,`Month`,`Year`,`StartTime`,`EndTime`,`MovieName`),
+  `ShowDate` datetime NOT NULL,
+  PRIMARY KEY (`MovieName`,`ShowDate`),
   KEY `FK_idx` (`MovieName`),
-  CONSTRAINT `FK` FOREIGN KEY (`MovieName`) REFERENCES `movie` (`Name`)
+  CONSTRAINT `st_fk` FOREIGN KEY (`MovieName`) REFERENCES `movie` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,7 +39,7 @@ CREATE TABLE `showtime` (
 
 LOCK TABLES `showtime` WRITE;
 /*!40000 ALTER TABLE `showtime` DISABLE KEYS */;
-INSERT INTO `showtime` VALUES (2,1,2000,'14:00','16:00','Movie 1'),(2,1,2000,'21:00','23:00','Movie 1'),(2,2,2000,'15:00','17:00','Movie 2'),(2,1,2000,'14:00','16:00','Movie 3');
+INSERT INTO `showtime` VALUES ('Movie 1','2000-01-02 14:00:00'),('Movie 1','2000-01-02 21:00:00'),('Movie 2','2000-02-02 15:00:00'),('Movie 3','2000-01-02 14:00:00'),('Movie 4','2020-11-30 10:00:00'),('Movie 5','2020-11-02 08:00:00');
 /*!40000 ALTER TABLE `showtime` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 18:33:14
+-- Dump completed on 2020-11-28 18:07:05

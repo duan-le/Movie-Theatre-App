@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db`;
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: db
+-- Host: 127.0.0.1    Database: db
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -27,10 +27,8 @@ DROP TABLE IF EXISTS `movie`;
 CREATE TABLE `movie` (
   `Name` varchar(45) NOT NULL,
   `Genre` varchar(45) DEFAULT NULL,
-  `ReleaseDay` int DEFAULT NULL,
-  `ReleaseMonth` int DEFAULT NULL,
-  `ReleaseYear` int DEFAULT NULL,
   `RunningTime` varchar(45) DEFAULT NULL,
+  `ReleaseDate` datetime DEFAULT NULL,
   PRIMARY KEY (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -41,7 +39,7 @@ CREATE TABLE `movie` (
 
 LOCK TABLES `movie` WRITE;
 /*!40000 ALTER TABLE `movie` DISABLE KEYS */;
-INSERT INTO `movie` VALUES ('Movie 1','Genre 1',1,1,2000,'2'),('Movie 2','Genre 2',1,2,2000,'2'),('Movie 3','Genre 1',1,1,2000,'2');
+INSERT INTO `movie` VALUES ('Movie 1','Genre 1','2','2000-01-01 00:00:00'),('Movie 2','Genre 2','2','2000-02-01 00:00:00'),('Movie 3','Genre 1','2','2000-01-01 00:00:00'),('Movie 4','Genre 1','3','2020-11-01 00:00:00'),('Movie 5','Genre 2','2.5','2021-11-01 00:00:00');
 /*!40000 ALTER TABLE `movie` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 18:33:14
+-- Dump completed on 2020-11-28 18:07:05

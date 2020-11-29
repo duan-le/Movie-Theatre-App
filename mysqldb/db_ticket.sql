@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db`;
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: db
+-- Host: 127.0.0.1    Database: db
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -27,15 +27,13 @@ DROP TABLE IF EXISTS `ticket`;
 CREATE TABLE `ticket` (
   `Number` int NOT NULL AUTO_INCREMENT,
   `SeatNumber` int NOT NULL,
-  `Day` int NOT NULL,
-  `Month` int NOT NULL,
-  `Year` int NOT NULL,
-  `StartTime` varchar(45) NOT NULL,
-  `EndTime` varchar(45) NOT NULL,
   `MovieName` varchar(45) NOT NULL,
-  `Price` float DEFAULT NULL,
-  PRIMARY KEY (`Number`,`Day`,`Month`,`Year`,`EndTime`,`StartTime`,`MovieName`,`SeatNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `Price` float NOT NULL,
+  `Date` datetime NOT NULL,
+  PRIMARY KEY (`Number`),
+  KEY `ticket_fk_idx` (`SeatNumber`,`MovieName`,`Date`),
+  CONSTRAINT `ticket_fk` FOREIGN KEY (`SeatNumber`, `MovieName`, `Date`) REFERENCES `seat` (`Number`, `MovieName`, `ShowDate`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +42,7 @@ CREATE TABLE `ticket` (
 
 LOCK TABLES `ticket` WRITE;
 /*!40000 ALTER TABLE `ticket` DISABLE KEYS */;
-INSERT INTO `ticket` VALUES (1,1,2,1,2000,'14:00','16:00','Movie 1',15),(2,2,2,1,2000,'14:00','16:00','Movie 1',15),(3,3,2,1,2000,'14:00','16:00','Movie 1',15),(4,1,2,2,2000,'15:00','17:00','Movie 2',20),(5,2,2,2,2000,'15:00','17:00','Movie 2',20),(6,3,2,2,2000,'15:00','17:00','Movie 2',20),(7,1,2,1,2000,'14:00','16:00','Movie 3',15),(8,2,2,1,2000,'14:00','16:00','Movie 3',15);
+INSERT INTO `ticket` VALUES (1,1,'Movie 1',15,'2000-01-02 14:00:00'),(2,2,'Movie 1',15,'2000-01-02 14:00:00'),(3,3,'Movie 1',15,'2000-01-02 14:00:00'),(4,1,'Movie 2',20,'2000-02-02 15:00:00'),(5,2,'Movie 2',20,'2000-02-02 15:00:00'),(6,3,'Movie 2',20,'2000-02-02 15:00:00'),(7,1,'Movie 3',15,'2000-01-02 14:00:00'),(8,2,'Movie 3',15,'2000-01-02 14:00:00'),(9,1,'Movie 1',20,'2000-01-02 21:00:00'),(10,2,'Movie 1',20,'2000-01-02 21:00:00'),(11,1,'Movie 4',18,'2020-11-30 10:00:00'),(12,1,'Movie 5',17,'2020-11-02 08:00:00');
 /*!40000 ALTER TABLE `ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 18:33:14
+-- Dump completed on 2020-11-28 18:07:05

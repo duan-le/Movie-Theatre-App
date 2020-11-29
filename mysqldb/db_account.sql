@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db`;
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: db
+-- Host: 127.0.0.1    Database: db
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -35,6 +35,7 @@ CREATE TABLE `account` (
   `BillingName` varchar(45) DEFAULT NULL,
   `BillingAddress` varchar(45) DEFAULT NULL,
   `BillingPhone` varchar(45) DEFAULT NULL,
+  `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -45,7 +46,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('email','pass',1111,'chn','name','addr','phone','bn','ba','bp'),('email2','pass2',2222,'chn2','name2','addr2','phone2','bn2','ba2','bp2');
+INSERT INTO `account` VALUES ('email','pass',1111,'chn','name','addr','phone','bn','ba','bp','2000-01-11 00:00:00'),('email2','pass2',2222,'chn2','name2','addr2','phone2','bn2','ba2','bp2','2020-11-11 00:00:00');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 18:33:14
+-- Dump completed on 2020-11-28 18:07:04

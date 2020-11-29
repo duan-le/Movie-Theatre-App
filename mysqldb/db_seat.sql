@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db`;
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: db
+-- Host: 127.0.0.1    Database: db
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -28,14 +28,10 @@ CREATE TABLE `seat` (
   `Number` int NOT NULL,
   `Available` tinyint(1) DEFAULT NULL,
   `MovieName` varchar(45) NOT NULL,
-  `ShowDay` int NOT NULL,
-  `ShowMonth` int NOT NULL,
-  `ShowYear` int NOT NULL,
-  `StartTime` varchar(45) NOT NULL,
-  `EndTime` varchar(45) NOT NULL,
-  PRIMARY KEY (`Number`,`MovieName`,`ShowDay`,`ShowMonth`,`ShowYear`,`StartTime`,`EndTime`),
-  KEY `FK2_idx` (`MovieName`,`ShowDay`,`ShowMonth`,`ShowYear`,`StartTime`,`EndTime`),
-  CONSTRAINT `FK2` FOREIGN KEY (`MovieName`, `ShowDay`, `ShowMonth`, `ShowYear`, `StartTime`, `EndTime`) REFERENCES `showtime` (`MovieName`, `Day`, `Month`, `Year`, `StartTime`, `EndTime`)
+  `ShowDate` datetime NOT NULL,
+  PRIMARY KEY (`Number`,`MovieName`,`ShowDate`),
+  KEY `seat_fk_idx` (`MovieName`,`ShowDate`),
+  CONSTRAINT `st1234_fk` FOREIGN KEY (`MovieName`, `ShowDate`) REFERENCES `showtime` (`MovieName`, `ShowDate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -45,7 +41,7 @@ CREATE TABLE `seat` (
 
 LOCK TABLES `seat` WRITE;
 /*!40000 ALTER TABLE `seat` DISABLE KEYS */;
-INSERT INTO `seat` VALUES (1,1,'Movie 1',2,1,2000,'14:00','16:00'),(1,1,'Movie 2',2,2,2000,'15:00','17:00'),(1,1,'Movie 3',2,1,2000,'14:00','16:00'),(2,1,'Movie 1',2,1,2000,'14:00','16:00'),(2,1,'Movie 2',2,2,2000,'15:00','17:00'),(2,1,'Movie 3',2,1,2000,'14:00','16:00'),(3,1,'Movie 1',2,1,2000,'14:00','16:00'),(3,1,'Movie 2',2,2,2000,'15:00','17:00');
+INSERT INTO `seat` VALUES (1,1,'Movie 1','2000-01-02 14:00:00'),(1,1,'Movie 1','2000-01-02 21:00:00'),(1,1,'Movie 2','2000-02-02 15:00:00'),(1,1,'Movie 3','2000-01-02 14:00:00'),(1,1,'Movie 4','2020-11-30 10:00:00'),(1,1,'Movie 5','2020-11-02 08:00:00'),(2,1,'Movie 1','2000-01-02 14:00:00'),(2,1,'Movie 1','2000-01-02 21:00:00'),(2,1,'Movie 2','2000-02-02 15:00:00'),(2,1,'Movie 3','2000-01-02 14:00:00'),(3,1,'Movie 1','2000-01-02 14:00:00'),(3,1,'Movie 2','2000-02-02 15:00:00');
 /*!40000 ALTER TABLE `seat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 18:33:14
+-- Dump completed on 2020-11-28 18:07:06
