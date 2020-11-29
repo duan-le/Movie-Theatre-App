@@ -1,6 +1,7 @@
 package Database;
 
 import java.util.*;
+
 import java.sql.*;
 import java.text.*;
 import Model.*;
@@ -11,16 +12,42 @@ public class DatabaseController {
     private ResultSet rs;
     
     public DatabaseController() {
-    	try{  
+    	try{   
     		Driver driver = new com.mysql.cj.jdbc.Driver();
 			DriverManager.registerDriver(driver);
             String path = "jdbc:mysql://127.0.0.1:3306/db"; 
             String user = "root";
-            String pass = "";
+            String pass = "desiree00";
             conn = DriverManager.getConnection(path, user, pass);  
         } catch(Exception e) {    
                 System.out.println(e);
         }
+    }
+    
+    // Query database to find all movies
+    public ArrayList<Movie> getAllMovies() {
+		ArrayList<Movie> movieList = new ArrayList<Movie>();
+		String n = "";
+		String g = "";
+		String rt = "";
+		java.util.Date dt = null;
+     	try {
+    		String query = "SELECT * FROM db.movie";
+    		prepStmt = conn.prepareStatement(query);
+    		rs = prepStmt.executeQuery();
+    		while(rs.next()) {
+       			n = rs.getString("Name");
+    			g = rs.getString("Genre");
+    			dt = rs.getTimestamp("ReleaseDate");
+    			rt = rs.getString("RunningTime");
+    			movieList.add(new Movie (n, g, dt, rt));
+    		}
+    		prepStmt.close();
+    		rs.close();
+    	} catch(Exception e) {
+            System.out.println(e);
+    	}
+        return movieList;
     }
     
     // Query database to find movie matching movieName
@@ -305,8 +332,5 @@ public class DatabaseController {
 		long diffHours = (dif / (1000 * 60 * 60)) / 24;
 
 		System.out.println(diffHours);
-
-
-
 	}
 }

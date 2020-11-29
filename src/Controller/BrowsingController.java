@@ -9,64 +9,80 @@ import java.util.*;
 import com.mysql.cj.exceptions.DataConversionException;
 
 public class BrowsingController {
+	
 	private BrowsingGUI browsingGUI;
-	private DatabaseController databaseController;
-	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
+	private DatabaseController databaseController; 
 
 	public BrowsingController(DatabaseController db) {
 		databaseController = db;
 	}
 	
 	public void browse(OrdinaryUser user) throws Exception {
-		// Print to console. Change to GUI later\
+//		browsingGUI = new BrowsingGUI ("Browse Movies", databaseController.getAllMovies().toString(), this);
 		user.addTicket(selectMovie(user));
 		
 	}
-	private void ordinaryBrowse(String movieName){
+	
+	public boolean ordinaryBrowse(String movieName){
+		boolean check = true;
 		Date date = new Date();
 		Movie movie = databaseController.findMovie(movieName);
 		if (movie.getReleaseDate().getTime() > date.getTime()){
-			System.out.println("Movie does not exist");
+			check = false;
+	//		System.out.println("Movie does not exist");
 			// gui exits the browse
 		}
+		return check;
 	}
 
 	private Ticket selectMovie(OrdinaryUser user) throws Exception{
-		// in the gui we will show all movie
 		
 		// in the database the movie table will contain all movies including movies that are not yet to be announced.
 		// only the registered user can see this in the browser and reserve (select) that movie after it passes the logic.
-		System.out.println("Enter movie: ");
-		String movieName = reader.readLine();
+		
 		if (user.getClass() == OrdinaryUser.class) {
+			browsingGUI = new BrowsingGUI ("Browse Movies", databaseController.getAllMovies().toString(), this);
 			// only show movies that are released to date
-			ordinaryBrowse(movieName);
+			
 		} 
-
-		Movie movie = databaseController.findMovie(movieName);
-		Showtime showtime = selectShowTime(movieName);
-		Seat seat = selectSeat(user, movieName, showtime);
-
+		
+		
+		
+		while (ordinaryBrowse(browsingGUI.getTextField()) == false) {
+			browsingGUI.displayInvalidMovie();
+			browsingGUI.displayMovies(databaseController.getAllMovies().toString());
+		}
+		Movie movie = databaseController.findMovie(browsingGUI.getTextField());
+		Showtime showtime = selectShowTime(browsingGUI.getTextField());
+		Seat seat = selectSeat(user, browsingGUI.getTextField(), showtime);
+		ordinaryBrowse(browsingGUI.getTextField());
 		// create ticket
 		Ticket ticket = databaseController.getTicket(movie.getName(), showtime, seat);
 		
 		return ticket;
 		
 	}
+	
+	public void confirmMovie (String movieName) {
+		
+	}
 
     private Showtime selectShowTime(String movieName) throws Exception{
 		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);
 		
+		String s = "";
 		// display available show times
 		for (int i = 0; i < allShowTime.size(); i++){
 			if(i % 10 == 0)
-				System.out.println();
-			System.out.println(allShowTime.get(i));
+				s += "\n";
+			s += allShowTime.get(i).toString();
+			//System.out.println(allShowTime.get(i));
 		}
-
+		
+		
 		// select show time
-		System.out.println("Select show time: ");
-		int index = Integer.parseInt(reader.readLine());
+		browsingGUI.displayShowtimes();
+		int index = Integer.parseInt(browsingGUI.getTextField());
 		Showtime showtime = allShowTime.get(index);
 		return showtime;
     }
@@ -98,5 +114,14 @@ public class BrowsingController {
 		Seat seat = allSeats.get(index);
 		
 		return seat;
+	}
+	
+	@Override
+	public String toString () {
+		String s = "";
+		
+		
+		
+		return s;
 	}
 }

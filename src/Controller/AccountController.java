@@ -3,47 +3,66 @@ package Controller;
 import Database.DatabaseController;
 import Model.*;
 import View.AccountGUI;
-import java.io.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AccountController {
 	private AccountGUI accountGUI;
 	private DatabaseController databaseController;
-	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 	
 	public AccountController(DatabaseController db) {
 		databaseController = db;
 	}
+	
+	public void createAccount() {
+		this.accountGUI = new AccountGUI ("Create an Account", this);
+	}
+	
+	// String name, String addr, String phono, String bname, String baddr, String bphono,
+	// String cardnum, String chn, String mail, String pass
 
 	public void register() throws Exception{
-		// get user, billing, card info
-
-		UserInfo userInfo = new UserInfo("name3", "addr3", "phone3");
-		CardInfo cardInfo = new CardInfo(3333, "chn3");
-		BillingInfo billingInfo = new BillingInfo("bn3", "ba3", "bp3");
-		String email = reader.readLine();
-		String password = reader.readLine();
+		
+		UserInfo userInfo = new UserInfo(accountGUI.getName(), accountGUI.getAddress(), accountGUI.getPhoneNum());
+		CardInfo cardInfo = new CardInfo(accountGUI.getCardNum(), accountGUI.getCardName());
+		BillingInfo billingInfo = new BillingInfo(accountGUI.getBillingName(),accountGUI.getBillingAddress(), accountGUI.getBillingPhoneNum());
+		String email = accountGUI.getEmail();
+		String password = accountGUI.getPassword();
 		Account account = new Account(userInfo, billingInfo, cardInfo, email, password, null);
 		databaseController.addAccount(account);
-		System.out.println("You are billed 20 dollars for the annual account fee");
 		account = databaseController.getAccount(email, password);
-
-		System.out.println("Account creation date: " + account.getCreationDate());
-	}
-	
-	public boolean login(OrdinaryUser user) throws Exception {
-		System.out.println("Enter email: ");
-		String email = reader.readLine();
-		System.out.println("Enter password: ");
-		String password = reader.readLine();
-		Account account = databaseController.getAccount(email, password);
-		if (account != null) {
-			((RegisteredUser) user).setAccount(account);
-			return true;
+		if (account == null) {
+			accountGUI.displayInvalidRegistration();
 		}
-		return false;
+		else {
+			accountGUI.displayConfirmedRegistration(account.getCreationDate().toString());
+		}
 	}
 	
-	public void update() {
+	public void login(OrdinaryUser user) throws Exception {
 		
+		accountGUI = new AccountGUI ("Login", this, user);
+	
 	}
+	
+	public void checkLogin (OrdinaryUser user) {
+		
+		Account account = databaseController.getAccount(accountGUI.getEmail(), accountGUI.getPassword());
+		if (account == null) {
+			accountGUI.dispose();
+			accountGUI.displayInvalidLogin();
+			try {
+				login(user);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		else {
+			((RegisteredUser) user).setAccount(account);
+			accountGUI.dispose();
+			accountGUI.displayLoginConfirmation();	
+		}
+	}
+	
 }

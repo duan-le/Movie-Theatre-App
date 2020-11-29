@@ -1,4 +1,4 @@
-package model;
+package View;
 
 
 import java.awt.FlowLayout;
@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.MovieTheaterApp;
+import Controller.MovieTheatreApp;
 
 public class StartGUI extends JFrame{
 
@@ -27,12 +27,12 @@ public class StartGUI extends JFrame{
 	/**
 	 * The buttons on the panel.
 	 */
-	private JButton browse, login, cancel, create;
+	private JButton browse, login, cancel, create, logout;
 	
 	private MovieTheatreApp movieTheatreApp;
 	
 	/**
-	 * Creates the frame and initializes all components on it.
+	 * Registered user start gui
 	 */
 	public StartGUI (String label, MovieTheatreApp map) {	
 		super(label);
@@ -45,15 +45,15 @@ public class StartGUI extends JFrame{
 //		    e.printStackTrace();
 //		}
 		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(180, 150);
+		
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(230, 150);
 		
-		browse = new JButton("Browse Movies as a Guest");
-		create = new JButton("Create an Account");
-		login = new JButton("Login");
+		browse = new JButton("Browse Movies");
 		cancel = new JButton("Cancel Ticket");
+		logout = new JButton("Logout");
 		
 		browse.addActionListener(new GuestListener());
 		login.addActionListener(new LoginListener());
@@ -61,9 +61,48 @@ public class StartGUI extends JFrame{
 		cancel.addActionListener(new CancelListener());
 		
 		panel.add(browse);
+		panel.add(cancel);
+		panel.add(logout);
+		
+		add("Center", panel);
+		setVisible(true);
+		
+	}
+	
+	/*
+	 * Ordinary user main GUI
+	 */
+	public StartGUI (MovieTheatreApp map) {	
+		super("Welcome");
+		
+		this.movieTheatreApp = map;
+		
+//		try { 
+//		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (Exception e) {
+//		    e.printStackTrace();
+//		}
+	
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(180, 150);
+		
+		panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		
+		browse = new JButton("Browse Movies");
+		create = new JButton("Create an Account");
+		cancel = new JButton("Cancel Ticket");
+		login = new JButton("Login");
+		
+		browse.addActionListener(new GuestListener());
+		login.addActionListener(new LoginListener());
+		create.addActionListener(new CreateListener());
+		cancel.addActionListener(new CancelListener());
+		
+		panel.add(browse);
+		panel.add(cancel);
 		panel.add(create);
 		panel.add(login);
-		panel.add(cancel);
 		
 		add("Center", panel);
 		setVisible(true);
@@ -82,7 +121,13 @@ public class StartGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			map.cancel();
+			try {
+				dispose();
+				movieTheatreApp.cancel();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}	
 	}
 	
@@ -107,7 +152,13 @@ public class StartGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			map.browse();
+			try {
+				dispose();
+				movieTheatreApp.browse();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}	
 	}
 	
@@ -131,7 +182,13 @@ public class StartGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			map.login();
+			try {
+				dispose();
+				movieTheatreApp.login();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
@@ -150,7 +207,29 @@ public class StartGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			map.register();
+			try {
+				dispose();
+				movieTheatreApp.register();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+
+	class LogoutListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			try {
+				dispose();
+				movieTheatreApp.logout();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	

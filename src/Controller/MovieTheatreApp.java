@@ -2,8 +2,6 @@ package Controller;
 
 import Database.DatabaseController;
 import View.StartGUI;
-import java.io.*; 
-import java.util.*;
 import Model.*;
 public class MovieTheatreApp {
 	private StartGUI startGUI;
@@ -11,7 +9,7 @@ public class MovieTheatreApp {
 	private PaymentController paymentController;
 	private CancellationController cancellationController;
 	private AccountController accountController;
-	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
+//	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 	private OrdinaryUser user;
 	
 	public MovieTheatreApp(DatabaseController db) {
@@ -20,6 +18,7 @@ public class MovieTheatreApp {
 		cancellationController = new CancellationController(db);
 		accountController = new AccountController(db);
 		user = new OrdinaryUser();
+//		startGUI = new StartGUI("Ordinary User", this);
 	}
 	
 	public static void main(String[] args) {
@@ -27,22 +26,56 @@ public class MovieTheatreApp {
 		DatabaseController databaseController = new DatabaseController();
 		MovieTheatreApp app = new MovieTheatreApp(databaseController);
 
-		while(true){
 			try{
-				if (app.user.getClass() == OrdinaryUser.class)
-					app.ordinaryStartMenu();
-				else
-					app.registerUserMenu();
+				if (app.user.getClass() == OrdinaryUser.class) {
+					app.startGUI = new StartGUI (app);
+//					app.ordinaryStartMenu();
+				}
+				else {
+					app.startGUI = new StartGUI ("Signed in to your account", app);
+//					app.registerUserMenu();
+				}
 			} catch(Exception e){
 				System.out.println(e);
 			}
 		}
-	}
 	
 	public void startPayment() throws Exception {
 		paymentController.pay(user);
 	}
 	
+	public void login () throws Exception {
+		user = new RegisteredUser();
+		try {
+			accountController.login(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		browsingController.browse(user);
+//		startPayment();
+	}
+	
+	public void browse () throws Exception {
+		user = new OrdinaryUser();
+		browsingController.browse(user);
+		startPayment();
+	}
+	
+	public void cancel () throws Exception {
+		cancellationController.cancel(new OrdinaryUser());
+	}
+	
+	public void register () throws Exception {
+		accountController.createAccount();
+	}
+	
+	public void logout () {
+		user = new OrdinaryUser ();
+	}
+	
+	
+	/*
 	public void ordinaryOption() {
 		// ordingary or register button 
 		// create user object based on button pressed
@@ -78,6 +111,7 @@ public class MovieTheatreApp {
 			System.out.println(e);
 		}
 	}
+
 	
 	public void registeredUserOption() {
 		try {
@@ -105,6 +139,8 @@ public class MovieTheatreApp {
 		}
 
 	}
+	
+
 	public void ordinaryStartMenu() {
 		String menu = "1. login" +
 					"\n2. movie"+
@@ -115,6 +151,7 @@ public class MovieTheatreApp {
 		ordinaryOption();
 
 	}
+	
 	public void registerUserMenu(){
 		String menu = "1. movie" +
 					"\n2. cancel" +
@@ -123,5 +160,6 @@ public class MovieTheatreApp {
 		System.out.println(menu);
 		registeredUserOption();
 	}
+	*/
 
 }
