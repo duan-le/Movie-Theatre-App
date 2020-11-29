@@ -4,6 +4,9 @@ import Database.DatabaseController;
 import View.PaymentGUI;
 import Model.*;
 import java.util.*;
+
+//import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+
 import java.io.*; 
 
 public class PaymentController {
@@ -27,8 +30,11 @@ public class PaymentController {
 		
 		
 		if (user.getClass() == OrdinaryUser.class) {
-			ordinaryPay();
+			String lb = "Billing Information";
+			paymentGUI = new PaymentGUI(lb, user, this);
 		} else {
+			String lb = "Your account has been billed automatically";
+			paymentGUI = new PaymentGUI(lb, this);
 			registeredPay();
 		}
 			
@@ -43,18 +49,20 @@ public class PaymentController {
 		}
 	}
 	
-	private void ordinaryPay() throws Exception {
+	private void ordinaryPay(String info) throws Exception {
 		// enter info
-		System.out.println("");
+		/*System.out.println("");
 		System.out.println("Enter Card Number: ");
 		cardNumber = Integer.parseInt(reader.readLine());
 		System.out.println("Enter Billing Info: ");
-		String billinginfo = reader.readLine();
+		String billinginfo = reader.readLine();*/
 		
 		// confirm payment
 		
+		
+		
 		// process payment here
-		System.out.println("Payment is now being Processed");
+		//System.out.println("Payment is now being Processed");
 
 	}
 	

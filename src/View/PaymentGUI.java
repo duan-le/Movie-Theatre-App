@@ -13,24 +13,34 @@ import javax.swing.JTextField;
 
 import Controller.PaymentController;
 import Model.Account;
+import Model.OrdinaryUser;
 import controller.MovieTheaterApp;
 
 
 public class PaymentGUI extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JPanel panel;
 	
 	private PaymentController pc;
+	
+	private OrdinaryUser ou;
 	
 	private JButton submit, cancel;
 	
 	private JTextField emailField, cardField, expiryField, cvvField;
 	
-	public PaymentGUI(String label, PaymentController p)
+	public PaymentGUI(String label, OrdinaryUser u, PaymentController p)
 	{
 		super(label);
 		
 		pc = p;
+		
+		ou = u;
 		
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -56,7 +66,7 @@ public class PaymentGUI extends JFrame{
 		
 	}
 	
-	public PaymentGUI(String label, Account a, PaymentController p)
+	public PaymentGUI(String label, PaymentController p)
 	{
 		pc = p;
 		panel = new JPanel();
@@ -64,7 +74,7 @@ public class PaymentGUI extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(230, 150);
 		
-		JLabel message = new JLabel("Your account has been billed automatically");
+		JLabel message = new JLabel(label);
 		
 		JButton okBut = new JButton("OK");
 		
@@ -89,10 +99,10 @@ public class PaymentGUI extends JFrame{
 			String cvv = cvvField.getText();
 			String expiry = expiryField.getText();
 			
-			String billingInfo = email + cardNum + cvv + expiry;
+			String billingInfo = email + " " + cardNum + "  "+ cvv + " "+ expiry;
 			
 			//Database checks to see if card info is valid
-			pc.ordinaryPay();
+			pc.ordinaryPay(billingInfo);
 			
 			confirmationGUI("Ticket Purchase Confirmation");
 			
