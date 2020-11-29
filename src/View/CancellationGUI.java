@@ -3,6 +3,7 @@ package model;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.*;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,10 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
 import Controller.CancellationController;
 import Database.DatabaseController;
-import model.PaymentGUI.CancelListener;
-import model.PaymentGUI.SubmitListener;
 
 public class CancellationGUI extends JFrame {
 
@@ -23,16 +23,60 @@ public class CancellationGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private JButton submit, cancel;
-	private JTextField ticketNum;
+	private JTextField ticketNum, cardField, emailField, billingField;
 	private CancellationController cc;
 	private DatabaseController db;
 	private JLabel ticketNumLabel;
 	
-	public CancellationGUI (String label, CancellationController c) {
+	public CancellationGUI (String label, CancellationController c)  {
 		super(label);
 		
 		cc = c;
 		
+	}
+	
+	class SubmitListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+			
+			String ticketNo = ticketNum.getText();
+			
+			cc.ticketParse(ticketNo);
+			
+			dispose();
+		}
+		
+	}
+	
+	class CancelListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			dispose();
+		}
+		
+	}
+	
+	class InfoProcessListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			String e = emailField.getText();
+			String c = cardField.getText();
+			String b = billingField.getText();
+			cc.billingInfoParse(e, c, b);
+			dispose();
+		}
+	}
+	
+	public int getTicketNo()
+	{
+		//JFrame f = new JFrame("Enter Ticket Number");
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,43 +99,6 @@ public class CancellationGUI extends JFrame {
 		
 		add("Center", panel);
 		setVisible(true);
-		
-	}
-	
-	class SubmitListener implements ActionListener
-	{
-
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			
-			String ticketNo = ticketNum.getText();
-			
-			boolean successful = cc.cancel(ticketNo);
-			
-			if(successful)
-			{
-				CancelConfirmationGUI();
-			}
-			else
-			{
-				CancellationFailedGUI();
-			}
-			
-			dispose();
-			
-		}
-		
-	}
-	
-	class CancelListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			dispose();
-		}
-		
 	}
 	
 	
@@ -107,7 +114,7 @@ public class CancellationGUI extends JFrame {
 			panel.add(ok);
 			
 			ccf.add("Center", panel);
-			setVisible(true);
+			ccf.setVisible(true);
 		}
 		
 		
@@ -115,11 +122,11 @@ public class CancellationGUI extends JFrame {
 	
 	
 	
-		public void CancellationFailedGUI()
+		public void CancellationFailedGUI(String label)
 		{
 			JFrame tcf = new JFrame("Ticket Cancellation Failed");
 			JPanel panel = new JPanel();
-			JLabel message = new JLabel("Your ticket could not be cancelled, please try again");
+			JLabel message = new JLabel(label);
 			JButton ok = new JButton("OK");
 			ok.addActionListener(new CancelListener());
 			
@@ -128,7 +135,53 @@ public class CancellationGUI extends JFrame {
 			
 			
 			tcf.add("Center", panel);
-			setVisible(true);
+			tcf.setVisible(true);
+		}
+		
+		public static void OrdinaryCancelGUI()
+		{
+			JFrame ocg = new JFrame("Cancel Ticket");
+			JPanel panel = new JPanel();
+			
+			JLabel cardLabel = new JLabel("Card Number: ");
+			JLabel billingLabel = new JLabel("Billing Information: ");
+			JLabel emailLabel = new JLabel("Email: ");
+			
+			cardField = new JTextField("Card Number");
+			billingField = new JTextField("Billing Info");
+			emailField = new JTextField("Email");
+			
+			JButton ok = new JButton("Submit");
+			ok.addActionListener(new CancelListener());
+			
+			panel.add(cardLabel);
+			panel.add(cardField);
+			panel.add(emailLabel);
+			panel.add(emailField);
+			panel.add(billingLabel);
+			panel.add(billingField);
+			panel.add(ok);
+			
+			
+			ocg.add("Center", panel);
+			ocg.setVisible(true);
+		}
+		
+		
+		public static void RegCancelGUI(double refund)
+		{
+			JFrame rcg = new JFrame("Ticket Cancellation Processed");
+			JPanel panel = new JPanel();
+			JLabel message = new JLabel("$" + refund + " voucher sent to email");
+			JButton ok = new JButton("OK");
+			ok.addActionListener(new CancelListener());
+			
+			panel.add(message);
+			panel.add(ok);
+			
+			
+			rcg.add("Center", panel);
+			rcg.setVisible(true);
 		}
 		
 		
