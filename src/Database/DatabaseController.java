@@ -169,9 +169,11 @@ public class DatabaseController {
     // Add purchased ticket from receipt
     public void addTicketReceipt(TicketReceipt ticketReceipt) {
         try {
-        	String query = "INSERT INTO db.ticketreceipt VALUES(?)";
+        	String query = "INSERT INTO db.ticketreceipt VALUES(?, ?)";
     		prepStmt = conn.prepareStatement(query);
 			prepStmt.setInt(1, ticketReceipt.getTicketNumber());
+			prepStmt.setInt(2, ticketReceipt.getCardNumber());
+
     		prepStmt.executeUpdate();
 			prepStmt.close();
         } catch(Exception e) {
@@ -180,16 +182,20 @@ public class DatabaseController {
     }
 
     // Remove purchased ticket from database
-    public void removeTicketReceipt(int ticketNumber) {
-    	try {
-        	String query = "DELETE FROM db.ticketreceipt WHERE TicketNumber=?";
+    public boolean removeTicketReceipt(int ticketNumber, int cardNumber) {
+		boolean deleted = false;
+		try {
+        	String query = "DELETE FROM db.ticketreceipt WHERE TicketNumber=? and cardNumber=?";
     		prepStmt = conn.prepareStatement(query);
-    		prepStmt.setInt(1, ticketNumber);
-    		prepStmt.executeUpdate();
+			prepStmt.setInt(1, ticketNumber);
+    		prepStmt.setInt(2, cardNumber);
+
+    		deleted = prepStmt.executeUpdate() >= 1;
 			prepStmt.close();
         } catch(Exception e) {
 	        System.out.println(e);
 		}
+		return deleted;
     }
 
     // Add account
@@ -281,6 +287,7 @@ public class DatabaseController {
 	        System.out.println(e);
 		}
 	}
+
 	// Testing DatabaseController
 	public static void main(String [] args){
 		DatabaseController dc = new DatabaseController();

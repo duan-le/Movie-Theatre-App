@@ -9,7 +9,7 @@ import java.io.*;
 public class PaymentController {
 	private PaymentGUI paymentGUI;
 	private DatabaseController databaseController;
-	
+	private int cardNumber;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 
 	public PaymentController(DatabaseController db) {
@@ -33,9 +33,10 @@ public class PaymentController {
 		}
 			
 		System.out.println("CardInfo, BillingInfo and UserInfo Payment Processed");
-		
+
+	
 		for (Ticket t : ticketList) {
-			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber());
+			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber(), cardNumber);
 			databaseController.addTicketReceipt(ticketReceipt);
 			user.addTicketReceipt(ticketReceipt);
 			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);
@@ -46,7 +47,7 @@ public class PaymentController {
 		// enter info
 		System.out.println("");
 		System.out.println("Enter Card Number: ");
-		String cardinfo = reader.readLine();
+		cardNumber = Integer.parseInt(reader.readLine());
 		System.out.println("Enter Billing Info: ");
 		String billinginfo = reader.readLine();
 		

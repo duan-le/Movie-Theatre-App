@@ -26,6 +26,8 @@ public class AccountController {
 		databaseController.addAccount(account);
 
 		System.out.println("You are billed 20 dollars for the annual account fee");
+		databaseController.getAccountCreationDate();
+		System.out.println("Account creation date: " + );
 	}
 	
 	public boolean login(OrdinaryUser user) throws Exception {

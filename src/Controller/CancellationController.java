@@ -10,6 +10,8 @@ import View.CancellationGUI;
 public class CancellationController {
 	private CancellationGUI cancellationGUI;
 	private DatabaseController databaseController;
+	private int cardNumber;
+
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 	
 	public CancellationController(DatabaseController db) {
@@ -21,18 +23,22 @@ public class CancellationController {
 		String line = reader.readLine();
 		int ticketNumber = Integer.parseInt(line);
 		Ticket ticket = databaseController.getTicket(ticketNumber);
-		if (check72hours(ticket)){
-			System.out.println("At least 72 hours before movie starts for Cancellation. Cancellation Failed.");
-			return;
-		}
+		// if (check72hours(ticket)){
+		// 	System.out.println("At least 72 hours before movie starts for Cancellation. Cancellation Failed.");
+		// 	return;
+		// }
 
-        databaseController.removeTicketReceipt(ticketNumber);
-		databaseController.updateSeat(ticket.getMovieName(), ticket.getShowtime(), ticket.getSeatNumber(), true);
 		if (user.getClass() == OrdinaryUser.class) {
 			ordinaryCancel(user, ticket);
 		} else {
 			registeredCancel(user, ticket);
 		}
+		boolean deleted = databaseController.removeTicketReceipt(ticketNumber, cardNumber);
+		if (deleted){
+			databaseController.updateSeat(ticket.getMovieName(), ticket.getShowtime(), ticket.getSeatNumber(), true);
+		}
+
+
 	}
 
 	private boolean check72hours(Ticket ticket){
@@ -50,7 +56,7 @@ public class CancellationController {
 	private void ordinaryCancel(OrdinaryUser user, Ticket ticket) throws Exception {
 		// enter info
 		System.out.println("Enter Card Number: ");
-		String cardinfo = reader.readLine();
+		cardNumber = Integer.parseInt(reader.readLine());
 		System.out.println("Enter Billing Info: ");
 		String billinginfo = reader.readLine();
 		
@@ -66,7 +72,12 @@ public class CancellationController {
 		System.out.println("Cancellation is now being Processed");
 		System.out.println("$"+refundAmount + " voucher sent to email.");
 		// need to add this logic to database table
-		System.out.println("Expires: " );
+		//add 1 year to date
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, 1); // to get previous year add -1
+		Date nextYear = cal.getTime();
+		
+		System.out.println("Expires: " + nextYear);
 	}
 	
 	private void registeredCancel(OrdinaryUser user, Ticket ticket) {
@@ -78,8 +89,12 @@ public class CancellationController {
 		System.out.println("Cancellation is now being Processed");
 		System.out.println("$"+refundAmount + " voucher sent to email");
 		// need to add this logic to database table
-		System.out.println("Expires: " );
+		//add 1 year to date
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, 1); // to get previous year add -1
+		Date nextYear = cal.getTime();
 
+		System.out.println("Expires: " + nextYear);
 
 	}
 }

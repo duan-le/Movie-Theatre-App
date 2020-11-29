@@ -17,17 +17,30 @@ public class BrowsingController {
 	
 	public void browse(OrdinaryUser user) throws Exception {
 		// Print to console. Change to GUI later\
-		user.addTicket(selectMovie());
+		user.addTicket(selectMovie(user));
 		
 	}
-	private Ticket selectMovie() throws Exception{
+	private void ordinaryBrowse(String movieName){
+		Date date = new Date();
+		Movie movie = databaseController.findMovie(movieName);
+		if (movie.getReleaseDate().getTime() > date.getTime()){
+			System.out.println("Movie does not exist");
+			// gui exits the browse
+		}
+	}
+
+	private Ticket selectMovie(OrdinaryUser user) throws Exception{
 		// in the gui we will show all movie
 		
 		// in the database the movie table will contain all movies including movies that are not yet to be announced.
 		// only the registered user can see this in the browser and reserve (select) that movie after it passes the logic.
-		
 		System.out.println("Enter movie: ");
 		String movieName = reader.readLine();
+		if (user.getClass() == OrdinaryUser.class) {
+			// only show movies that are released to date
+			ordinaryBrowse(movieName);
+		} 
+
 		Movie movie = databaseController.findMovie(movieName);
 		Showtime showtime = selectShowTime(movieName);
 		Seat seat = selectSeat(movieName, showtime);
