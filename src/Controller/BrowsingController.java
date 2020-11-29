@@ -66,7 +66,6 @@ public class BrowsingController {
 		// in the database the movie table will contain all movies including movies that are not yet to be announced.
 		// only the registered user can see this in the browser and reserve (select) that movie after it passes the logic.
 		Movie movie = databaseController.findMovie(browsingGUI.getMovie());
-		System.out.println("here");
 		String movies = "";
 		if (user.getClass() == OrdinaryUser.class) {
 			if (movie == null || (movie != null && ordinaryBrowse(browsingGUI.getMovie()) == false )) {
@@ -99,21 +98,39 @@ public class BrowsingController {
 		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);
 		String str = "";
 		for (int i = 0; i < allShowTime.size(); i++) {
-			if (i%10 == 0)
-				str += "\n";
-			str += allShowTime.get(i).toString();
+			str += (i+1) + ": " + allShowTime.get(i).toString() + "\n";
 		}
 		return str;
 	}
 	
     public void selectShowTime() throws Exception{
     	
+    	boolean check = true;
     	String movieName = browsingGUI.getMovie();
 		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);
-		
 		int index = Integer.parseInt(browsingGUI.getShowtime());
-		Showtime showtime = allShowTime.get(index);
-		browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
+		Showtime showtime = allShowTime.get(index - 1);
+		ArrayList<Seat> allSeats= databaseController.getAllSeats(movieName, showtime);
+		Movie movie = databaseController.findMovie(movieName);
+		Date date = new Date();
+		if (movie.getReleaseDate().getTime() > date.getTime()){
+			double seatAvail = 0;
+			for (Seat seat: allSeats){
+				if (seat.getAvailability())
+					seatAvail ++;
+			}
+			if (seatAvail / allSeats.size() < .9) {
+				browsingGUI.displayInvalidSeat();
+				browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
+				browsingGUI.displayShowtimes(getAllShowtimes(movieName), movieName);
+				check = false;
+//				System.out.println("over 10% is booked already");
+				//gui exits the browse
+			}
+		}
+		// display available seats
+		if (check == true)
+			browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
     }
     
     public String getAllSeats (String movieName, Showtime showtime) {
@@ -129,19 +146,29 @@ public class BrowsingController {
     	return str;
     }
 	
-	public Seat selectSeat(OrdinaryUser user, String movieName, Showtime showtime) throws Exception {
+	public void selectSeat(OrdinaryUser user) throws Exception {
+		
+		
+		String movieName = browsingGUI.getMovie();
+		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);
+		Showtime showtime = allShowTime.get((Integer.parseInt(browsingGUI.getShowtime()) - 1));
+		
 		ArrayList<Seat> allSeats= databaseController.getAllSeats(movieName, showtime);
 		Movie movie = databaseController.findMovie(movieName);
+		/*
 		Date date = new Date();
 		if (movie.getReleaseDate().getTime() > date.getTime()){
-			double seatAvail =0;
+			double seatAvail = 0;
 			for (Seat seat: allSeats){
 				if (seat.getAvailability())
 					seatAvail ++;
 			}
-			if (seatAvail / allSeats.size() < .9)
-				System.out.println("over 10% is booked already");
+			if (seatAvail / allSeats.size() < .9) {
+				browsingGUI.displayInvalidSeat();
+				browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
+//				System.out.println("over 10% is booked already");
 				// gui exits the browse
+			}
 		}
 		// display available seats
 		for (int i = 0; i < allSeats.size(); i++){
@@ -152,10 +179,16 @@ public class BrowsingController {
 
 		// select seats then update database
 		System.out.println("Select seat number: ");
-		int index = Integer.parseInt(reader.readLine()); 
-		Seat seat = allSeats.get(index);
+		*/
 		
-		return seat;
+		int index = Integer.parseInt(browsingGUI.getSeat()); 
+		Seat seat = allSeats.get(index-1);
+		
+		if (seat != null) {
+			user.addTicket(databaseController.getTicket(movieName, showtime, seat));
+			browsingGUI.displayConfirmation ();
+		}		
+//		return seat;
 	}
 	
 }

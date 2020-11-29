@@ -94,7 +94,9 @@ public class BrowsingGUI extends JFrame {
 		seat = new JTextField (10);
 		bottom = new JPanel (new FlowLayout ());
 		okay = new JButton ("Okay");
+		okay.addActionListener(new SelectSeatListener());
 		cancel = new JButton ("Cancel");
+		cancel.addActionListener(new CancelListener());
 		bottom.add(new JLabel ("Select a Seat: "));
 		bottom.add(seat);
 		bottom.add(okay);
@@ -110,14 +112,14 @@ public class BrowsingGUI extends JFrame {
 		frame = new JFrame("Available Showtimes for " + movieName);
 		frame.setSize(500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-//		frame.add("North", new JLabel("Available Showtimes", SwingConstants.CENTER));
 
 		JScrollPane scroll = new JScrollPane(textArea);
 		showtime = new JTextField (10);
 		bottom = new JPanel (new FlowLayout ());
 		okay = new JButton ("Okay");
+		okay.addActionListener(new SelectShowtimeListener());
 		cancel = new JButton ("Cancel");
+		cancel.addActionListener(new CancelListener());
 		bottom.add(new JLabel ("Select a Showtime: "));
 		bottom.add(showtime);
 		bottom.add(okay);
@@ -134,7 +136,7 @@ public class BrowsingGUI extends JFrame {
 		frame = new JFrame("Browse Theatres");
 		frame.setSize(300, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add("North", new JLabel("Available Theatres", SwingConstants.CENTER));
+//		frame.add("North", new JLabel("Available Theatres", SwingConstants.CENTER));
 		
 		JScrollPane scroll = new JScrollPane(textArea);
 		theatre = new JTextField (10);
@@ -156,9 +158,19 @@ public class BrowsingGUI extends JFrame {
 		JOptionPane.showMessageDialog(frame, "Unable to find movie you searched for.");
 	}
 	
-	public void displayInvalidSeat () {
+	public void displayInvalidShowtime () {
 		JFrame f = new JFrame ("Error");
 		JOptionPane.showMessageDialog(frame, "Unable to find movie you searched for.");
+	}
+	
+	public void displayInvalidSeat () {
+		JFrame f = new JFrame ("Error");
+		JOptionPane.showMessageDialog(frame, "Over 10% of seats are already booked for this movie.\nPlease select another showtime");
+	}
+	
+	public void displayConfirmation () {
+		JFrame f = new JFrame ("COnfirmed");
+		JOptionPane.showMessageDialog(frame, "Ticket selected");
 	}
 	
 	class CancelListener implements ActionListener {
@@ -189,8 +201,13 @@ public class BrowsingGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			
+			dispose();
+			try {
+				bc.selectSeat(ou);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 	}
