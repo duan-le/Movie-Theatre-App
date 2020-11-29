@@ -262,11 +262,6 @@ public class AccountGUI extends JFrame {
 			
 		}
 	}
-	
-	/*
-	 * name.getText(), addr.getText(), phono.getText(), bname.getText(), baddr.getText(), bphono.getText(),
-							cardnum.getText(), chn.getText(), mail.getText(), pass.getText()
-	 */
 
 	/**
 	 * Listens for when the cancel button is pressed.
@@ -294,56 +289,5 @@ public class AccountGUI extends JFrame {
 			ac.checkLogin(ou);
 		}	
 	} 
-
-	
-	/*
-	public class LoginGUI {
-		
-		AccountGUI accountGUI;
-		JPasswordField password;
-		JTextField email;
-		JLabel pass, mail;
-		JButton okay, cancel;
-		
-		LoginGUI (AccountGUI ag) {
-			
-			this.accountGUI = ag;
-			email = new JTextField();
-			password = new JPasswordField();
-			mail = new JLabel ("Email: ");
-			pass = new JLabel ("Password: ");
-			
-			okay = new JButton ("Login");
-			cancel = new JButton ("Cancel");
-			
-			ag.loginInfo.add(mail);
-			ag.loginInfo.add(email);
-			ag.loginInfo.add(pass);
-			ag.loginInfo.add(password);
-			ag.buttons.add(okay);
-			ag.buttons.add(cancel);
-			
-			
-			ag.loginInfo = new JPanel(new GridLayout (2, 2));
-			ag.buttons = new JPanel(new FlowLayout());
-			
-			ag.add(ag.loginInfo);
-			ag.add(ag.buttons);
-		}
-		
-		public String getPass () {
-			return password.getPassword().toString();
-		}
-		
-		public String getMail () {
-			return email.getText();
-		}
-		
-		public JButton getOkayButton () {
-			return okay;
-		}
-	}
-	*/
-	
 
 }

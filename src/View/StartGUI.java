@@ -39,12 +39,6 @@ public class StartGUI extends JFrame{
 		
 		this.movieTheatreApp = map;
 		
-//		try { 
-//		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (Exception e) {
-//		    e.printStackTrace();
-//		}
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(180, 150);
 		
@@ -55,9 +49,8 @@ public class StartGUI extends JFrame{
 		cancel = new JButton("Cancel Ticket");
 		logout = new JButton("Logout");
 		
-		browse.addActionListener(new GuestListener());
-		login.addActionListener(new LoginListener());
-		create.addActionListener(new CreateListener());
+		browse.addActionListener(new BrowseListener());
+		logout.addActionListener(new LogoutListener());
 		cancel.addActionListener(new CancelListener());
 		
 		panel.add(browse);
@@ -76,12 +69,6 @@ public class StartGUI extends JFrame{
 		super("Welcome");
 		
 		this.movieTheatreApp = map;
-		
-//		try { 
-//		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (Exception e) {
-//		    e.printStackTrace();
-//		}
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(180, 150);
@@ -94,7 +81,7 @@ public class StartGUI extends JFrame{
 		cancel = new JButton("Cancel Ticket");
 		login = new JButton("Login");
 		
-		browse.addActionListener(new GuestListener());
+		browse.addActionListener(new BrowseListener());
 		login.addActionListener(new LoginListener());
 		create.addActionListener(new CreateListener());
 		cancel.addActionListener(new CancelListener());
@@ -132,18 +119,9 @@ public class StartGUI extends JFrame{
 	}
 	
 	/**
-	 * Disposes of the frame and ends the program.
-
-	public void cancel() {
-		dispose();
-		System.exit(1);
-	}
-	*/
-	
-	/**
 	 * Listens for when the admin button is pressed.
  	 */
-	class GuestListener implements ActionListener {
+	class BrowseListener implements ActionListener {
 
 		/**
 		 * Calls the newAdmin method.
@@ -161,14 +139,6 @@ public class StartGUI extends JFrame{
 			}
 		}	
 	}
-	
-	/**
-	 * Disposes of this frame and starts a new browsing frame.
-	public void newBrowse() {
-		dispose();
-		new BrowsingGUI("Browse Movies");
-	}
-	*/
 	
 	/**
 	 * Listens for when the student button is pressed.
@@ -191,16 +161,6 @@ public class StartGUI extends JFrame{
 			}
 		}
 	}
-	
-	/**
-	 * Disposes of this frame and starts a new studentLogin frame.
-	
-	public void newLogin() {
-		dispose();
-		System.out.println("Properly disposed");
-		new AccountGUI("Login");
-	}
-	 */
 	
 	class CreateListener implements ActionListener {
 
@@ -232,12 +192,5 @@ public class StartGUI extends JFrame{
 			}
 		}
 	}
-	
-	/*
-	public void newCreate () {
-		dispose();
-		new AccountGUI ("Create Account");
-	}
-	*/
 	
 }

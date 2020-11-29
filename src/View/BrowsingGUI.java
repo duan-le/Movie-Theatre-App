@@ -1,168 +1,222 @@
-package model;
+package View;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import controller.BrowsingController;
-import controller.MovieTheaterApp;
+import Controller.BrowsingController;
+import Controller.MovieTheatreApp;
+import Model.OrdinaryUser;
 
 public class BrowsingGUI extends JFrame {
 	
 	JFrame frame;
 	private JPanel bottom;
 	private JButton okay, cancel;
-	private JTextField textField;
+	private JTextField movie, theatre, seat, showtime;
 	private JTextArea textArea;
 	private BrowsingController bc;
+	private OrdinaryUser ou;
 	
-	public BrowsingGUI (String label, int n) {
+	public BrowsingGUI(String label, String movies, BrowsingController browsingController, OrdinaryUser ou) {
 		super (label);
 		
-		this.bc = new BrowsingController (this);
+		this.bc = browsingController;
+		this.ou = ou;
 		
 		textArea = new JTextArea ();
-		textField = new JTextField (10);
-		
-		displayMovies();
-		
+	
+		displayMovies(movies);
+	}
+
+	public String getMovie () {
+		return movie.getText();
 	}
 	
-	public JTextField getTextField () {
-		return textField;
+	public String getSeat () {
+		return seat.getText();
 	}
 	
-	public JButton getOkayButton () {
-		return okay;
+	public String getTheatre () {
+		return theatre.getText();
 	}
 	
-	public JButton getCancelButton () {
-		return cancel;
-	}
-	
-	public JFrame getFrame () {
-		return frame;
+	public String getShowtime () {
+		return showtime.getText();
 	}
  	
-	public void displayMovies () {
-		String str = "Need\nTo\nFigure\nOut\nHow\nTo\nConnect\nTo\nController\nand\nDatabase";
+	public void displayMovies (String movies) {
 		
-		frame = new JFrame("Browse Movies");
-		frame.setSize(500, 300);
+		frame = new JFrame("Movies Showing");
+		frame.setSize(300, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.add("North", new JLabel("Movies Showing", SwingConstants.CENTER));
+//		frame.add("North", new JLabel("Movies Showing", SwingConstants.CENTER));
 		
 		JScrollPane scroll = new JScrollPane(textArea);
-		textField = new JTextField (10);
-		bottom = new JPanel (new FlowLayout ());
+		movie = new JTextField (10);
+		bottom = new JPanel (new GridLayout (2, 2));
 		okay = new JButton ("Okay");
+		okay.addActionListener(new SelectMovieListener());
 		cancel = new JButton ("Cancel");
+		cancel.addActionListener(new CancelListener());
 		bottom.add(new JLabel ("Select a Movie: "));
-		bottom.add(textField);
+		bottom.add(movie);
 		bottom.add(okay);
 		bottom.add(cancel);
 		frame.add("Center", scroll);
 		frame.add("South", bottom);
-		textArea.setText(str);
+		textArea.setText(movies);
 		frame.setVisible(true);
-		
-//		BrowsingController bc = new BrowsingController (this);
-		bc.browseMovies();
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 	
-	public void displaySeats () {
-		String str = "Need\nTo\nFigure\nOut\nHow\nTo\nConnect\nTo\nController\nand\nDatabase";
-		
-		frame = new JFrame("Browse Seats");
+	public void displaySeats (String seats, String movieName) {
+				
+		frame = new JFrame("Browse Seats for " + movieName);
 		frame.setSize(500, 300);
-		
-		frame.add("North", new JLabel("Available Seats", SwingConstants.CENTER));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.add("North", new JLabel("Available Seats", SwingConstants.CENTER));
 		
 		JTextArea textArea = new JTextArea();
 		JScrollPane scroll = new JScrollPane(textArea);
-		textField = new JTextField (10);
+		seat = new JTextField (10);
 		bottom = new JPanel (new FlowLayout ());
 		okay = new JButton ("Okay");
 		cancel = new JButton ("Cancel");
 		bottom.add(new JLabel ("Select a Seat: "));
-		bottom.add(textField);
+		bottom.add(seat);
 		bottom.add(okay);
 		bottom.add(cancel);
 		frame.add("Center", scroll);
 		frame.add("South", bottom);
-		textArea.setText(str);
+		textArea.setText(seats);
 		frame.setVisible(true);
-		
-//		BrowsingController bc = new BrowsingController (this);
-		bc.browseSeats();
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	public void displayShowtimes () {
-		String str = "Need\nTo\nFigure\nOut\nHow\nTo\nConnect\nTo\nController\nand\nDatabase";
+	public void displayShowtimes (String showtimes, String movieName) {
 		
-		frame = new JFrame("Browse Showtimes");
+		frame = new JFrame("Available Showtimes for " + movieName);
 		frame.setSize(500, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.add("North", new JLabel("Available Showtimes", SwingConstants.CENTER));
+//		frame.add("North", new JLabel("Available Showtimes", SwingConstants.CENTER));
 
 		JScrollPane scroll = new JScrollPane(textArea);
-		textField = new JTextField (10);
+		showtime = new JTextField (10);
 		bottom = new JPanel (new FlowLayout ());
 		okay = new JButton ("Okay");
 		cancel = new JButton ("Cancel");
 		bottom.add(new JLabel ("Select a Showtime: "));
-		bottom.add(textField);
+		bottom.add(showtime);
 		bottom.add(okay);
 		bottom.add(cancel);
 		frame.add("Center", scroll);
 		frame.add("South", bottom);
-		textArea.setText(str);
+		textArea.setText(showtimes);
 		frame.setVisible(true);
 		
-//		BrowsingController bc = new BrowsingController (this);
-		bc.browseShowtimes();
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-		public void displayTheatres () {
-		String str = "Need\nTo\nFigure\nOut\nHow\nTo\nConnect\nTo\nController\nand\nDatabase";
+		public void displayTheatres (String theatres) {
 		
 		frame = new JFrame("Browse Theatres");
-		frame.setSize(500, 300);
-		
+		frame.setSize(300, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add("North", new JLabel("Available Theatres", SwingConstants.CENTER));
 		
 		JScrollPane scroll = new JScrollPane(textArea);
-		textField = new JTextField (10);
-		bottom = new JPanel (new FlowLayout ());
+		theatre = new JTextField (10);
+		bottom = new JPanel (new GridLayout (2, 2));
 		okay = new JButton ("Okay");
 		cancel = new JButton ("Cancel");
 		bottom.add(new JLabel ("Select a Theatre: "));
-		bottom.add(textField);
+		bottom.add(theatre);
 		bottom.add(okay);
 		bottom.add(cancel);
 		frame.add("Center", scroll);
 		frame.add("South", bottom);
-		textArea.setText(str);
+		textArea.setText(theatres);
 		frame.setVisible(true);
+	}
 		
-//		BrowsingController bc = new BrowsingController (this);
-		bc.browseTheatres();
+	public void displayInvalidMovie () {
+		JFrame f = new JFrame ("Error");
+		JOptionPane.showMessageDialog(frame, "Unable to find movie you searched for.");
+	}
+	
+	public void displayInvalidSeat () {
+		JFrame f = new JFrame ("Error");
+		JOptionPane.showMessageDialog(frame, "Unable to find movie you searched for.");
+	}
+	
+	class CancelListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+		}
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	class SelectMovieListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				dispose();
+				bc.selectMovie (ou);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+	}
+	
+	class SelectSeatListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			
+		}
+		
+	}
+	
+	class SelectShowtimeListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+			try {
+				bc.selectShowTime();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+	}
+	
+	class SelectTheatreListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 	}
 	

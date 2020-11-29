@@ -1,4 +1,4 @@
-package model;
+package View;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;

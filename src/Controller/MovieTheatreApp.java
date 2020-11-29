@@ -52,14 +52,13 @@ public class MovieTheatreApp {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		browsingController.browse(user);
-//		startPayment();
+		startGUI = new StartGUI ("Logged in", this);
 	}
 	
 	public void browse () throws Exception {
 		user = new OrdinaryUser();
 		browsingController.browse(user);
-		startPayment();
+//		startPayment();
 	}
 	
 	public void cancel () throws Exception {
