@@ -112,7 +112,7 @@ public class CancellationController {
 	
 	private void registeredCancel(OrdinaryUser user, Ticket ticket) {
 
-		
+		//need database access
 		// Cancellation is automatic because registered user should be logged in
 		double refundAmount = ticket.getTicketPrice();
 		
