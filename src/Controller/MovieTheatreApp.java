@@ -16,7 +16,7 @@ public class MovieTheatreApp {
 		browsingController = new BrowsingController(db);
 		paymentController = new PaymentController(db);
 		cancellationController = new CancellationController(db);
-		accountController = new AccountController(db);
+		accountController = new AccountController(db, this);
 		user = new OrdinaryUser();
 //		startGUI = new StartGUI("Ordinary User", this);
 	}
@@ -52,6 +52,10 @@ public class MovieTheatreApp {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		startGUI = new StartGUI ("Logged in", this);
+	}
+	
+	public void userSelection () {
 		startGUI = new StartGUI ("Logged in", this);
 	}
 	

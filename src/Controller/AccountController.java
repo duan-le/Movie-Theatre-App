@@ -10,13 +10,19 @@ import java.awt.event.ActionListener;
 public class AccountController {
 	private AccountGUI accountGUI;
 	private DatabaseController databaseController;
+	MovieTheatreApp movieTheatreApp;
 	
-	public AccountController(DatabaseController db) {
+	public AccountController(DatabaseController db, MovieTheatreApp map) {
 		databaseController = db;
+		movieTheatreApp = map;
 	}
 	
 	public void createAccount() {
 		this.accountGUI = new AccountGUI ("Create an Account", this);
+	}
+	
+	public MovieTheatreApp getMTA () {
+		return movieTheatreApp;
 	}
 	
 	// String name, String addr, String phono, String bname, String baddr, String bphono,
