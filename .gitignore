@@ -2,4 +2,5 @@
 .settings
 .vscode
 .metadata
+.class
 /bin/
