@@ -78,7 +78,7 @@ public class CancellationController {
 		// enter info
 		
 		
-		CancellationGUI.OrdinaryCancelGUI();
+		cancellationGUI.OrdinaryCancelGUI();
 		
 		
 		/*System.out.println("Enter Card Number: ");
@@ -96,7 +96,7 @@ public class CancellationController {
 		// process refund here
 		double refundAmount = ticket.getTicketPrice() * .85;
 		
-		CancellationGUI.RegCancelGUI(refundAmount);
+		cancellationGUI.RegCancelGUI(refundAmount);
 		//System.out.println("Cancellation is now being Processed");
 		//System.out.println("$"+refundAmount + " voucher sent to email.");
 		

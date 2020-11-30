@@ -80,19 +80,18 @@ public class CancellationGUI extends JFrame {
 			String c = cardField.getText();
 			String b = billingField.getText();
 			cc.billingInfoParse(em, c, b);
-			dispose();
+			f.dispose();
 		}
 	}
 	
 	public void getTicketNo()
 	{
 		f = new JFrame("Ticket Information");
-		f.setSize(300, 300);
+		f.setSize(300, 120);
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 500);
-		
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
 		submit = new JButton("Submit Cancellation");
 		cancel = new JButton("Cancel");
 		
@@ -146,14 +145,16 @@ public class CancellationGUI extends JFrame {
 			f.setSize(300, 100);
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel panel = new JPanel();
+			JPanel buttons = new JPanel();
 			JLabel message = new JLabel(label);
 			ok = new JButton("OK");
 			ok.addActionListener(new CancelListener());
 			
 			panel.add(message);
+			buttons.add(ok);
 			
 			f.add("Center", panel);
-			f.add("South", ok);
+			f.add("South", buttons);
 			f.setVisible(true);
 		}
 		
@@ -199,17 +200,19 @@ public class CancellationGUI extends JFrame {
 		public void RegCancelGUI(double refund)
 		{
 			f = new JFrame("Ticket Cancellation Processed");
-			f.setSize(300, 200);
+			f.setSize(400, 100);
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel panel = new JPanel();
+			JPanel buttons = new JPanel();
 			JLabel message = new JLabel("$" + refund + " voucher sent to email");
-			JButton ok = new JButton("OK");
+			ok = new JButton("OK");
 			ok.addActionListener(new CancelListener());
 			
 			panel.add(message);			
+			buttons.add(ok);
 			
 			f.add("Center", panel);
-			f.add("South", ok);
+			f.add("South", buttons);
 			f.setVisible(true);
 		}
 		
@@ -220,7 +223,7 @@ public class CancellationGUI extends JFrame {
 			CancellationGUI cd = new CancellationGUI("Cancellation", c);
 			
 			cd.CancelConfirmationGUI();
-			cd.CancellationFailedGUI("Failed");
+			cd.CancellationFailedGUI("Your ticket cancellation could not be processed");
 			cd.getTicketNo();
 			cd.RegCancelGUI(45.00);
 			cd.OrdinaryCancelGUI();
