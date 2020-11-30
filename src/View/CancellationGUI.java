@@ -147,7 +147,7 @@ public class CancellationGUI extends JFrame {
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel panel = new JPanel();
 			JLabel message = new JLabel(label);
-			JButton ok = new JButton("OK");
+			ok = new JButton("OK");
 			ok.addActionListener(new CancelListener());
 			
 			panel.add(message);
@@ -157,7 +157,7 @@ public class CancellationGUI extends JFrame {
 			f.setVisible(true);
 		}
 		
-		public static void OrdinaryCancelGUI()
+		public void OrdinaryCancelGUI()
 		{
 			f = new JFrame("Cancel Ticket");
 			f.setSize(500, 170);
@@ -179,8 +179,8 @@ public class CancellationGUI extends JFrame {
 			emailField.setPreferredSize(new Dimension(30, 10));
 			billingField.setPreferredSize(new Dimension(30, 10));
 			
-			JButton smit = new JButton("Submit");
-			smit.addActionListener(new SubmitListener());
+			submit = new JButton("Submit");
+			submit.addActionListener(new SubmitListener());
 			
 			center.add(cardLabel);
 			center.add(cardField);
@@ -188,7 +188,7 @@ public class CancellationGUI extends JFrame {
 			center.add(emailField);
 			center.add(billingLabel);
 			center.add(billingField);
-			panel.add(smit);
+			panel.add(submit);
 			
 			f.add("Center", center);
 			f.add("South", panel);
@@ -196,7 +196,7 @@ public class CancellationGUI extends JFrame {
 		}
 		
 		
-		public static void RegCancelGUI(double refund)
+		public void RegCancelGUI(double refund)
 		{
 			f = new JFrame("Ticket Cancellation Processed");
 			f.setSize(300, 200);
@@ -219,10 +219,10 @@ public class CancellationGUI extends JFrame {
 			CancellationController c = new CancellationController(db);
 			CancellationGUI cd = new CancellationGUI("Cancellation", c);
 			
-			//cd.CancelConfirmationGUI();
-			//cd.CancellationFailedGUI("Failed");
-			//cd.getTicketNo();
-			//cd.RegCancelGUI(45.00);
+			cd.CancelConfirmationGUI();
+			cd.CancellationFailedGUI("Failed");
+			cd.getTicketNo();
+			cd.RegCancelGUI(45.00);
 			cd.OrdinaryCancelGUI();
 		}*/
 	

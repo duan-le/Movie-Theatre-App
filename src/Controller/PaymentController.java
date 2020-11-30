@@ -30,11 +30,11 @@ public class PaymentController {
 		
 		
 		if (user.getClass() == OrdinaryUser.class) {
-			String lb = "Billing Information";
-			paymentGUI = new PaymentGUI(lb, user, this);
+			paymentGUI = new PaymentGUI(user, this);
+			paymentGUI.OrdPaymentGUI();
 		} else {
-			String lb = "Your account has been billed automatically";
-			paymentGUI = new PaymentGUI(lb, this);
+			paymentGUI = new PaymentGUI(user, this);
+			paymentGUI.RegPaymentGUI();
 			registeredPay();
 		}
 			
