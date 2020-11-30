@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import Controller.PaymentController;
 import Model.Account;
 import Model.OrdinaryUser;
-import controller.MovieTheaterApp;
+import Controller.MovieTheatreApp;
 
 
 public class PaymentGUI extends JFrame{

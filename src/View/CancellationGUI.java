@@ -1,5 +1,7 @@
-package model;
+package View;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,10 +22,16 @@ public class CancellationGUI extends JFrame {
 	/**
 	 * serial id
 	 */
+	
+	static JFrame f;
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
-	private JButton submit, cancel;
-	private JTextField ticketNum, cardField, emailField, billingField;
+	private JButton submit, cancel, ok;
+	private JTextField ticketNum;
+	private static JTextField cardField;
+	private static JTextField emailField;
+	private static JTextField billingField;
 	private CancellationController cc;
 	private DatabaseController db;
 	private JLabel ticketNumLabel;
@@ -46,7 +54,7 @@ public class CancellationGUI extends JFrame {
 			
 			cc.ticketParse(ticketNo);
 			
-			dispose();
+			f.dispose();
 		}
 		
 	}
@@ -56,65 +64,75 @@ public class CancellationGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			dispose();
+			//f.setVisible(false);
+			f.dispose();
 		}
 		
 	}
+	
 	
 	class InfoProcessListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			String e = emailField.getText();
+			String em = emailField.getText();
 			String c = cardField.getText();
 			String b = billingField.getText();
-			cc.billingInfoParse(e, c, b);
+			cc.billingInfoParse(em, c, b);
 			dispose();
 		}
 	}
 	
-	public int getTicketNo()
+	public void getTicketNo()
 	{
-		//JFrame f = new JFrame("Enter Ticket Number");
+		f = new JFrame("Ticket Information");
+		f.setSize(300, 300);
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(230, 150);
+		setSize(500, 500);
 		
 		submit = new JButton("Submit Cancellation");
 		cancel = new JButton("Cancel");
 		
-		ticketNum = new JTextField();
+		ticketNum = new JTextField(1);
 		
 		submit.addActionListener(new SubmitListener());
 		cancel.addActionListener(new CancelListener());
 		
 		ticketNumLabel = new JLabel("Ticket number: ");
 		
+		JPanel buttons = new JPanel();
+		
 		panel.add(ticketNumLabel);
 		panel.add(ticketNum);
-		panel.add(submit);
-		panel.add(cancel);
+		buttons.add(submit);
+		buttons.add(cancel);
 		
-		add("Center", panel);
-		setVisible(true);
+		f.add("Center", panel);
+		f.add("South", buttons);
+		f.setVisible(true);
 	}
 	
 	
 		public void CancelConfirmationGUI()
 		{
-			JFrame ccf = new JFrame("Ticket Cancellation Confirmed");
+			f = new JFrame("Ticket Cancellation Confirmed");
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			f.setSize(350, 100);
 			JPanel panel = new JPanel();
+			JPanel buttons = new JPanel();
 			JLabel message = new JLabel("Your ticket has been cancelled");
-			JButton ok = new JButton("OK");
+			ok = new JButton("OK");
 			ok.addActionListener(new CancelListener());
 			
 			panel.add(message);
-			panel.add(ok);
+			buttons.add(ok);
 			
-			ccf.add("Center", panel);
-			ccf.setVisible(true);
+			f.add("Center", panel);
+			f.add("South", buttons);
+			f.setVisible(true);
 		}
 		
 		
@@ -124,68 +142,91 @@ public class CancellationGUI extends JFrame {
 	
 		public void CancellationFailedGUI(String label)
 		{
-			JFrame tcf = new JFrame("Ticket Cancellation Failed");
+			f = new JFrame("Ticket Cancellation Failed");
+			f.setSize(300, 100);
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel panel = new JPanel();
 			JLabel message = new JLabel(label);
 			JButton ok = new JButton("OK");
 			ok.addActionListener(new CancelListener());
 			
 			panel.add(message);
-			panel.add(ok);
 			
-			
-			tcf.add("Center", panel);
-			tcf.setVisible(true);
+			f.add("Center", panel);
+			f.add("South", ok);
+			f.setVisible(true);
 		}
 		
 		public static void OrdinaryCancelGUI()
 		{
-			JFrame ocg = new JFrame("Cancel Ticket");
+			f = new JFrame("Cancel Ticket");
+			f.setSize(500, 170);
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			JPanel center = new JPanel();
 			JPanel panel = new JPanel();
+			
+			center= new JPanel (new GridLayout (3, 2));
 			
 			JLabel cardLabel = new JLabel("Card Number: ");
 			JLabel billingLabel = new JLabel("Billing Information: ");
 			JLabel emailLabel = new JLabel("Email: ");
 			
-			cardField = new JTextField("Card Number");
-			billingField = new JTextField("Billing Info");
-			emailField = new JTextField("Email");
+			cardField = new JTextField();
+			billingField = new JTextField();
+			emailField = new JTextField();
 			
-			JButton ok = new JButton("Submit");
-			ok.addActionListener(new CancelListener());
+			cardField.setPreferredSize(new Dimension(30, 10));
+			emailField.setPreferredSize(new Dimension(30, 10));
+			billingField.setPreferredSize(new Dimension(30, 10));
 			
-			panel.add(cardLabel);
-			panel.add(cardField);
-			panel.add(emailLabel);
-			panel.add(emailField);
-			panel.add(billingLabel);
-			panel.add(billingField);
-			panel.add(ok);
+			JButton smit = new JButton("Submit");
+			smit.addActionListener(new SubmitListener());
 			
+			center.add(cardLabel);
+			center.add(cardField);
+			center.add(emailLabel);
+			center.add(emailField);
+			center.add(billingLabel);
+			center.add(billingField);
+			panel.add(smit);
 			
-			ocg.add("Center", panel);
-			ocg.setVisible(true);
+			f.add("Center", center);
+			f.add("South", panel);
+			f.setVisible(true);
 		}
 		
 		
 		public static void RegCancelGUI(double refund)
 		{
-			JFrame rcg = new JFrame("Ticket Cancellation Processed");
+			f = new JFrame("Ticket Cancellation Processed");
+			f.setSize(300, 200);
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel panel = new JPanel();
 			JLabel message = new JLabel("$" + refund + " voucher sent to email");
 			JButton ok = new JButton("OK");
 			ok.addActionListener(new CancelListener());
 			
-			panel.add(message);
-			panel.add(ok);
+			panel.add(message);			
 			
-			
-			rcg.add("Center", panel);
-			rcg.setVisible(true);
+			f.add("Center", panel);
+			f.add("South", ok);
+			f.setVisible(true);
 		}
 		
-		
+		/*public static void main(String[] args)
+		{
+			DatabaseController db = new DatabaseController();
+			CancellationController c = new CancellationController(db);
+			CancellationGUI cd = new CancellationGUI("Cancellation", c);
+			
+			//cd.CancelConfirmationGUI();
+			//cd.CancellationFailedGUI("Failed");
+			//cd.getTicketNo();
+			//cd.RegCancelGUI(45.00);
+			cd.OrdinaryCancelGUI();
+		}*/
 	
 	
 	
 }
+

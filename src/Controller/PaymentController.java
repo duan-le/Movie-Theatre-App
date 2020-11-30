@@ -49,7 +49,7 @@ public class PaymentController {
 		}
 	}
 	
-	private void ordinaryPay(String info) throws Exception {
+	public void ordinaryPay(String info) throws Exception {
 		// enter info
 		/*System.out.println("");
 		System.out.println("Enter Card Number: ");
