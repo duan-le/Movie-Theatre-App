@@ -33,7 +33,7 @@ public class CancellationController {
 	public void ticketParse(String ticketNo) {
 		ticketNumber = Integer.parseInt(ticketNo); 
 		ticket = databaseController.getTicket(ticketNumber);
-		if (check72hours(ticket))
+		if (!check72hours(ticket))
 		{
 			cancellationGUI.CancellationFailedGUI("This movie starts within 72 hours. Ticket Cancellation Failed");
 			return;
@@ -68,16 +68,13 @@ public class CancellationController {
 		Date date = new Date();
 		long dif = ticket.getShowtime().getDate().getTime() - date.getTime();
 		if (dif < 0){
-			System.out.println(dif);
 			return true;
 		}
 		long diffHours = dif / (60 * 60 * 1000 * 24);
 		if (diffHours > 72)
 		{
-			System.out.println(diffHours);
 			return true;
 		}
-		System.out.println(dif);
 		return false;
 	}
 
