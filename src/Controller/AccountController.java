@@ -24,9 +24,6 @@ public class AccountController {
 	public MovieTheatreApp getMTA () {
 		return movieTheatreApp;
 	}
-	
-	// String name, String addr, String phono, String bname, String baddr, String bphono,
-	// String cardnum, String chn, String mail, String pass
 
 	public void register() throws Exception{
 		
@@ -74,5 +71,4 @@ public class AccountController {
 			movieTheatreApp.loginStatus(true);
 		}
 	}
-	
 }

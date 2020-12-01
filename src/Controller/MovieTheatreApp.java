@@ -25,12 +25,10 @@ public class MovieTheatreApp {
 	public static void main(String[] args) {
 		DatabaseController databaseController = new DatabaseController();
 		MovieTheatreApp app = new MovieTheatreApp(databaseController);
-
-			try{
-			    // Set cross-platform Java L&F (also called "Metal")
+			try {
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 				if (app.user.getClass() == OrdinaryUser.class) {
-					app.startGUI = new StartGUI (app);
+					app.startGUI = new StartGUI(app);
 				}
 				else {
 					app.startGUI = new StartGUI ("Signed in to your account", app);
@@ -49,7 +47,7 @@ public class MovieTheatreApp {
 		paymentController.setMta(this);
 	}
 	
-	public void login () throws Exception {
+	public void login() throws Exception {
 		user = new RegisteredUser();
 		try {
 			accountController.login(user);
@@ -62,25 +60,25 @@ public class MovieTheatreApp {
 		startGUI = new StartGUI ("Logged in", this);
 	}
 	
-	public void browse () throws Exception {
+	public void browse() throws Exception {
 		browsingController.browse(user);
 	}
 	
-	public void cancel () throws Exception {
+	public void cancel() throws Exception {
 		cancellationController.cancel(new OrdinaryUser());
 		cancellationController.setMta(this);
 	}
 	
-	public void register () throws Exception {
+	public void register() throws Exception {
 		accountController.createAccount();
 	}
 	
-	public void logout () {
+	public void logout() {
 		user = new OrdinaryUser ();
 		startGUI = new StartGUI (this);
 	}
 	
-	public void restart () {
+	public void restart() {
 		if (user.getClass() == OrdinaryUser.class) {
 			startGUI = new StartGUI (this);
 		}
@@ -89,8 +87,7 @@ public class MovieTheatreApp {
 		}
 	}
 	
-	public void setUser (OrdinaryUser u) {
+	public void setUser(OrdinaryUser u) {
 		user = u;
 	}
-
 }

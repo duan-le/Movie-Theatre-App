@@ -175,10 +175,7 @@ public class BrowsingController {
 		String movieName = browsingGUI.getMovie();
 		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);
 		Showtime showtime = allShowTime.get((Integer.parseInt(browsingGUI.getShowtime()) - 1));
-		
 		ArrayList<Seat> allSeats= databaseController.getAllSeats(movieName, showtime);
-		Movie movie = databaseController.findMovie(movieName);
-		
 		int index = Integer.parseInt(browsingGUI.getSeat()); 
 		Seat seat = allSeats.get(index-1);
 		browsingGUI.dispose();
@@ -189,5 +186,4 @@ public class BrowsingController {
 			movieTheatreApp.startPayment();
 		}		
 	}
-	
 }
