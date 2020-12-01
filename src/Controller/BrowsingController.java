@@ -53,7 +53,6 @@ public class BrowsingController {
 			// only show movies that are released to date
 		} 
 		else {
-			System.out.println("here");
 			movies = getMovies();
 			String unreleased = getUnreleased();
 			browsingGUI = new BrowsingGUI ("Browse Movies", movies, unreleased, this, user);
