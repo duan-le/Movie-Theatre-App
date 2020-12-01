@@ -72,6 +72,7 @@ public class MovieTheatreApp {
 	
 	public void cancel () throws Exception {
 		cancellationController.cancel(new OrdinaryUser());
+		cancellationController.setMta(this);
 	}
 	
 	public void register () throws Exception {
