@@ -143,10 +143,10 @@ public class BrowsingGUI extends JFrame {
 		JOptionPane.showMessageDialog(f, "Over 10% of seats are already booked for this movie.\nPlease select another showtime");
 	}
 	
-	public void displayConfirmation () {
+	public void displayConfirmation (double price) {
 		dispose();
 		JFrame f = new JFrame ("Confirmed");
-		JOptionPane.showMessageDialog(f, "Ticket selected");
+		JOptionPane.showMessageDialog(f, "Ticket selected. Total: $" + String.format("%.2f", price));
 	}
 	
 	class CancelListener implements ActionListener {
