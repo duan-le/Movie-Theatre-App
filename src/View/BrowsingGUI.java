@@ -21,6 +21,7 @@ import Controller.BrowsingController;
 import Model.OrdinaryUser;
 
 public class BrowsingGUI extends JFrame {
+	
 	private JFrame frame;
 	private JPanel bottom, seats, main;
 	private JButton okay, cancel;
@@ -215,7 +216,6 @@ public class BrowsingGUI extends JFrame {
 			frame.dispose();
 			bc.getMTA().restart();
 		}
-		
 	}
 	
 	class SelectMovieListener implements ActionListener {
@@ -245,8 +245,7 @@ public class BrowsingGUI extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}
-		
+		}	
 	}
 	
 	class SelectShowtimeListener implements ActionListener {
@@ -261,7 +260,6 @@ public class BrowsingGUI extends JFrame {
 				e1.printStackTrace();
 			}
 		}
-		
 	}
 	
 }

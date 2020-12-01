@@ -40,6 +40,9 @@ public class AccountController {
 		}
 		else {
 			accountGUI.displayConfirmedRegistration(account.getCreationDate().toString());
+			movieTheatreApp.setUser(new RegisteredUser());
+			((RegisteredUser) movieTheatreApp.getUser()).setAccount(account);
+			movieTheatreApp.restart();
 		}
 	}
 	
@@ -72,3 +75,4 @@ public class AccountController {
 		}
 	}
 }
+
