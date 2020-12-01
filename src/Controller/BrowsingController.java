@@ -72,6 +72,7 @@ public class BrowsingController {
 				browsingGUI.dispose();
 				browsingGUI.displayInvalidMovie();
 				browse(user);
+				return;
 			}
 		}
 		else if (movie == null) {
