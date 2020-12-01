@@ -182,7 +182,7 @@ public class BrowsingGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			dispose();
 			try {
-				seatFrame.dispose();
+				frame.dispose();
 				bc.selectSeat(ou);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -198,7 +198,7 @@ public class BrowsingGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			dispose();
 			try {
-				showtimeFrame.dispose();
+				frame.dispose();
 				bc.selectShowTime();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
