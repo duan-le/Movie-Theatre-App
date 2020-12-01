@@ -69,7 +69,7 @@ public class AccountController {
 			accountGUI.dispose();
 			accountGUI.displayLoginConfirmation();	
 			movieTheatreApp.userSelection();
-			
+			movieTheatreApp.loginStatus(true);
 		}
 	}
 	

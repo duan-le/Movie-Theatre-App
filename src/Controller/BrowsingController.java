@@ -108,7 +108,7 @@ public class BrowsingController {
     	String movieName = browsingGUI.getMovie();
 		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);
 		int index = Integer.parseInt(browsingGUI.getShowtime());
-		Showtime showtime = allShowTime.get(index - 1);
+		Showtime showtime = allShowTime.get(index-1);
 		ArrayList<Seat> allSeats= databaseController.getAllSeats(movieName, showtime);
 		Movie movie = databaseController.findMovie(movieName);
 		Date date = new Date();

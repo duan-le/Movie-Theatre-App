@@ -9,7 +9,8 @@ public class MovieTheatreApp {
 	private PaymentController paymentController;
 	private CancellationController cancellationController;
 	private AccountController accountController;
-//	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
+//	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	private boolean loggedIn;
 	private OrdinaryUser user;
 	
 	public MovieTheatreApp(DatabaseController db) {
@@ -38,7 +39,11 @@ public class MovieTheatreApp {
 			} catch(Exception e){
 				System.out.println(e);
 			}
-		}
+		} 
+	
+	public void loginStatus(boolean l) {
+		loggedIn = l;
+	}
 	
 	public void startPayment() throws Exception {
 		paymentController.pay(user);

@@ -56,12 +56,12 @@ public class CancellationController {
 	{
 		ticketNumber = Integer.parseInt(ticketNo); 
 		ticket = databaseController.getTicket(ticketNumber);
-		if (check72hours(ticket))
-		{
-			cancellationGUI.CancellationFailedGUI("This movie starts within 72 hours. Ticket Cancellation Failed");
-			//System.out.println("At least 72 hours before movie starts for Cancellation. Cancellation Failed.");
-			return;
-		}
+//		if (check72hours(ticket))
+//		{
+//			cancellationGUI.CancellationFailedGUI("This movie starts within 72 hours. Ticket Cancellation Failed");
+//			//System.out.println("At least 72 hours before movie starts for Cancellation. Cancellation Failed.");
+//			return;
+//		}
 
 		if (u.getClass() == OrdinaryUser.class) {
 			try {
