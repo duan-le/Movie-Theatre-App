@@ -80,6 +80,7 @@ public class MovieTheatreApp {
 	
 	public void logout () {
 		user = new OrdinaryUser ();
+		startGUI = new StartGUI (this);
 	}
 	
 	public void restart () {

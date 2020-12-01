@@ -18,6 +18,10 @@ public class BrowsingController {
 		movieTheatreApp = mta;
 	}
 	
+	public MovieTheatreApp getMTA() {
+		return movieTheatreApp;
+	}
+	
 	public String getMovies () {
 		String movies = "";
 		ArrayList <Movie> allMovies = databaseController.getAllMovies();

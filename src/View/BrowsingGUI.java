@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,7 +22,7 @@ import Model.OrdinaryUser;
 
 public class BrowsingGUI extends JFrame {
 	
-	private JFrame movieFrame, seatFrame, showtimeFrame;
+	private JFrame movieFrame, seatFrame, showtimeFrame, frame;
 	private JPanel bottom;
 	private JButton okay, cancel;
 	private JTextField movie, theatre, seat, showtime;
@@ -58,11 +59,9 @@ public class BrowsingGUI extends JFrame {
  	
 	public void displayMovies (String movies) {
 		
-		movieFrame = new JFrame("Movies Showing");
-		movieFrame.setSize(300, 300);
-		movieFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-//		frame.add("North", new JLabel("Movies Showing", SwingConstants.CENTER));
+		frame = new JFrame("Movies Showing");
+		frame.setSize(300, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JScrollPane scroll = new JScrollPane(textArea);
 		movie = new JTextField (10);
@@ -75,19 +74,18 @@ public class BrowsingGUI extends JFrame {
 		bottom.add(movie);
 		bottom.add(okay);
 		bottom.add(cancel);
-		movieFrame.add("Center", scroll);
-		movieFrame.add("South", bottom);
+		frame.add("Center", scroll);
+		frame.add("South", bottom);
 		textArea.setText(movies);
-		movieFrame.setVisible(true);
+		frame.setVisible(true);
 		
 	}
 	
 	public void displaySeats (String seats, String movieName) {
 				
-		seatFrame = new JFrame("Browse Seats for " + movieName);
-		seatFrame.setSize(500, 300);
-		seatFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.add("North", new JLabel("Available Seats", SwingConstants.CENTER));
+		frame = new JFrame("Browse Seats for " + movieName);
+		frame.setSize(500, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JTextArea textArea = new JTextArea();
 		JScrollPane scroll = new JScrollPane(textArea);
@@ -101,17 +99,17 @@ public class BrowsingGUI extends JFrame {
 		bottom.add(seat);
 		bottom.add(okay);
 		bottom.add(cancel);
-		seatFrame.add("Center", scroll);
-		seatFrame.add("South", bottom);
+		frame.add("Center", scroll);
+		frame.add("South", bottom);
 		textArea.setText(seats);
-		seatFrame.setVisible(true);
+		frame.setVisible(true);
 	}
 	
 	public void displayShowtimes (String showtimes, String movieName) {
 		
-		showtimeFrame = new JFrame("Available Showtimes for " + movieName);
-		showtimeFrame.setSize(500, 300);
-		showtimeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame = new JFrame("Available Showtimes for " + movieName);
+		frame.setSize(500, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JScrollPane scroll = new JScrollPane(textArea);
 		showtime = new JTextField (10);
@@ -124,36 +122,11 @@ public class BrowsingGUI extends JFrame {
 		bottom.add(showtime);
 		bottom.add(okay);
 		bottom.add(cancel);
-		showtimeFrame.add("Center", scroll);
-		showtimeFrame.add("South", bottom);
-		textArea.setText(showtimes);
-		showtimeFrame.setVisible(true);
-		
-	}
-	
-	/*
-		public void displayTheatres (String theatres) {
-		
-		frame = new JFrame("Browse Theatres");
-		frame.setSize(300, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.add("North", new JLabel("Available Theatres", SwingConstants.CENTER));
-		
-		JScrollPane scroll = new JScrollPane(textArea);
-		theatre = new JTextField (10);
-		bottom = new JPanel (new GridLayout (2, 2));
-		okay = new JButton ("Okay");
-		cancel = new JButton ("Cancel");
-		bottom.add(new JLabel ("Select a Theatre: "));
-		bottom.add(theatre);
-		bottom.add(okay);
-		bottom.add(cancel);
 		frame.add("Center", scroll);
 		frame.add("South", bottom);
-		textArea.setText(theatres);
+		textArea.setText(showtimes);
 		frame.setVisible(true);
 	}
-	*/
 		
 	public void displayInvalidMovie () {
 		JFrame f = new JFrame ("Error");
@@ -180,18 +153,20 @@ public class BrowsingGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			dispose();
-			
+			frame.dispose();
+			bc.getMTA().restart();
 		}
 		
 	}
+	
+	
 	
 	class SelectMovieListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				movieFrame.dispose();
+				frame.dispose();
 				bc.selectMovie (ou);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -229,16 +204,6 @@ public class BrowsingGUI extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}
-		
-	}
-	
-	class SelectTheatreListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
 		}
 		
 	}
