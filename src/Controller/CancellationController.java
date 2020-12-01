@@ -14,6 +14,7 @@ public class CancellationController {
 	private int ticketNumber;
 	private String email, billingInfo;
 	private OrdinaryUser u;
+	private Ticket ticket;
 
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 	
@@ -54,7 +55,7 @@ public class CancellationController {
 	public void ticketParse(String ticketNo)
 	{
 		ticketNumber = Integer.parseInt(ticketNo); 
-		Ticket ticket = databaseController.getTicket(ticketNumber);
+		ticket = databaseController.getTicket(ticketNumber);
 		if (check72hours(ticket))
 		{
 			cancellationGUI.CancellationFailedGUI("This movie starts within 72 hours. Ticket Cancellation Failed");
@@ -83,6 +84,10 @@ public class CancellationController {
 		email = e;
 		billingInfo = b;
 		cardNumber = Integer.parseInt(c);
+		
+		double refundAmount = ticket.getTicketPrice() * .85;
+		
+		cancellationGUI.RegCancelGUI(refundAmount);
 	}
 
 	private boolean check72hours(Ticket ticket){
@@ -117,9 +122,13 @@ public class CancellationController {
 		
 
 		// process refund here
-		double refundAmount = ticket.getTicketPrice() * .85;
 		
-		cancellationGUI.RegCancelGUI(refundAmount);
+		
+		//double refundAmount = ticket.getTicketPrice() * .85;
+		
+		//cancellationGUI.RegCancelGUI(refundAmount);
+		
+		
 		//System.out.println("Cancellation is now being Processed");
 		//System.out.println("$"+refundAmount + " voucher sent to email.");
 		
