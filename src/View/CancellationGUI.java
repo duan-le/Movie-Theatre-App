@@ -65,6 +65,7 @@ public class CancellationGUI extends JFrame {
 		public void actionPerformed(ActionEvent e)
 		{
 			rcg.dispose();
+			cc.mta.restart();
 		}
 		
 	}
@@ -75,6 +76,7 @@ public class CancellationGUI extends JFrame {
 		public void actionPerformed(ActionEvent e)
 		{
 			gtg.dispose();
+			cc.mta.restart();
 		}
 		
 	}
@@ -85,6 +87,7 @@ public class CancellationGUI extends JFrame {
 		public void actionPerformed(ActionEvent e)
 		{
 			ccg.dispose();
+			cc.mta.restart();
 		}
 		
 	}
@@ -95,6 +98,7 @@ public class CancellationGUI extends JFrame {
 		public void actionPerformed(ActionEvent e)
 		{
 			cfg.dispose();
+			cc.mta.restart();
 		}
 		
 	}

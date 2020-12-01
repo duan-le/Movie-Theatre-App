@@ -10,6 +10,7 @@ import View.CancellationGUI;
 public class CancellationController {
 	private CancellationGUI cancellationGUI;
 	private DatabaseController databaseController;
+	public MovieTheatreApp mta;
 	private int cardNumber;
 	private int ticketNumber;
 	private String email, billingInfo;
@@ -20,6 +21,11 @@ public class CancellationController {
 	
 	public CancellationController(DatabaseController db) {
 		databaseController = db;
+	}
+	
+	public void setMta(MovieTheatreApp mt)
+	{
+		mta = mt;
 	}
 	
 	public void cancel(OrdinaryUser user) throws Exception {
