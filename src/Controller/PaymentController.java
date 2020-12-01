@@ -37,7 +37,8 @@ public class PaymentController {
 			databaseController.addTicketReceipt(ticketReceipt);
 			user.addTicketReceipt(ticketReceipt);
 			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);
-		}	
+		}
+		ou.clearTicketList();
 	}
 	
 	public void ordinaryPay(String info) throws Exception {

@@ -24,4 +24,8 @@ public class OrdinaryUser {
 	public ArrayList<Ticket> getTicketList() {
 		return ticketList;
 	}
+	
+	public void clearTicketList() {
+		ticketList.clear();
+	}
 }
