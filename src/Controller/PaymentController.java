@@ -21,7 +21,7 @@ public class PaymentController {
 		databaseController = db;
 	}
 	
-	public void pay(OrdinaryUser user) throws Exception{
+	public void pay(boolean loggedIn, OrdinaryUser user) throws Exception{
 		// print to console. switch to gui later
 		
 		ArrayList<Ticket> ticketList = user.getTicketList();
@@ -31,13 +31,13 @@ public class PaymentController {
 		}
 		
 		
-		if (user.getClass() == OrdinaryUser.class) {
-			paymentGUI = new PaymentGUI(user, this);
-			ordinaryPay("info");
-		} else {
+		if (loggedIn) {
 			paymentGUI = new PaymentGUI(user, this);
 			paymentGUI.RegPaymentGUI();
 			registeredPay();
+		} else {
+			paymentGUI = new PaymentGUI(user, this);
+			ordinaryPay("info");
 		}
 			
 		System.out.println("CardInfo, BillingInfo and UserInfo Payment Processed");
@@ -49,6 +49,7 @@ public class PaymentController {
 			user.addTicketReceipt(ticketReceipt);
 			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);
 		}
+		
 	}
 	
 	public void ordinaryPay(String info) throws Exception {

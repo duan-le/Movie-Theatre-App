@@ -46,7 +46,7 @@ public class MovieTheatreApp {
 	}
 	
 	public void startPayment() throws Exception {
-		paymentController.pay(user);
+		paymentController.pay(loggedIn, user);
 	}
 	
 	public void login () throws Exception {
