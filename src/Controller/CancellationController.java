@@ -13,6 +13,7 @@ public class CancellationController {
 	private int cardNumber;
 	private int ticketNumber;
 	private String email, billingInfo;
+	private Ticket ticket;
 
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 	
@@ -28,7 +29,7 @@ public class CancellationController {
 		cancellationGUI.getTicketNo();
 		
 		
-		Ticket ticket = databaseController.getTicket(ticketNumber);
+		//Ticket ticket = databaseController.getTicket(ticketNumber);
 		System.out.println("here");
 		if (check72hours(ticket))
 		{
@@ -53,6 +54,7 @@ public class CancellationController {
 	public void ticketParse(String ticketNo)
 	{
 		ticketNumber = Integer.parseInt(ticketNo); 
+		ticket = databaseController.getTicket(ticketNumber);
 	}
 	
 	public void billingInfoParse(String e, String c, String b)
