@@ -17,7 +17,7 @@ public class DatabaseController {
 			DriverManager.registerDriver(driver);
             String path = "jdbc:mysql://127.0.0.1:3306/db"; 
             String user = "root";
-            String pass = "desiree00";
+            String pass = "password";
             conn = DriverManager.getConnection(path, user, pass);  
         } catch(Exception e) {    
                 System.out.println(e);
@@ -342,24 +342,5 @@ public class DatabaseController {
         } catch(Exception e) {
 	        System.out.println(e);
 		}
-	}
-
-	/*
-	 * testing database controller
-	 */
-	public static void main(String [] args){
-		DatabaseController dc = new DatabaseController();
-		Calendar cal = Calendar.getInstance();
-		cal.set(2000, 10, 28, 2, 0, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		java.util.Date dt1 = cal.getTime();
-		java.util.Date dt2 = new java.util.Date();
-
-		System.out.println(dt1);
-		System.out.println(dt2);
-		long dif = dt2.getTime() - dt1.getTime();
-		long diffHours = (dif / (1000 * 60 * 60)) / 24;
-
-		System.out.println(diffHours);
 	}
 }
