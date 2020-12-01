@@ -28,7 +28,7 @@ public class CancellationGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	private JButton submit, cancel, ok;
-	private JTextField ticketNum;
+	private static JTextField ticketNum;
 	private static JTextField cardField;
 	private static JTextField emailField;
 	private static JTextField billingField;
@@ -123,7 +123,7 @@ public class CancellationGUI extends JFrame {
 		JButton submitCanc = new JButton("Submit Cancellation");
 		cancel = new JButton("Cancel");
 		
-		ticketNum = new JTextField(1);
+		ticketNum = new JTextField();
 		
 		submitCanc.addActionListener(new SubmitListener());
 		cancel.addActionListener(new CancelListenerGTG());

@@ -13,6 +13,8 @@ public class CancellationController {
 	private int cardNumber;
 	private int ticketNumber;
 	private String email, billingInfo;
+	private OrdinaryUser u;
+	private Ticket ticket;
 
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 	
@@ -23,13 +25,13 @@ public class CancellationController {
 	public void cancel(OrdinaryUser user) throws Exception {
 		//System.out.println("Enter ticket number: ");
 		//String line = reader.readLine();
-		
+		u = user;
 		cancellationGUI = new CancellationGUI("Ticket Cancellation", this);
 		cancellationGUI.getTicketNo();
 		
 		
-		Ticket ticket = databaseController.getTicket(ticketNumber);
-		
+		//Ticket ticket = databaseController.getTicket(ticketNumber);
+		/*System.out.println("here");
 		if (check72hours(ticket))
 		{
 			cancellationGUI.CancellationFailedGUI("This movie starts within 72 hours. Ticket Cancellation Failed");
@@ -46,13 +48,35 @@ public class CancellationController {
 		if (deleted){
 			databaseController.updateSeat(ticket.getMovieName(), ticket.getShowtime(), ticket.getSeatNumber(), true);
 		}
-
+*/
 
 	}
 	
 	public void ticketParse(String ticketNo)
 	{
 		ticketNumber = Integer.parseInt(ticketNo); 
+		ticket = databaseController.getTicket(ticketNumber);
+//		if (check72hours(ticket))
+//		{
+//			cancellationGUI.CancellationFailedGUI("This movie starts within 72 hours. Ticket Cancellation Failed");
+//			//System.out.println("At least 72 hours before movie starts for Cancellation. Cancellation Failed.");
+//			return;
+//		}
+
+		if (u.getClass() == OrdinaryUser.class) {
+			try {
+				ordinaryCancel(u, ticket);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			registeredCancel(u, ticket);
+		}
+		boolean deleted = databaseController.removeTicketReceipt(ticketNumber, cardNumber);
+		if (deleted){
+			databaseController.updateSeat(ticket.getMovieName(), ticket.getShowtime(), ticket.getSeatNumber(), true);
+		}
 	}
 	
 	public void billingInfoParse(String e, String c, String b)
@@ -60,6 +84,10 @@ public class CancellationController {
 		email = e;
 		billingInfo = b;
 		cardNumber = Integer.parseInt(c);
+		
+		double refundAmount = ticket.getTicketPrice() * .85;
+		
+		cancellationGUI.RegCancelGUI(refundAmount);
 	}
 
 	private boolean check72hours(Ticket ticket){
@@ -94,9 +122,13 @@ public class CancellationController {
 		
 
 		// process refund here
-		double refundAmount = ticket.getTicketPrice() * .85;
 		
-		cancellationGUI.RegCancelGUI(refundAmount);
+		
+		//double refundAmount = ticket.getTicketPrice() * .85;
+		
+		//cancellationGUI.RegCancelGUI(refundAmount);
+		
+		
 		//System.out.println("Cancellation is now being Processed");
 		//System.out.println("$"+refundAmount + " voucher sent to email.");
 		
