@@ -17,14 +17,17 @@ public class PaymentController {
 	private String billingInfo;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 
+	private ArrayList<Ticket> ticketList;
+	private OrdinaryUser ou;
+	
 	public PaymentController(DatabaseController db) {
 		databaseController = db;
 	}
 	
 	public void pay(boolean loggedIn, OrdinaryUser user) throws Exception{
 		// print to console. switch to gui later
-		
-		ArrayList<Ticket> ticketList = user.getTicketList();
+		ou = user;
+		ticketList = user.getTicketList();
 		double price = 0;
 		for (Ticket t : ticketList) {
 			price += t.getTicketPrice();
@@ -43,12 +46,12 @@ public class PaymentController {
 		System.out.println("CardInfo, BillingInfo and UserInfo Payment Processed");
 
 	
-		for (Ticket t : ticketList) {
+		/*for (Ticket t : ticketList) {
 			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber(), cardNumber);
 			databaseController.addTicketReceipt(ticketReceipt);
 			user.addTicketReceipt(ticketReceipt);
 			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);
-		}
+		}*/
 		
 	}
 	
@@ -75,6 +78,15 @@ public class PaymentController {
 		email = e;
 		billingInfo = b;
 		cardNumber = Integer.parseInt(c);
+		
+		for (Ticket t : ticketList) {
+			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber(), cardNumber);
+			databaseController.addTicketReceipt(ticketReceipt);
+			ou.addTicketReceipt(ticketReceipt);
+			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);
+		}
+		
+		//paymentGUI.confirmationGUI("success");
 	}
 	
 	private void registeredPay() {
