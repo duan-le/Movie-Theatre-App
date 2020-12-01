@@ -90,4 +90,8 @@ public class MovieTheatreApp {
 	public void setUser(OrdinaryUser u) {
 		user = u;
 	}
+	
+	public OrdinaryUser getUser () {
+		return user;
+	}
 }

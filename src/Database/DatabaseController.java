@@ -17,7 +17,7 @@ public class DatabaseController {
 			DriverManager.registerDriver(driver);
             String path = "jdbc:mysql://127.0.0.1:3306/db"; 
             String user = "root";
-            String pass = "password";
+            String pass = "desiree00";
             conn = DriverManager.getConnection(path, user, pass);  
         } catch(Exception e) {    
                 System.out.println(e);
