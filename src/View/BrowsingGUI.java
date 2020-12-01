@@ -1,11 +1,12 @@
 package View;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,16 +15,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
 import Controller.BrowsingController;
-import Controller.MovieTheatreApp;
 import Model.OrdinaryUser;
 
 public class BrowsingGUI extends JFrame {
 	
-	private JFrame movieFrame, seatFrame, showtimeFrame, frame;
-	private JPanel bottom;
+	private JFrame frame;
+	private JPanel bottom, seats, main;
 	private JButton okay, cancel;
 	private JTextField movie, theatre, seat, showtime;
 	private JTextArea textArea;
@@ -37,6 +35,8 @@ public class BrowsingGUI extends JFrame {
 		this.ou = ou;
 		
 		textArea = new JTextArea ();
+		seats = new JPanel (new GridLayout(0, 10));
+		seats.setPreferredSize(new Dimension(300,30));
 	
 		displayMovies(movies);
 	}
@@ -81,14 +81,15 @@ public class BrowsingGUI extends JFrame {
 		
 	}
 	
-	public void displaySeats (String seats, String movieName) {
+	public void displaySeats (String movieName) {
 				
 		frame = new JFrame("Browse Seats for " + movieName);
 		frame.setSize(500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		main = new JPanel (new GridLayout(2, 1));
 		
-		JTextArea textArea = new JTextArea();
-		JScrollPane scroll = new JScrollPane(textArea);
+//		JTextArea textArea = new JTextArea();
+//		JScrollPane scroll = new JScrollPane(textArea);
 		seat = new JTextField (10);
 		bottom = new JPanel (new FlowLayout ());
 		okay = new JButton ("Okay");
@@ -99,10 +100,24 @@ public class BrowsingGUI extends JFrame {
 		bottom.add(seat);
 		bottom.add(okay);
 		bottom.add(cancel);
-		frame.add("Center", scroll);
-		frame.add("South", bottom);
-		textArea.setText(seats);
+		main.add(seats);
+		main.add(bottom);
+		frame.add(main);
+//		frame.add("Center", scroll);
+//		frame.add("South", bottom);
+//		textArea.setText(s);
 		frame.setVisible(true);
+	}
+	
+	/*
+	 * adds seats to the frame based on their availability
+	 */
+	public void addSeatsToFrame (int i, Color c) {
+		JPanel f = new JPanel();
+		f.setPreferredSize(new Dimension(30, 30));
+		f.setBackground(c);
+		f.add(new JLabel (String.valueOf(i), JLabel.CENTER));
+		seats.add(f);
 	}
 	
 	public void displayShowtimes (String showtimes, String movieName) {
@@ -158,8 +173,6 @@ public class BrowsingGUI extends JFrame {
 		}
 		
 	}
-	
-	
 	
 	class SelectMovieListener implements ActionListener {
 

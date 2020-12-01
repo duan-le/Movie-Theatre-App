@@ -24,7 +24,9 @@ public class DatabaseController {
         }
     }
     
-    // Query database to find all movies
+    /*
+     *  Query database to find all movies
+     */
     public ArrayList<Movie> getAllMovies() {
 		ArrayList<Movie> movieList = new ArrayList<Movie>();
 		String n = "";
@@ -50,7 +52,9 @@ public class DatabaseController {
         return movieList;
     }
     
-    // Query database to find movie matching movieName
+    /*
+     *  Query database to find movie matching movieName
+     */
     public Movie findMovie(String movieName) {
     	String n = "";
 		String g = "";
@@ -76,7 +80,9 @@ public class DatabaseController {
 	}
 	
 
-    // Query database to find all showtimes for movie
+    /*
+     *  Query database to find all showtimes for movie
+     */
     public ArrayList<Showtime> getAllShowtimes(String movieName) {
 		ArrayList<Showtime> showtimeList = new ArrayList<Showtime>();
      	try {
@@ -95,7 +101,9 @@ public class DatabaseController {
         return showtimeList;
     }
 
-    // Query to get all seats for a movie at a specific showtime
+    /*
+     *  Query to get all seats for a movie at a specific showtime
+     */
     public ArrayList<Seat> getAllSeats(String movieName, Showtime showtime) {
     	ArrayList<Seat> seatList = new ArrayList<Seat>();
     	int sn = 0;
@@ -119,7 +127,9 @@ public class DatabaseController {
         return seatList;
     }
     
-    // Update Seat e.g. boolean filled seat
+    /*
+     *  Update Seat e.g. boolean filled seat
+     */
     public void updateSeat(String movieName, Showtime showtime, int seatNumber, boolean avail){
     	try {
     		String query = "UPDATE db.seat SET Available=? WHERE MovieName=? and ShowDate=? and Number=?";
@@ -135,7 +145,9 @@ public class DatabaseController {
 		}
     }
     
-    // Get ticket from database by everything but ticket number
+    /*
+     * Get ticket from database by everything but ticket number
+     */
     public Ticket getTicket(String movieName, Showtime showtime, Seat seat) {
     	int tn = 0;
     	int sn = 0;
@@ -165,7 +177,9 @@ public class DatabaseController {
     	return new Ticket(mn, sn, tn, new Showtime(dt), p);
     }
     
-    // Get ticket by ticket number 
+    /*
+     * Get ticket by ticket number 
+     */
     public Ticket getTicket(int ticketNumber) {
     	int tn = 0;
     	int sn = 0;
@@ -193,7 +207,9 @@ public class DatabaseController {
     	return new Ticket(mn, sn, tn, new Showtime(dt), p);
     }
     
-    // Add purchased ticket from receipt
+    /*
+     * Add purchased ticket from receipt
+     */
     public void addTicketReceipt(TicketReceipt ticketReceipt) {
         try {
         	String query = "INSERT INTO db.ticketreceipt VALUES(?, ?)";
@@ -208,7 +224,9 @@ public class DatabaseController {
 		}
     }
 
-    // Remove purchased ticket from database
+    /*
+     * Removes a purchased ticket from the database upon cancellation
+     */
     public boolean removeTicketReceipt(int ticketNumber, int cardNumber) {
 		boolean deleted = false;
 		try {
@@ -225,7 +243,9 @@ public class DatabaseController {
 		return deleted;
     }
 
-    // Add account
+    /*
+     * Adds an account to the database
+     */
     public void addAccount(Account account) {
     	try {
     		String query = "INSERT INTO db.account VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)";
@@ -247,6 +267,9 @@ public class DatabaseController {
 		}
     }
 
+    /*
+     * Gets an account from the database
+     */
     public Account getAccount(String email, String password) {
     	Account account = null;
     	int cn = 0;
@@ -284,7 +307,9 @@ public class DatabaseController {
     	return account;
     }
     
-    // Update user info for account
+    /*
+     * Updates user information for an account
+     */
     public void updateUserInfo(UserInfo userInfo, Account account) {
         try {
         	String query = "UPDATE db.account SET Name=?, Address=?, Phone=? WHERE Email=? and Password=?";
@@ -301,7 +326,9 @@ public class DatabaseController {
 		}
     }
 
-    // Update card info for account
+    /*
+     * Updates card information for an account
+     */
     public void updateCardInfo(CardInfo cardInfo, Account account) {
     	try {
         	String query = "UPDATE db.account SET CardNumber=?, CardHolderName=? WHERE Email=? and Password=?";
@@ -317,7 +344,9 @@ public class DatabaseController {
 		}
 	}
 
-	// Testing DatabaseController
+	/*
+	 * testing database controller
+	 */
 	public static void main(String [] args){
 		DatabaseController dc = new DatabaseController();
 		Calendar cal = Calendar.getInstance();

@@ -3,10 +3,10 @@ package Controller;
 import Database.DatabaseController;
 import Model.*;
 import View.BrowsingGUI;
+
+import java.awt.Color;
 import java.io.*; 
 import java.util.*;
-
-import com.mysql.cj.exceptions.DataConversionException;
 
 public class BrowsingController {
 	
@@ -42,7 +42,6 @@ public class BrowsingController {
 			movies = getMovies();
 		}
 		browsingGUI = new BrowsingGUI ("Browse Movies", movies, this, user);
-//		user.addTicket(selectMovie(user));
 	}
 	
 	public boolean ordinaryBrowse(String movieName){
@@ -71,7 +70,6 @@ public class BrowsingController {
 		// in the database the movie table will contain all movies including movies that are not yet to be announced.
 		// only the registered user can see this in the browser and reserve (select) that movie after it passes the logic.
 		Movie movie = databaseController.findMovie(browsingGUI.getMovie());
-//		String movies = "";
 		if (user.getClass() == OrdinaryUser.class) {
 			if (movie == null || (movie != null && ordinaryBrowse(browsingGUI.getMovie()) == false )) {
 				browsingGUI.dispose();
@@ -87,14 +85,6 @@ public class BrowsingController {
 		}
 			
 		browsingGUI.displayShowtimes(getAllShowtimes(movie.getName()), movie.getName());
-		
-//		Showtime showtime = selectShowTime(browsingGUI.getShowtime());
-//		Seat seat = selectSeat(user, browsingGUI.getSeat(), showtime);
-//		ordinaryBrowse(browsingGUI.getTheatre());
-		// create ticket
-//		Ticket ticket = databaseController.getTicket(movie.getName(), showtime, seat);
-		
-//		return ticket;
 		
 	}
 
@@ -125,16 +115,15 @@ public class BrowsingController {
 			}
 			if (seatAvail / allSeats.size() < .9) {
 				browsingGUI.displayInvalidSeat();
-//				browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
 				browsingGUI.displayShowtimes(getAllShowtimes(movieName), movieName);
 				check = false;
-//				System.out.println("over 10% is booked already");
-				//gui exits the browse
 			}
 		}
 		// display available seats
-		if (check == true)
-			browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
+		if (check == true) {
+			getSeats (movieName, showtime);
+			browsingGUI.displaySeats(movieName);
+		}
     }
     
     public String getAllSeats (String movieName, Showtime showtime) {
@@ -149,6 +138,21 @@ public class BrowsingController {
     	
     	return str;
     }
+    
+    /*
+     * Used to pass seats and their colour coding based on availability to gui
+     */
+    public void getSeats (String movieName, Showtime showtime) {
+    	
+    	ArrayList<Seat> allSeats= databaseController.getAllSeats(movieName, showtime);
+    	
+    	for (Seat s : allSeats) {
+    		if (s.getAvailability() == false)
+    			browsingGUI.addSeatsToFrame (s.getSeatNumber(), new Color (255, 0, 0));
+    		else 
+    			browsingGUI.addSeatsToFrame (s.getSeatNumber(), new Color (0, 255, 0));
+    	}
+    }
 	
 	public void selectSeat(OrdinaryUser user) throws Exception {
 		
@@ -159,31 +163,6 @@ public class BrowsingController {
 		
 		ArrayList<Seat> allSeats= databaseController.getAllSeats(movieName, showtime);
 		Movie movie = databaseController.findMovie(movieName);
-		/*
-		Date date = new Date();
-		if (movie.getReleaseDate().getTime() > date.getTime()){
-			double seatAvail = 0;
-			for (Seat seat: allSeats){
-				if (seat.getAvailability())
-					seatAvail ++;
-			}
-			if (seatAvail / allSeats.size() < .9) {
-				browsingGUI.displayInvalidSeat();
-				browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
-//				System.out.println("over 10% is booked already");
-				// gui exits the browse
-			}
-		}
-		// display available seats
-		for (int i = 0; i < allSeats.size(); i++){
-			if (i % 10 == 0)
-				System.out.println();
-			System.out.print(allSeats.get(i).getSeatNumber()+ " ");
-		}
-
-		// select seats then update database
-		System.out.println("Select seat number: ");
-		*/
 		
 		int index = Integer.parseInt(browsingGUI.getSeat()); 
 		Seat seat = allSeats.get(index-1);
@@ -194,7 +173,6 @@ public class BrowsingController {
 			browsingGUI.displayConfirmation(ticket.getTicketPrice());
 			movieTheatreApp.startPayment();
 		}		
-//		return seat;
 	}
 	
 }

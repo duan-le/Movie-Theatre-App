@@ -150,6 +150,7 @@ public class PaymentGUI extends JFrame{
 		public void actionPerformed(ActionEvent e)
 		{
 			opg.dispose();
+			pc.mta.restart();
 		}
 		
 	}
