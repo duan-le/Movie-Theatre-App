@@ -146,7 +146,6 @@ public class BrowsingController {
 	
 	public void selectSeat(OrdinaryUser user) throws Exception {
 		
-		
 		String movieName = browsingGUI.getMovie();
 		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);
 		Showtime showtime = allShowTime.get((Integer.parseInt(browsingGUI.getShowtime()) - 1));

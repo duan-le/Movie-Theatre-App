@@ -275,6 +275,7 @@ public class AccountGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose();
+			ac.getMTA().restart();
 		}	
 	}
 	
@@ -287,12 +288,12 @@ public class AccountGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ac.checkLogin(ou);
-			try {
-				ac.getMTA().userSelection();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				ac.getMTA().userSelection();
+//			} catch (Exception e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 		}	
 	} 
 

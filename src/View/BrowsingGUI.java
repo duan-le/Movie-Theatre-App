@@ -181,6 +181,7 @@ public class BrowsingGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose();
+			
 		}
 		
 	}

@@ -77,6 +77,10 @@ public class MovieTheatreApp {
 		user = new OrdinaryUser ();
 	}
 	
+	public void restart () {
+		startGUI = new StartGUI (this);
+	}
+	
 	
 	/*
 	public void ordinaryOption() {

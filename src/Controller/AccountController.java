@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class AccountController {
 	private AccountGUI accountGUI;
 	private DatabaseController databaseController;
-	MovieTheatreApp movieTheatreApp;
+	private MovieTheatreApp movieTheatreApp;
 	
 	public AccountController(DatabaseController db, MovieTheatreApp map) {
 		databaseController = db;
@@ -68,6 +68,8 @@ public class AccountController {
 			((RegisteredUser) user).setAccount(account);
 			accountGUI.dispose();
 			accountGUI.displayLoginConfirmation();	
+			movieTheatreApp.userSelection();
+			
 		}
 	}
 	
