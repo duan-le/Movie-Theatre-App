@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.*;
 import javax.swing.BoxLayout;
@@ -229,14 +230,14 @@ public class CancellationGUI extends JFrame {
 		}
 		
 		
-		public void RegCancelGUI(double refund)
+		public void RegCancelGUI(double refund, Date exp)
 		{
 			rcg = new JFrame("Ticket Cancellation Processed");
 			rcg.setSize(400, 100);
 			rcg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel panel = new JPanel();
 			JPanel buttons = new JPanel();
-			JLabel message = new JLabel("$" + refund + " voucher sent to email");
+			JLabel message = new JLabel("$" + String.format("%.2f", refund) + " voucher sent to email. Expires: " + exp);
 			JButton okay = new JButton("OK");
 			okay.addActionListener(new CancelListenerRCG());
 			
