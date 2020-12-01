@@ -29,7 +29,7 @@ public class CancellationController {
 		
 		
 		Ticket ticket = databaseController.getTicket(ticketNumber);
-		
+		System.out.println("here");
 		if (check72hours(ticket))
 		{
 			cancellationGUI.CancellationFailedGUI("This movie starts within 72 hours. Ticket Cancellation Failed");
