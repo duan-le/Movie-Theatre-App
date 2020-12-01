@@ -12,9 +12,10 @@ public class BrowsingController {
 	
 	private BrowsingGUI browsingGUI;
 	private DatabaseController databaseController; 
-
-	public BrowsingController(DatabaseController db) {
+	private MovieTheatreApp movieTheatreApp;
+	public BrowsingController(DatabaseController db, MovieTheatreApp mta) {
 		databaseController = db;
+		movieTheatreApp = mta;
 	}
 	
 	public String getMovies () {
@@ -146,6 +147,7 @@ public class BrowsingController {
 	
 	public void selectSeat(OrdinaryUser user) throws Exception {
 		
+		
 		String movieName = browsingGUI.getMovie();
 		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);
 		Showtime showtime = allShowTime.get((Integer.parseInt(browsingGUI.getShowtime()) - 1));
@@ -184,6 +186,7 @@ public class BrowsingController {
 		if (seat != null) {
 			user.addTicket(databaseController.getTicket(movieName, showtime, seat));
 			browsingGUI.displayConfirmation ();
+			movieTheatreApp.startPayment();
 		}		
 //		return seat;
 	}

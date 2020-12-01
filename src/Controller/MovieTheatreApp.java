@@ -13,7 +13,7 @@ public class MovieTheatreApp {
 	private OrdinaryUser user;
 	
 	public MovieTheatreApp(DatabaseController db) {
-		browsingController = new BrowsingController(db);
+		browsingController = new BrowsingController(db, this);
 		paymentController = new PaymentController(db);
 		cancellationController = new CancellationController(db);
 		accountController = new AccountController(db, this);
@@ -80,7 +80,6 @@ public class MovieTheatreApp {
 	public void restart () {
 		startGUI = new StartGUI (this);
 	}
-	
 	
 	/*
 	public void ordinaryOption() {
