@@ -189,8 +189,9 @@ public class BrowsingController {
 		Seat seat = allSeats.get(index-1);
 		browsingGUI.dispose();
 		if (seat != null) {
-			user.addTicket(databaseController.getTicket(movieName, showtime, seat));
-			browsingGUI.displayConfirmation ();
+			Ticket ticket = databaseController.getTicket(movieName, showtime, seat);
+			user.addTicket(ticket);
+			browsingGUI.displayConfirmation(ticket.getTicketPrice());
 			movieTheatreApp.startPayment();
 		}		
 //		return seat;

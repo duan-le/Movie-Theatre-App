@@ -44,14 +44,13 @@ public class PaymentController {
 		}
 			
 		System.out.println("CardInfo, BillingInfo and UserInfo Payment Processed");
-
 	
-		/*for (Ticket t : ticketList) {
+		for (Ticket t : ticketList) {
 			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber(), cardNumber);
 			databaseController.addTicketReceipt(ticketReceipt);
 			user.addTicketReceipt(ticketReceipt);
 			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);
-		}*/
+		}
 		
 	}
 	
