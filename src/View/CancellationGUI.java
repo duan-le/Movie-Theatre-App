@@ -247,22 +247,6 @@ public class CancellationGUI extends JFrame {
 			rcg.add("Center", panel);
 			rcg.add("South", buttons);
 			rcg.setVisible(true);
-		}
-		
-		/*public static void main(String[] args)
-		{
-			DatabaseController db = new DatabaseController();
-			CancellationController c = new CancellationController(db);
-			CancellationGUI cd = new CancellationGUI("Cancellation", c);
-			
-			cd.CancelConfirmationGUI();
-			cd.CancellationFailedGUI("Your ticket cancellation could not be processed");
-			cd.getTicketNo();
-			cd.RegCancelGUI(45.00);
-			cd.OrdinaryCancelGUI();
-		}*/
-	
-	
-	
+		}	
 }
 

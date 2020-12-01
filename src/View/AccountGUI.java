@@ -23,13 +23,7 @@ import javax.swing.JPasswordField;
 
 
 public class AccountGUI extends JFrame {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-//	private LoginGUI loginGUI;
-//	private RegisterGUI registerGUI;
+	private static final long serialVersionUID = 1L;;
 	private JLabel flname, address, phoneNum, billingName, billingAddress, billingNum, cardNumber, cardName, email, password;
 	private JTextField name, addr, phono, bname, baddr, bphono, cardnum, chn, mail, pass;
 	private JButton okay, cancel;
@@ -221,9 +215,6 @@ public class AccountGUI extends JFrame {
 	public void setUser (OrdinaryUser u) {
 		ou = u;
 	}
-//	public String getPass () {
-//		return String.valueOf(passw.getPassword());
-//	}
 	
 	public String getMail () {
 		return email.getText();
@@ -291,12 +282,6 @@ public class AccountGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ac.checkLogin(ou);
-//			try {
-//				ac.getMTA().userSelection();
-//			} catch (Exception e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
 		}	
 	} 
 

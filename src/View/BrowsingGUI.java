@@ -21,7 +21,6 @@ import Controller.BrowsingController;
 import Model.OrdinaryUser;
 
 public class BrowsingGUI extends JFrame {
-	
 	private JFrame frame;
 	private JPanel bottom, seats, main;
 	private JButton okay, cancel;
@@ -137,9 +136,6 @@ public class BrowsingGUI extends JFrame {
 		frame.setSize(500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main = new JPanel (new GridLayout(2, 1));
-		
-//		JTextArea textArea = new JTextArea();
-//		JScrollPane scroll = new JScrollPane(textArea);
 		seat = new JTextField (10);
 		bottom = new JPanel (new FlowLayout ());
 		okay = new JButton ("Okay");
@@ -153,9 +149,6 @@ public class BrowsingGUI extends JFrame {
 		main.add(seats);
 		main.add(bottom);
 		frame.add(main);
-//		frame.add("Center", scroll);
-//		frame.add("South", bottom);
-//		textArea.setText(s);
 		frame.setVisible(true);
 	}
 	
@@ -265,7 +258,6 @@ public class BrowsingGUI extends JFrame {
 				frame.dispose();
 				bc.selectShowTime();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}

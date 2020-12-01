@@ -22,10 +22,6 @@ import Controller.MovieTheatreApp;
 
 
 public class PaymentGUI extends JFrame{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private JPanel panel;
@@ -124,10 +120,7 @@ public class PaymentGUI extends JFrame{
 			String email = emailField.getText();
 			String cardNum = cardField.getText();
 			String bInfo = billingField.getText();
-			
-			
-			
-			
+
 			//Database checks to see if card info is valid
 			try {
 				pc.parseInfo(email, bInfo, cardNum);
@@ -199,15 +192,4 @@ public class PaymentGUI extends JFrame{
 		tcf.add("South", button);
 		tcf.setVisible(true);
 	}
-	
-	/*public static void main(String [] args)
-	{
-		OrdinaryUser u = new OrdinaryUser();
-		DatabaseController db = new DatabaseController();
-		PaymentController p = new PaymentController(db);
-		PaymentGUI pg = new PaymentGUI(u, p);
-		pg.RegPaymentGUI();
-		pg.OrdPaymentGUI();
-		pg.confirmationGUI("hello");
-	}*/
 }
