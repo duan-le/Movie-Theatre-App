@@ -160,6 +160,7 @@ public class PaymentGUI extends JFrame{
 		public void actionPerformed(ActionEvent e)
 		{
 			tcf.dispose();
+			pc.mta.restart();
 		}
 		
 	}
@@ -170,6 +171,7 @@ public class PaymentGUI extends JFrame{
 		public void actionPerformed(ActionEvent e)
 		{
 			rpg.dispose();
+			pc.mta.restart();
 		}
 		
 	}

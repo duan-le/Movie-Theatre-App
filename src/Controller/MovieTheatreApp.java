@@ -47,6 +47,7 @@ public class MovieTheatreApp {
 	
 	public void startPayment() throws Exception {
 		paymentController.pay(loggedIn, user);
+		paymentController.setMta(this);
 	}
 	
 	public void login () throws Exception {

@@ -14,11 +14,17 @@ public class PaymentController {
 	private DatabaseController databaseController;
 	private int cardNumber;
 	private String email;
+	public MovieTheatreApp mta;
 	private String billingInfo;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 
 	private ArrayList<Ticket> ticketList;
 	private OrdinaryUser ou;
+	
+	public void setMta(MovieTheatreApp mt)
+	{
+		mta = mt;
+	}
 	
 	public PaymentController(DatabaseController db) {
 		databaseController = db;
@@ -96,4 +102,6 @@ public class PaymentController {
 		System.out.println("Payment Automatically Processed");
 
 	}
+	
+	
 }
