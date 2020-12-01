@@ -13,6 +13,8 @@ public class PaymentController {
 	private PaymentGUI paymentGUI;
 	private DatabaseController databaseController;
 	private int cardNumber;
+	private String email;
+	private String billingInfo;
 	private BufferedReader reader =  new BufferedReader(new InputStreamReader(System.in)); 
 
 	public PaymentController(DatabaseController db) {
@@ -64,6 +66,14 @@ public class PaymentController {
 		// process payment here
 		//System.out.println("Payment is now being Processed");
 
+	}
+	
+	
+	public void parseInfo(String e, String b, String c)
+	{
+		email = e;
+		billingInfo = b;
+		cardNumber = Integer.parseInt(c);
 	}
 	
 	private void registeredPay() {

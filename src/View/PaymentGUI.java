@@ -126,11 +126,11 @@ public class PaymentGUI extends JFrame{
 			String bInfo = billingField.getText();
 			
 			
-			String billingInfo = email + " " + cardNum + "  "+ bInfo;
+			
 			
 			//Database checks to see if card info is valid
 			try {
-				pc.ordinaryPay(billingInfo);
+				pc.parseInfo(email, bInfo, cardNum);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
