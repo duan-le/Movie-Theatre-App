@@ -66,20 +66,18 @@ public class BrowsingController {
 		// in the database the movie table will contain all movies including movies that are not yet to be announced.
 		// only the registered user can see this in the browser and reserve (select) that movie after it passes the logic.
 		Movie movie = databaseController.findMovie(browsingGUI.getMovie());
-		String movies = "";
+//		String movies = "";
 		if (user.getClass() == OrdinaryUser.class) {
 			if (movie == null || (movie != null && ordinaryBrowse(browsingGUI.getMovie()) == false )) {
 				browsingGUI.dispose();
 				browsingGUI.displayInvalidMovie();
-				movies = ordinaryBrowse();
-				browsingGUI.displayMovies(movies);
+				browse(user);
 			}
 		}
 		else if (movie == null) {
 			browsingGUI.dispose();
 			browsingGUI.displayInvalidMovie();
-			movies = getMovies();
-			browsingGUI.displayMovies(movies);
+			browse(user);
 		}
 			
 		browsingGUI.displayShowtimes(getAllShowtimes(movie.getName()), movie.getName());
@@ -121,7 +119,7 @@ public class BrowsingController {
 			}
 			if (seatAvail / allSeats.size() < .9) {
 				browsingGUI.displayInvalidSeat();
-				browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
+//				browsingGUI.displaySeats(getAllSeats(movieName, showtime), movieName);
 				browsingGUI.displayShowtimes(getAllShowtimes(movieName), movieName);
 				check = false;
 //				System.out.println("over 10% is booked already");
@@ -183,7 +181,7 @@ public class BrowsingController {
 		
 		int index = Integer.parseInt(browsingGUI.getSeat()); 
 		Seat seat = allSeats.get(index-1);
-		
+		browsingGUI.dispose();
 		if (seat != null) {
 			user.addTicket(databaseController.getTicket(movieName, showtime, seat));
 			browsingGUI.displayConfirmation ();
