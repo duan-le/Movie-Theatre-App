@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db`;
--- MySQL dump 10.13  Distrib 8.0.20, for macos10.15 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: db
+-- Host: localhost    Database: db
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -29,9 +29,7 @@ CREATE TABLE `seat` (
   `Available` tinyint(1) DEFAULT NULL,
   `MovieName` varchar(45) NOT NULL,
   `ShowDate` datetime NOT NULL,
-  PRIMARY KEY (`Number`,`MovieName`,`ShowDate`),
-  KEY `seat_fk_idx` (`MovieName`,`ShowDate`),
-  CONSTRAINT `st1234_fk` FOREIGN KEY (`MovieName`, `ShowDate`) REFERENCES `showtime` (`MovieName`, `ShowDate`)
+  PRIMARY KEY (`Number`,`MovieName`,`ShowDate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -41,7 +39,7 @@ CREATE TABLE `seat` (
 
 LOCK TABLES `seat` WRITE;
 /*!40000 ALTER TABLE `seat` DISABLE KEYS */;
-INSERT INTO `seat` VALUES (1,1,'Movie 1','2000-01-02 14:00:00'),(1,1,'Movie 1','2000-01-02 21:00:00'),(1,1,'Movie 2','2000-02-02 15:00:00'),(1,1,'Movie 3','2000-01-02 14:00:00'),(1,1,'Movie 4','2020-11-30 10:00:00'),(1,1,'Movie 5','2020-11-02 08:00:00'),(2,1,'Movie 1','2000-01-02 14:00:00'),(2,1,'Movie 1','2000-01-02 21:00:00'),(2,1,'Movie 2','2000-02-02 15:00:00'),(2,1,'Movie 3','2000-01-02 14:00:00'),(3,1,'Movie 1','2000-01-02 14:00:00'),(3,1,'Movie 2','2000-02-02 15:00:00');
+INSERT INTO `seat` VALUES (1,1,'Gone With The Wind','2020-12-04 00:00:00'),(1,1,'Gone With The Wind','2020-12-04 00:03:00'),(1,1,'Jaws','2020-12-04 00:06:00'),(1,1,'Jaws','2020-12-04 00:08:30'),(1,1,'Kung Fu Panda','2020-12-04 00:15:00'),(1,1,'Kung Fu Panda','2020-12-04 00:17:00'),(1,1,'The Godfather','2020-12-04 00:11:00'),(1,1,'The Godfather','2020-12-04 00:13:00'),(1,1,'Unreleased','2022-01-01 00:10:00'),(1,1,'Unreleased','2022-01-01 00:13:00'),(2,1,'Gone With The Wind','2020-12-04 00:00:00'),(2,1,'Gone With The Wind','2020-12-04 00:03:00'),(2,1,'Jaws','2020-12-04 00:06:00'),(2,1,'Jaws','2020-12-04 00:08:30'),(2,1,'Kung Fu Panda','2020-12-04 00:15:00'),(2,1,'Kung Fu Panda','2020-12-04 00:17:00'),(2,1,'The Godfather','2020-12-04 00:11:00'),(2,1,'The Godfather','2020-12-04 00:13:00'),(2,1,'Unreleased','2022-01-01 00:10:00'),(2,1,'Unreleased','2022-01-01 00:13:00'),(3,1,'Gone With The Wind','2020-12-04 00:00:00'),(3,1,'Gone With The Wind','2020-12-04 00:03:00'),(3,1,'Jaws','2020-12-04 00:06:00'),(3,1,'Jaws','2020-12-04 00:08:30'),(3,1,'Kung Fu Panda','2020-12-04 00:15:00'),(3,1,'Kung Fu Panda','2020-12-04 00:17:00'),(3,1,'The Godfather','2020-12-04 00:11:00'),(3,1,'The Godfather','2020-12-04 00:13:00'),(3,1,'Unreleased','2022-01-01 00:10:00'),(3,1,'Unreleased','2022-01-01 00:13:00'),(4,1,'Gone With The Wind','2020-12-04 00:00:00'),(4,1,'Gone With The Wind','2020-12-04 00:03:00'),(4,1,'Jaws','2020-12-04 00:06:00'),(4,1,'Jaws','2020-12-04 00:08:30'),(4,1,'Kung Fu Panda','2020-12-04 00:15:00'),(4,1,'Kung Fu Panda','2020-12-04 00:17:00'),(4,1,'The Godfather','2020-12-04 00:11:00'),(4,1,'The Godfather','2020-12-04 00:13:00'),(4,1,'Unreleased','2022-01-01 00:10:00'),(4,1,'Unreleased','2022-01-01 00:13:00'),(5,1,'Gone With The Wind','2020-12-04 00:00:00'),(5,1,'Gone With The Wind','2020-12-04 00:03:00'),(5,1,'Jaws','2020-12-04 00:06:00'),(5,1,'Jaws','2020-12-04 00:08:30'),(5,1,'Kung Fu Panda','2020-12-04 00:15:00'),(5,1,'Kung Fu Panda','2020-12-04 00:17:00'),(5,1,'The Godfather','2020-12-04 00:11:00'),(5,1,'The Godfather','2020-12-04 00:13:00'),(5,1,'Unreleased','2022-01-01 00:10:00'),(5,1,'Unreleased','2022-01-01 00:13:00'),(6,1,'Gone With The Wind','2020-12-04 00:00:00'),(6,1,'Gone With The Wind','2020-12-04 00:03:00'),(6,1,'Jaws','2020-12-04 00:06:00'),(6,1,'Jaws','2020-12-04 00:08:30'),(6,1,'Kung Fu Panda','2020-12-04 00:15:00'),(6,1,'Kung Fu Panda','2020-12-04 00:17:00'),(6,1,'The Godfather','2020-12-04 00:11:00'),(6,1,'The Godfather','2020-12-04 00:13:00'),(6,1,'Unreleased','2022-01-01 00:10:00'),(6,1,'Unreleased','2022-01-01 00:13:00'),(7,1,'Gone With The Wind','2020-12-04 00:00:00'),(7,1,'Gone With The Wind','2020-12-04 00:03:00'),(7,1,'Jaws','2020-12-04 00:06:00'),(7,1,'Jaws','2020-12-04 00:08:30'),(7,1,'Kung Fu Panda','2020-12-04 00:15:00'),(7,1,'Kung Fu Panda','2020-12-04 00:17:00'),(7,1,'The Godfather','2020-12-04 00:11:00'),(7,1,'The Godfather','2020-12-04 00:13:00'),(7,1,'Unreleased','2022-01-01 00:10:00'),(7,1,'Unreleased','2022-01-01 00:13:00'),(8,1,'Gone With The Wind','2020-12-04 00:00:00'),(8,1,'Gone With The Wind','2020-12-04 00:03:00'),(8,1,'Jaws','2020-12-04 00:06:00'),(8,1,'Jaws','2020-12-04 00:08:30'),(8,1,'Kung Fu Panda','2020-12-04 00:15:00'),(8,1,'Kung Fu Panda','2020-12-04 00:17:00'),(8,1,'The Godfather','2020-12-04 00:11:00'),(8,1,'The Godfather','2020-12-04 00:13:00'),(8,1,'Unreleased','2022-01-01 00:10:00'),(8,1,'Unreleased','2022-01-01 00:13:00'),(9,1,'Gone With The Wind','2020-12-04 00:00:00'),(9,1,'Gone With The Wind','2020-12-04 00:03:00'),(9,1,'Jaws','2020-12-04 00:06:00'),(9,1,'Jaws','2020-12-04 00:08:30'),(9,1,'Kung Fu Panda','2020-12-04 00:15:00'),(9,1,'Kung Fu Panda','2020-12-04 00:17:00'),(9,1,'The Godfather','2020-12-04 00:11:00'),(9,1,'The Godfather','2020-12-04 00:13:00'),(9,1,'Unreleased','2022-01-01 00:10:00'),(9,1,'Unreleased','2022-01-01 00:13:00'),(10,1,'Gone With The Wind','2020-12-04 00:00:00'),(10,1,'Gone With The Wind','2020-12-04 00:03:00'),(10,1,'Jaws','2020-12-04 00:06:00'),(10,1,'Jaws','2020-12-04 00:08:30'),(10,1,'Kung Fu Panda','2020-12-04 00:15:00'),(10,1,'Kung Fu Panda','2020-12-04 00:17:00'),(10,1,'The Godfather','2020-12-04 00:11:00'),(10,1,'The Godfather','2020-12-04 00:13:00'),(10,1,'Unreleased','2022-01-01 00:10:00'),(10,1,'Unreleased','2022-01-01 00:13:00');
 /*!40000 ALTER TABLE `seat` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-28 18:07:06
+-- Dump completed on 2020-11-30 23:03:27

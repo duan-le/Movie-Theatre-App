@@ -1,8 +1,8 @@
 CREATE DATABASE  IF NOT EXISTS `db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db`;
--- MySQL dump 10.13  Distrib 8.0.20, for macos10.15 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: db
+-- Host: localhost    Database: db
 -- ------------------------------------------------------
 -- Server version	8.0.22
 
@@ -27,9 +27,7 @@ DROP TABLE IF EXISTS `showtime`;
 CREATE TABLE `showtime` (
   `MovieName` varchar(45) NOT NULL,
   `ShowDate` datetime NOT NULL,
-  PRIMARY KEY (`MovieName`,`ShowDate`),
-  KEY `FK_idx` (`MovieName`),
-  CONSTRAINT `st_fk` FOREIGN KEY (`MovieName`) REFERENCES `movie` (`Name`)
+  PRIMARY KEY (`MovieName`,`ShowDate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,7 +37,7 @@ CREATE TABLE `showtime` (
 
 LOCK TABLES `showtime` WRITE;
 /*!40000 ALTER TABLE `showtime` DISABLE KEYS */;
-INSERT INTO `showtime` VALUES ('Movie 1','2000-01-02 14:00:00'),('Movie 1','2000-01-02 21:00:00'),('Movie 2','2000-02-02 15:00:00'),('Movie 3','2000-01-02 14:00:00'),('Movie 4','2020-11-30 10:00:00'),('Movie 5','2020-11-02 08:00:00');
+INSERT INTO `showtime` VALUES ('Gone With The Wind','2020-12-04 00:00:00'),('Gone With The Wind','2020-12-04 00:03:00'),('Jaws','2020-12-04 00:06:00'),('Jaws','2020-12-04 00:08:30'),('Kung Fu Panda','2020-12-04 00:15:00'),('Kung Fu Panda','2020-12-04 00:17:00'),('The Godfather','2020-12-04 00:11:00'),('The Godfather','2020-12-04 00:13:00'),('Unreleased','2022-01-01 00:10:00'),('Unreleased','2022-01-01 00:13:00');
 /*!40000 ALTER TABLE `showtime` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-28 18:07:05
+-- Dump completed on 2020-11-30 23:03:26
