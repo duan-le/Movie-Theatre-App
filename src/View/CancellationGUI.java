@@ -23,7 +23,7 @@ public class CancellationGUI extends JFrame {
 	 * serial id
 	 */
 	
-	static JFrame f;
+	 JFrame f, ocg, gtg, rcg, cfg, ccg;
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
@@ -54,22 +54,50 @@ public class CancellationGUI extends JFrame {
 			
 			cc.ticketParse(ticketNo);
 			
-			f.dispose();
+			gtg.dispose();
 		}
 		
 	}
 	
-	class CancelListener implements ActionListener
+	class CancelListenerRCG implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			//f.setVisible(false);
-			f.dispose();
+			rcg.dispose();
 		}
 		
 	}
 	
+	class CancelListenerGTG implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			gtg.dispose();
+		}
+		
+	}
+	
+	class CancelListenerCCG implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			ccg.dispose();
+		}
+		
+	}
+	
+	class CancelListenerCFG implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			cfg.dispose();
+		}
+		
+	}
 	
 	class InfoProcessListener implements ActionListener
 	{
@@ -80,25 +108,25 @@ public class CancellationGUI extends JFrame {
 			String c = cardField.getText();
 			String b = billingField.getText();
 			cc.billingInfoParse(em, c, b);
-			f.dispose();
+			ocg.dispose();
 		}
 	}
 	
 	public void getTicketNo()
 	{
-		f = new JFrame("Ticket Information");
-		f.setSize(300, 120);
+		gtg = new JFrame("Ticket Information");
+		gtg.setSize(300, 120);
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gtg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-		submit = new JButton("Submit Cancellation");
+		JButton submitCanc = new JButton("Submit Cancellation");
 		cancel = new JButton("Cancel");
 		
 		ticketNum = new JTextField(1);
 		
-		submit.addActionListener(new SubmitListener());
-		cancel.addActionListener(new CancelListener());
+		submitCanc.addActionListener(new SubmitListener());
+		cancel.addActionListener(new CancelListenerGTG());
 		
 		ticketNumLabel = new JLabel("Ticket number: ");
 		
@@ -106,32 +134,32 @@ public class CancellationGUI extends JFrame {
 		
 		panel.add(ticketNumLabel);
 		panel.add(ticketNum);
-		buttons.add(submit);
+		buttons.add(submitCanc);
 		buttons.add(cancel);
 		
-		f.add("Center", panel);
-		f.add("South", buttons);
-		f.setVisible(true);
+		gtg.add("Center", panel);
+		gtg.add("South", buttons);
+		gtg.setVisible(true);
 	}
 	
 	
 		public void CancelConfirmationGUI()
 		{
-			f = new JFrame("Ticket Cancellation Confirmed");
-			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			f.setSize(350, 100);
+			ccg = new JFrame("Ticket Cancellation Confirmed");
+			ccg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			ccg.setSize(350, 100);
 			JPanel panel = new JPanel();
 			JPanel buttons = new JPanel();
 			JLabel message = new JLabel("Your ticket has been cancelled");
-			ok = new JButton("OK");
-			ok.addActionListener(new CancelListener());
+			JButton okay = new JButton("OK");
+			okay.addActionListener(new CancelListenerCCG());
 			
 			panel.add(message);
-			buttons.add(ok);
+			buttons.add(okay);
 			
-			f.add("Center", panel);
-			f.add("South", buttons);
-			f.setVisible(true);
+			ccg.add("Center", panel);
+			ccg.add("South", buttons);
+			ccg.setVisible(true);
 		}
 		
 		
@@ -141,28 +169,28 @@ public class CancellationGUI extends JFrame {
 	
 		public void CancellationFailedGUI(String label)
 		{
-			f = new JFrame("Ticket Cancellation Failed");
-			f.setSize(300, 100);
-			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			cfg = new JFrame("Ticket Cancellation Failed");
+			cfg.setSize(400, 100);
+			cfg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel panel = new JPanel();
 			JPanel buttons = new JPanel();
 			JLabel message = new JLabel(label);
-			ok = new JButton("OK");
-			ok.addActionListener(new CancelListener());
+			JButton okay = new JButton("OK");
+			okay.addActionListener(new CancelListenerCFG());
 			
 			panel.add(message);
-			buttons.add(ok);
+			buttons.add(okay);
 			
-			f.add("Center", panel);
-			f.add("South", buttons);
-			f.setVisible(true);
+			cfg.add("Center", panel);
+			cfg.add("South", buttons);
+			cfg.setVisible(true);
 		}
 		
 		public void OrdinaryCancelGUI()
 		{
-			f = new JFrame("Cancel Ticket");
-			f.setSize(500, 170);
-			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			ocg = new JFrame("Cancel Ticket");
+			ocg.setSize(500, 170);
+			ocg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel center = new JPanel();
 			JPanel panel = new JPanel();
 			
@@ -181,7 +209,7 @@ public class CancellationGUI extends JFrame {
 			billingField.setPreferredSize(new Dimension(30, 10));
 			
 			submit = new JButton("Submit");
-			submit.addActionListener(new SubmitListener());
+			submit.addActionListener(new InfoProcessListener());
 			
 			center.add(cardLabel);
 			center.add(cardField);
@@ -191,29 +219,29 @@ public class CancellationGUI extends JFrame {
 			center.add(billingField);
 			panel.add(submit);
 			
-			f.add("Center", center);
-			f.add("South", panel);
-			f.setVisible(true);
+			ocg.add("Center", center);
+			ocg.add("South", panel);
+			ocg.setVisible(true);
 		}
 		
 		
 		public void RegCancelGUI(double refund)
 		{
-			f = new JFrame("Ticket Cancellation Processed");
-			f.setSize(400, 100);
-			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			rcg = new JFrame("Ticket Cancellation Processed");
+			rcg.setSize(400, 100);
+			rcg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			JPanel panel = new JPanel();
 			JPanel buttons = new JPanel();
 			JLabel message = new JLabel("$" + refund + " voucher sent to email");
-			ok = new JButton("OK");
-			ok.addActionListener(new CancelListener());
+			JButton okay = new JButton("OK");
+			okay.addActionListener(new CancelListenerRCG());
 			
 			panel.add(message);			
-			buttons.add(ok);
+			buttons.add(okay);
 			
-			f.add("Center", panel);
-			f.add("South", buttons);
-			f.setVisible(true);
+			rcg.add("Center", panel);
+			rcg.add("South", buttons);
+			rcg.setVisible(true);
 		}
 		
 		/*public static void main(String[] args)

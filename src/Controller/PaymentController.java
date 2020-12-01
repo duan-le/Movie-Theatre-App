@@ -31,7 +31,7 @@ public class PaymentController {
 		
 		if (user.getClass() == OrdinaryUser.class) {
 			paymentGUI = new PaymentGUI(user, this);
-			paymentGUI.OrdPaymentGUI();
+			ordinaryPay("info");
 		} else {
 			paymentGUI = new PaymentGUI(user, this);
 			paymentGUI.RegPaymentGUI();
@@ -58,7 +58,7 @@ public class PaymentController {
 		String billinginfo = reader.readLine();*/
 		
 		// confirm payment
-		
+		paymentGUI.OrdPaymentGUI();
 		
 		
 		// process payment here

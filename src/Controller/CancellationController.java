@@ -120,7 +120,7 @@ public class CancellationController {
 		System.out.println("Cancellation is now being Processed");
 		System.out.println("$"+refundAmount + " voucher sent to email");*/
 		
-		CancellationGUI.RegCancelGUI(refundAmount);
+		cancellationGUI.RegCancelGUI(refundAmount);
 		
 		// need to add this logic to database table
 		//add 1 year to date

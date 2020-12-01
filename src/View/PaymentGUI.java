@@ -30,7 +30,7 @@ public class PaymentGUI extends JFrame{
 
 	private JPanel panel;
 	
-	private JFrame f;
+	private JFrame rpg, tcf, opg;
 	
 	private PaymentController pc;
 	
@@ -48,7 +48,7 @@ public class PaymentGUI extends JFrame{
 	
 	public void OrdPaymentGUI()
 	{
-		JFrame opg = new JFrame("Payment Information");
+		opg = new JFrame("Payment Information");
 		JPanel center = new JPanel (new GridLayout (3, 2));
 		JPanel buttons = new JPanel();
 		center.setLayout(new BoxLayout(center, BoxLayout.PAGE_AXIS));
@@ -78,7 +78,7 @@ public class PaymentGUI extends JFrame{
 		center.add(billingField);
 		
 		submit.addActionListener(new SubmitListener());
-		cancel.addActionListener(new CancelListener());
+		cancel.addActionListener(new CancelListenerOPG());
 		
 		buttons.add(submit);
 		buttons.add(cancel);
@@ -91,27 +91,27 @@ public class PaymentGUI extends JFrame{
 	
 	public void RegPaymentGUI()
 	{
-		f = new JFrame("Payment Successful");
+		rpg = new JFrame("Payment Successful");
 		panel = new JPanel();
 		JPanel buttons = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(400, 100);
+		rpg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		rpg.setSize(400, 100);
 		
 		JLabel message = new JLabel("Your account has been billed automatically");
 		
 		JButton okBut = new JButton("OK");
 		
-		okBut.addActionListener(new CancelListener());
+		okBut.addActionListener(new CancelListenerRPG());
 		
 		panel.add(message);
 		buttons.add(okBut);
 		
-		f.add("Center", panel);
-		f.add("South", buttons);
+		rpg.add("Center", panel);
+		rpg.add("South", buttons);
 		
 		
-		f.setVisible(true);
+		rpg.setVisible(true);
 	}
 	
 	class SubmitListener implements ActionListener
@@ -138,25 +138,45 @@ public class PaymentGUI extends JFrame{
 			
 			confirmationGUI("Ticket Purchase Confirmation");
 			
-			f.dispose();
+			opg.dispose();
 			
 		}
 		
 	}
 	
-	class CancelListener implements ActionListener
+	class CancelListenerOPG implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			f.dispose();
+			opg.dispose();
+		}
+		
+	}
+	
+	class CancelListenerTCF implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			tcf.dispose();
+		}
+		
+	}
+	
+	class CancelListenerRPG implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			rpg.dispose();
 		}
 		
 	}
 	
 	public void confirmationGUI(String label)
 	{
-		JFrame tcf = new JFrame("Ticket Purchase Confirmation");
+		tcf = new JFrame("Ticket Purchase Confirmation");
 		JPanel confPanel = new JPanel();
 		confPanel.setLayout(new GridBagLayout());
 		tcf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -167,7 +187,7 @@ public class PaymentGUI extends JFrame{
 		JButton okBut = new JButton("OK");
 		JPanel button = new JPanel();
 		
-		okBut.addActionListener(new CancelListener());
+		okBut.addActionListener(new CancelListenerTCF());
 		
 		confPanel.add(message);
 		button.add(okBut);
