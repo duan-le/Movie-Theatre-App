@@ -218,6 +218,9 @@ public class AccountGUI extends JFrame {
 		return pass.getText();
 	}
 	
+	public void setUser (OrdinaryUser u) {
+		ou = u;
+	}
 //	public String getPass () {
 //		return String.valueOf(passw.getPassword());
 //	}

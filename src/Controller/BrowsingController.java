@@ -24,9 +24,22 @@ public class BrowsingController {
 	
 	public String getMovies () {
 		String movies = "";
+		Date date = new Date ();
 		ArrayList <Movie> allMovies = databaseController.getAllMovies();
 		for (Movie m : allMovies) {
-			movies += m.getName() + "\n";
+			if (m.getReleaseDate().getTime() <= date.getTime())
+				movies += m.getName() + "\n";
+		}
+		return movies;
+	}
+	
+	public String getUnreleased () {
+		String movies = "";
+		Date date = new Date ();
+		ArrayList <Movie> allMovies = databaseController.getAllMovies();
+		for (Movie m : allMovies) {
+			if (m.getReleaseDate().getTime() > date.getTime())
+				movies += m.getName() + "\n";
 		}
 		return movies;
 	}
@@ -35,13 +48,16 @@ public class BrowsingController {
 
 		String movies = "";
 		if (user.getClass() == OrdinaryUser.class) {
-			movies = ordinaryBrowse();
+			movies = getMovies();
+			browsingGUI = new BrowsingGUI ("Browse Movies", movies, this, user);
 			// only show movies that are released to date
 		} 
 		else {
+			System.out.println("here");
 			movies = getMovies();
+			String unreleased = getUnreleased();
+			browsingGUI = new BrowsingGUI ("Browse Movies", movies, unreleased, this, user);
 		}
-		browsingGUI = new BrowsingGUI ("Browse Movies", movies, this, user);
 	}
 	
 	public boolean ordinaryBrowse(String movieName){
@@ -155,7 +171,6 @@ public class BrowsingController {
     }
 	
 	public void selectSeat(OrdinaryUser user) throws Exception {
-		
 		
 		String movieName = browsingGUI.getMovie();
 		ArrayList<Showtime> allShowTime = databaseController.getAllShowtimes(movieName);

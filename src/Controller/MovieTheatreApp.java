@@ -63,7 +63,6 @@ public class MovieTheatreApp {
 	}
 	
 	public void browse () throws Exception {
-		user = new OrdinaryUser();
 		browsingController.browse(user);
 	}
 	
@@ -82,7 +81,16 @@ public class MovieTheatreApp {
 	}
 	
 	public void restart () {
-		startGUI = new StartGUI (this);
+		if (user.getClass() == OrdinaryUser.class) {
+			startGUI = new StartGUI (this);
+		}
+		else {
+			startGUI = new StartGUI ("Signed in to your account", this);
+		}
+	}
+	
+	public void setUser (OrdinaryUser u) {
+		user = u;
 	}
 
 }

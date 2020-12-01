@@ -66,6 +66,8 @@ public class AccountController {
 			}
 		else {
 			((RegisteredUser) user).setAccount(account);
+			movieTheatreApp.setUser(user);
+			accountGUI.setUser(user);
 			accountGUI.dispose();
 			accountGUI.displayLoginConfirmation();	
 			movieTheatreApp.userSelection();

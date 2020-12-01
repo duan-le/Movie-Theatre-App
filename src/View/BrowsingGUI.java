@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import Controller.BrowsingController;
 import Model.OrdinaryUser;
 
@@ -24,7 +26,7 @@ public class BrowsingGUI extends JFrame {
 	private JPanel bottom, seats, main;
 	private JButton okay, cancel;
 	private JTextField movie, theatre, seat, showtime;
-	private JTextArea textArea;
+	private JTextArea textArea, text;
 	private BrowsingController bc;
 	private OrdinaryUser ou;
 	
@@ -35,10 +37,24 @@ public class BrowsingGUI extends JFrame {
 		this.ou = ou;
 		
 		textArea = new JTextArea ();
-		seats = new JPanel (new GridLayout(0, 10));
+		seats = new JPanel (new GridLayout(0, 5));
 		seats.setPreferredSize(new Dimension(300,30));
 	
 		displayMovies(movies);
+	}
+	
+	public BrowsingGUI(String label, String movies, String unreleased, BrowsingController browsingController, OrdinaryUser ou) {
+		super (label);
+		
+		this.bc = browsingController;
+		this.ou = ou;
+		
+		textArea = new JTextArea ();
+		text = new JTextArea();
+		seats = new JPanel (new GridLayout(0, 5));
+		seats.setPreferredSize(new Dimension(300,30));
+	
+		displayMovies(movies, unreleased);
 	}
 
 	public String getMovie () {
@@ -81,6 +97,40 @@ public class BrowsingGUI extends JFrame {
 		
 	}
 	
+	public void displayMovies (String movies, String unreleased) {
+		
+		frame = new JFrame("Movies Showing");
+		frame.setSize(300, 500);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel m = new JPanel (new GridLayout (5, 1));
+		
+		JLabel released = new JLabel ("Released", SwingConstants.CENTER);
+		JLabel toBeReleased = new JLabel ("To Be Released", SwingConstants.CENTER);
+		JScrollPane scroll = new JScrollPane(textArea);
+		JScrollPane unseen = new JScrollPane(text);
+		movie = new JTextField (10);
+		bottom = new JPanel (new GridLayout (2, 2));
+		okay = new JButton ("Okay");
+		okay.addActionListener(new SelectMovieListener());
+		cancel = new JButton ("Cancel");
+		cancel.addActionListener(new CancelListener());
+		bottom.add(new JLabel ("Select a Movie: "));
+		bottom.add(movie);
+		bottom.add(okay);
+		bottom.add(cancel);
+		m.add(released);
+		m.add(scroll);
+		m.add(toBeReleased);
+		m.add(unseen);
+		m.add(bottom);
+		textArea.setText(movies);
+		text.setText(unreleased);
+		frame.add(m);
+		frame.setVisible(true);
+		
+	}
+	
 	public void displaySeats (String movieName) {
 				
 		frame = new JFrame("Browse Seats for " + movieName);
@@ -108,6 +158,7 @@ public class BrowsingGUI extends JFrame {
 //		textArea.setText(s);
 		frame.setVisible(true);
 	}
+	
 	
 	/*
 	 * adds seats to the frame based on their availability
