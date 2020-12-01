@@ -92,8 +92,10 @@ public class CancellationController {
 		cardNumber = Integer.parseInt(c);
 		
 		double refundAmount = ticket.getTicketPrice() * .85;
-		
-		cancellationGUI.RegCancelGUI(refundAmount);
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, 1); // to get previous year add -1
+		Date nextYear = cal.getTime();
+		cancellationGUI.RegCancelGUI(refundAmount, nextYear);
 	}
 
 	private boolean check72hours(Ticket ticket){
@@ -158,15 +160,17 @@ public class CancellationController {
 		System.out.println("Cancellation is now being Processed");
 		System.out.println("$"+refundAmount + " voucher sent to email");*/
 		
-		cancellationGUI.RegCancelGUI(refundAmount);
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, 1); // to get previous year add -1
+		Date nextYear = cal.getTime();
+		
+		cancellationGUI.RegCancelGUI(refundAmount, nextYear);
 		
 		// need to add this logic to database table
 		//add 1 year to date
 		
 		
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, 1); // to get previous year add -1
-		Date nextYear = cal.getTime();
+		
 
 		//System.out.println("Expires: " + nextYear);
 
