@@ -33,6 +33,11 @@ public class CancellationController {
 	public void ticketParse(String ticketNo) {
 		ticketNumber = Integer.parseInt(ticketNo); 
 		ticket = databaseController.getTicket(ticketNumber);
+		if (check72hours(ticket))
+		{
+			cancellationGUI.CancellationFailedGUI("This movie starts within 72 hours. Ticket Cancellation Failed");
+			return;
+		}
 		if (u.getClass() == OrdinaryUser.class) {
 			try {
 				ordinaryCancel(u, ticket);
