@@ -33,7 +33,7 @@ public class PaymentController {
 			ordinaryPay("info");
 		}	
 		for (Ticket t : ticketList) {
-			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber(), cardNumber);
+			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber());
 			databaseController.addTicketReceipt(ticketReceipt);
 			user.addTicketReceipt(ticketReceipt);
 			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);
@@ -53,7 +53,7 @@ public class PaymentController {
 		cardNumber = Integer.parseInt(c);
 		
 		for (Ticket t : ticketList) {
-			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber(), cardNumber);
+			TicketReceipt ticketReceipt = new TicketReceipt(t.getTicketNumber());
 			databaseController.addTicketReceipt(ticketReceipt);
 			ou.addTicketReceipt(ticketReceipt);
 			databaseController.updateSeat(t.getMovieName(), t.getShowtime(), t.getSeatNumber(), false);

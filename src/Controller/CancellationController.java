@@ -15,6 +15,7 @@ public class CancellationController {
 	private int ticketNumber;
 	private OrdinaryUser u;
 	private Ticket ticket;
+	private TicketReceipt ticketReceipt;
 	
 	public CancellationController(DatabaseController db) {
 		databaseController = db;
@@ -31,10 +32,11 @@ public class CancellationController {
 	}
 	
 	public void ticketParse(String ticketNo) {
-		ticketNumber = Integer.parseInt(ticketNo); 
+		ticketNumber = Integer.parseInt(ticketNo);
+		ticketReceipt = databaseController.getTicketReceipt(ticketNumber);
 		ticket = databaseController.getTicket(ticketNumber);
 		
-		if(ticket == null)
+		if(ticketReceipt == null)
 		{
 			cancellationGUI.CancellationFailedGUI("Unable to find ticket");
 			return;

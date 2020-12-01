@@ -238,6 +238,27 @@ public class DatabaseController {
 		}
 		return deleted;
     }
+    
+    public TicketReceipt getTicketReceipt(int ticketNumber) {
+    	TicketReceipt ticketReceipt = null;
+    	int tn = 0;
+    	try {
+        	String query = "SELECT * FROM db.ticketreceipt WHERE TicketNumber=?";
+    		prepStmt = conn.prepareStatement(query);
+			prepStmt.setInt(1, ticketNumber);
+    		rs = prepStmt.executeQuery();
+			while (rs.next()) {
+				tn = rs.getInt("TicketNumber");
+				ticketReceipt = new TicketReceipt(tn);
+			}
+    		prepStmt.close();
+			rs.close();
+        } catch(Exception e) {
+	        System.out.println(e);
+		}
+    	
+    	return ticketReceipt;
+    }
 
     /*
      * Adds an account to the database
