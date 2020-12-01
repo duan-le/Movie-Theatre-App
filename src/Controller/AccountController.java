@@ -39,6 +39,7 @@ public class AccountController {
 			accountGUI.displayInvalidRegistration();
 		}
 		else {
+			movieTheatreApp.loginStatus(true);
 			accountGUI.displayConfirmedRegistration(account.getCreationDate().toString());
 			movieTheatreApp.setUser(new RegisteredUser());
 			((RegisteredUser) movieTheatreApp.getUser()).setAccount(account);
