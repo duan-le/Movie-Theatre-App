@@ -42,7 +42,7 @@ public class CancellationController {
 		} else {
 			registeredCancel(u, ticket);
 		}
-		boolean deleted = databaseController.removeTicketReceipt(ticketNumber, cardNumber);
+		boolean deleted = databaseController.removeTicketReceipt(ticketNumber);
 		if (deleted){
 			databaseController.updateSeat(ticket.getMovieName(), ticket.getShowtime(), ticket.getSeatNumber(), true);
 		}

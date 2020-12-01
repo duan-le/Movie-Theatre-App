@@ -212,11 +212,9 @@ public class DatabaseController {
      */
     public void addTicketReceipt(TicketReceipt ticketReceipt) {
         try {
-        	String query = "INSERT INTO db.ticketreceipt VALUES(?, ?)";
+        	String query = "INSERT INTO db.ticketreceipt VALUES(?)";
     		prepStmt = conn.prepareStatement(query);
 			prepStmt.setInt(1, ticketReceipt.getTicketNumber());
-			prepStmt.setInt(2, ticketReceipt.getCardNumber());
-
     		prepStmt.executeUpdate();
 			prepStmt.close();
         } catch(Exception e) {
@@ -227,14 +225,12 @@ public class DatabaseController {
     /*
      * Removes a purchased ticket from the database upon cancellation
      */
-    public boolean removeTicketReceipt(int ticketNumber, int cardNumber) {
+    public boolean removeTicketReceipt(int ticketNumber) {
 		boolean deleted = false;
 		try {
-        	String query = "DELETE FROM db.ticketreceipt WHERE TicketNumber=? and cardNumber=?";
+        	String query = "DELETE FROM db.ticketreceipt WHERE TicketNumber=?";
     		prepStmt = conn.prepareStatement(query);
 			prepStmt.setInt(1, ticketNumber);
-    		prepStmt.setInt(2, cardNumber);
-
     		deleted = prepStmt.executeUpdate() >= 1;
 			prepStmt.close();
         } catch(Exception e) {
